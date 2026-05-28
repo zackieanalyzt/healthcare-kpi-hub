@@ -1,0 +1,22 @@
+{
+  "name": "@healthcare-kpi-hub/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "bun test",
+    "db:migrate": "bun src/scripts/run-migrations.ts",
+    "db:seed": "bun src/scripts/run-seeds.ts",
+    "auth:check-mariadb": "bun src/scripts/check-mariadb.ts",
+    "auth:smoke-login": "bun src/scripts/smoke-login.ts"
+  },
+  "dependencies": {
+    "@healthcare-kpi-hub/config": "workspace:*",
+    "@healthcare-kpi-hub/shared-types": "workspace:*",
+    "mariadb": "^3.5.2"
+  }
+}

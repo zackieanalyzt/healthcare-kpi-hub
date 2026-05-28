@@ -1,0 +1,12 @@
+{
+  "name": "@healthcare-kpi-hub/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "echo \"No tests for config yet\""
+  }
+}
