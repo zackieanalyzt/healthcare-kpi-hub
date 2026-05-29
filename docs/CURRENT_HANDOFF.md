@@ -98,10 +98,10 @@ Deferred requirement to remember:
 
 Recommended next action:
 
-1. triage the recorded owner-led rehearsal results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
-2. keep the scope fixed until triage confirms whether any wording, audit, or UX refinements are needed
-3. treat dashboard or role-model feedback during triage as future design input unless it exposes a real safety defect in the current pilot
-4. keep the captured organization-first dashboard landing requirement in the dashboard design backlog; do not implement it before triage opens that phase
+1. treat triage as completed for the owner-led dry run and keep the decision recorded in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+2. open `Dashboard and KPI Visualization Design Phase` only
+3. keep scope guard active: no dashboard implementation, no chart library, no dashboard API, no aggregation service, and no landing page behavior change yet
+4. keep role-model feedback and dashboard landing feedback as design inputs unless a future run exposes a real workflow safety defect
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
@@ -111,6 +111,7 @@ We are continuing healthcare-kpi-hub from checkpoint 461fe11 docs: add MacBook C
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
 Current status: Ready for owner-led controlled rehearsal execution, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. The current rehearsal is an owner-led controlled rehearsal / internal dry run using T-01 as project owner / facilitator across viewer, editor, manager, and admin. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
+Current triage outcome recommends opening `Dashboard and KPI Visualization Design Phase` only. Dashboard implementation remains gated.
 
 Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 The latest product feedback also requests an organization-first dashboard landing page with drill-down from organization to department, unit, and individual KPI detail. Capture this in docs and triage, but do not implement it during the current rehearsal pass.

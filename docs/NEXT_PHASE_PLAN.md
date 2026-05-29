@@ -52,6 +52,14 @@ Reference documents for deferred design candidates:
 - scope decision is made explicitly
 - baseline verification remains green
 
+Dashboard Design Phase entry criteria:
+
+- owner-led rehearsal results are recorded
+- feedback triage is completed
+- explicit scope decision is recorded
+- no S1 or S2 blocker remains open
+- organization-first dashboard requirement is accepted as design input
+
 ## Exit Criteria
 
 - next design phase is selected intentionally

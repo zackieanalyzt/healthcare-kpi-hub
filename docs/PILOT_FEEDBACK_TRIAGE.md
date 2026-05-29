@@ -36,20 +36,20 @@ Complete after rehearsal:
 
 | Field | Value |
 |---|---|
-| rehearsal date | |
-| checkpoint under review | `c312ea6` or later reviewed checkpoint |
-| facilitator | |
-| triage owner | |
-| decision owner | |
-| total testers | |
+| rehearsal date | `2026-05-29` |
+| checkpoint under review | `bb5e8c3` with rehearsal evidence recorded against the owner-led dry run package beginning at `461fe11` |
+| facilitator | `T-01 = project owner / facilitator` |
+| triage owner | `Project owner` |
+| decision owner | `Project owner and steering reviewer` |
+| total testers | `1` |
 | total scenarios planned | 14 |
-| total scenarios executed | |
-| pass count | |
-| fail count | |
-| blocked count | |
-| not-run count | |
-| defect count | |
-| recommendation summary | |
+| total scenarios executed | `14` |
+| pass count | `14` |
+| fail count | `0` |
+| blocked count | `0` |
+| not-run count | `0` |
+| defect count | `0` |
+| recommendation summary | `Open next design phase: Dashboard and KPI Visualization Design Phase (design only, no implementation yet)` |
 
 ## 4. Participant / Tester Summary
 
@@ -86,7 +86,7 @@ Defect ID convention:
 
 | Defect ID | Scenario | Severity | Summary | Suspected area | Triage decision | Owner | Status | Notes |
 |---|---|---|---|---|---|---|---|---|
-| | | S1 / S2 / S3 / S4 | | auth/session / RBAC / navigation / worklist / KPI page / KPI entry detail / mutation / stale-write/concurrency / audit history / Thai/English message / data seed / other | fix before pilot / fix after pilot / documentation only / not a defect / needs design decision | | open / triaged / resolved | |
+| none | owner-led rehearsal summary | none | No functional defect was opened during the owner-led dry run | n/a | not a defect | Project owner | triaged | Rehearsal completed with `14 pass / 0 fail / 0 blocked / 0 defects` |
 
 ## 7. Feedback Classification Table
 
@@ -94,7 +94,8 @@ Use this for non-defect feedback, wording, training, and design observations.
 
 | Feedback ID | Scenario | Type | Severity | Summary | Suggested action | Owner | Notes |
 |---|---|---|---|---|---|---|---|
-| | | wording / usability / training / audit readability / role expectation / future request | S1 / S2 / S3 / S4 | | refine wording / refine UX / add documentation / keep for future design phase / no action | | |
+| FB-001 | R-02 to R-09 | usability / role expectation | S3 | Role-specific UI differentiation is still unclear; viewer, editor, manager, and admin look too similar in the current web UI, making permission boundaries harder to understand without trying actions | refine UX in a future scoped pass; do not change current workflow baseline during triage | Project owner | This is not a safety defect because the owner-led dry run did not show forbidden mutation being allowed |
+| FB-002 | product review after login and KPI page navigation | future request | S4 | Organization-first dashboard landing page with hierarchical drill-down is desired instead of starting too deep on unit or team KPI pages | keep for future design phase | Project owner | See dashboard requirements for organization -> department/workgroup -> unit/team -> individual flow |
 
 Dashboard requests during current pilot scope:
 
@@ -145,10 +146,10 @@ Record the decision:
 
 | Decision | Selected | Reason |
 |---|---|---|
-| proceed to limited internal pilot | yes / no | |
-| refine wording/audit/UX only | yes / no | |
-| pause feature expansion because S1/S2 issues exist | yes / no | |
-| open next design phase | yes / no | |
+| proceed to limited internal pilot | no | The triage outcome is leaning toward a design decision rather than another pilot expansion step in this pass |
+| refine wording/audit/UX only | no | There is a usability observation, but the more strategically important outcome is a dashboard design decision rather than a wording-only refinement |
+| pause feature expansion because S1/S2 issues exist | no | No S1 or S2 defect was opened during the owner-led dry run |
+| open next design phase | yes | Current workflow passed the owner-led dry run; no blocking defect was recorded; dashboard direction is strategically important and needs deliberate design before implementation |
 
 ## 10. Next-Phase Candidate List
 
@@ -156,11 +157,11 @@ Only consider a next design phase after triage is complete.
 
 | Candidate | Open now? | Reason |
 |---|---|---|
-| Assignment and Due-Date Workflow Design | yes / no | |
-| KPI Template Import Design | yes / no | |
-| Operational KPI Value Import Design | yes / no | |
-| Dashboard/Aggregation Design | yes / no | |
-| Dashboard and KPI Visualization Design Phase | yes / no | |
+| Assignment and Due-Date Workflow Design | no | Not selected by current triage decision |
+| KPI Template Import Design | no | Deferred until later scope review |
+| Operational KPI Value Import Design | no | Deferred until later scope review |
+| Dashboard/Aggregation Design | yes | Needed as a prerequisite to any future dashboard implementation |
+| Dashboard and KPI Visualization Design Phase | yes | Recommended next phase from this triage, design only and no implementation yet |
 
 Deferred requirement reminder:
 
@@ -189,9 +190,9 @@ Use this section as the final triage output:
 
 | Field | Value |
 |---|---|
-| primary decision | |
-| rationale | |
-| must-fix items before next step | |
-| can-wait items | |
-| documentation updates needed | |
-| next recommended action | |
+| primary decision | `open next design phase` |
+| rationale | `Owner-led controlled rehearsal / internal dry run passed all 14 scenarios with no recorded defect. The most important follow-up is now a strategic dashboard design question, not a workflow safety repair.` |
+| must-fix items before next step | `No S1 or S2 blocker remains open from the owner-led dry run.` |
+| can-wait items | `FB-001 role-specific UI differentiation can wait for a future UX refinement pass; FB-002 dashboard landing and drill-down stays in design scope only for now.` |
+| documentation updates needed | `Keep dashboard requirement docs, handoff, and next-phase plan aligned with the triage decision.` |
+| next recommended action | `Authorize Dashboard and KPI Visualization Design Phase only. Do not implement dashboard UI, chart library, dashboard API, aggregation service, schema change, or landing page behavior in this pass.` |
