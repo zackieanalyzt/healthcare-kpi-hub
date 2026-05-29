@@ -120,7 +120,7 @@
 - responsibilities:
   - KPI operational mutations, editability checks, optimistic concurrency
 - allowed dependencies:
-  - `shared`, `audit`, `kpi_definitions`, `reporting_periods`
+  - `shared`, `audit`, `kpi_definitions`, `reporting_periods`, read-only `navigation` context
 - forbidden dependencies:
   - must not depend on `worklist` internals
 - public service contracts:

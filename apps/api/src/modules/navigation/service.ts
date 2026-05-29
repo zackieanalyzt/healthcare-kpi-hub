@@ -1,5 +1,10 @@
 import type { Database } from "bun:sqlite";
-import type { KpiPageDetail, NavigationWorkgroup } from "@healthcare-kpi-hub/shared-types";
+import type {
+  KpiPageDetail,
+  KpiPageHierarchyNode,
+  KpiPageSummary,
+  NavigationWorkgroup
+} from "@healthcare-kpi-hub/shared-types";
 import { AppError } from "../../domain/shared/errors";
 import {
   findCurrentPeriod,
@@ -51,5 +56,33 @@ export function getKpiPageDetail(
       currentPeriod?.id ?? null,
       currentUsername
     )
+  };
+}
+
+export function getKpiPageContext(
+  db: Database,
+  pageId: string
+): {
+  page: KpiPageSummary;
+  hierarchy: {
+    current_node: KpiPageHierarchyNode;
+    parent_node: KpiPageHierarchyNode | null;
+    child_nodes: KpiPageHierarchyNode[];
+  };
+} | null {
+  const page = findKpiPageMetadata(db, pageId);
+  const currentNode = findHierarchyCurrentNode(db, pageId);
+
+  if (!page || !currentNode) {
+    return null;
+  }
+
+  return {
+    page,
+    hierarchy: {
+      current_node: currentNode,
+      parent_node: findHierarchyParentNode(db, pageId),
+      child_nodes: listHierarchyChildNodes(db, pageId)
+    }
   };
 }

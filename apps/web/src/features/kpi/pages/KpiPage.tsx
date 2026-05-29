@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { KpiPageDetail } from "@healthcare-kpi-hub/shared-types";
 import { fetchKpiPage } from "../../../app/api";
 
@@ -181,6 +182,9 @@ export function KpiPage({ pageId }: { pageId: string }) {
                 <div>Actual: {item.value.actual_value ?? "-"}</div>
                 <div>Progress: {item.value.progress_value ?? "-"}</div>
                 <div>Note: {item.value.note ?? "-"}</div>
+                {item.assignment.entry_id ? (
+                  <Link to={`/entries/${item.assignment.entry_id}`}>Open entry detail</Link>
+                ) : null}
               </div>
             ))}
           </div>

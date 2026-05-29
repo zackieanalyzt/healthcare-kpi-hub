@@ -651,7 +651,11 @@ Validation:
 - Permission: `kpi.read`
 - Status codes: `200`, `401`, `403`, `404`
 
-Response shape matches one item from KPI page entries plus history summary:
+Path params:
+
+- `entryId`: required, non-empty string
+
+Response:
 
 ```json
 {
@@ -663,7 +667,8 @@ Response shape matches one item from KPI page entries plus history summary:
       "assigned_to": "jane.doe",
       "due_at": "2026-05-31T17:00:00Z",
       "updated_at": "2026-05-20T08:00:00Z",
-      "updated_by": "john.manager"
+      "updated_by": "john.manager",
+      "editable": true
     },
     "definition": {
       "id": "kpd_01",
@@ -671,7 +676,50 @@ Response shape matches one item from KPI page entries plus history summary:
       "name": "Vaccination Coverage",
       "unit": "%",
       "value_type": "percentage",
-      "preset_code": "percentage"
+      "preset_code": "percentage",
+      "owner_label": "District Epidemiology Team"
+    },
+    "reporting_period": {
+      "id": "rpt_01",
+      "period_key": "2026-05",
+      "period_type": "monthly",
+      "status": "open",
+      "starts_at": "2026-05-01T00:00:00Z",
+      "ends_at": "2026-05-31T23:59:59Z"
+    },
+    "page": {
+      "id": "pag_01",
+      "code": "PREVENTION",
+      "name": "Prevention Metrics",
+      "section": {
+        "id": "sec_01",
+        "code": "DC",
+        "name": "Disease Control"
+      },
+      "workgroup": {
+        "id": "wrk_01",
+        "code": "PH",
+        "name": "Public Health"
+      }
+    },
+    "hierarchy": {
+      "current_node": {
+        "page_id": "pag_01",
+        "code": "PREVENTION",
+        "name": "Prevention Metrics",
+        "hierarchy_level": "unit",
+        "owner_label": "Disease Control Unit",
+        "owner_user": null
+      },
+      "parent_node": {
+        "page_id": "pag_parent",
+        "code": "PROMOTION",
+        "name": "Promotion Metrics",
+        "hierarchy_level": "department",
+        "owner_label": "Health Promotion Division",
+        "owner_user": null
+      },
+      "child_nodes": []
     },
     "value": {
       "target_value": "95",
@@ -684,8 +732,9 @@ Response shape matches one item from KPI page entries plus history summary:
       {
         "audit_event_id": "aud_01",
         "action": "kpi_entry.updated",
+        "actor_username": "john.manager",
         "occurred_at": "2026-05-20T08:00:00Z",
-        "actor_username": "john.manager"
+        "summary": "Updated KPI values after district review."
       }
     ]
   },
@@ -695,6 +744,16 @@ Response shape matches one item from KPI page entries plus history summary:
   }
 }
 ```
+
+Behavior:
+
+- returns the period-scoped operational read model for one KPI entry
+- `definition` represents template-level KPI semantics and must not be interpreted as a period-specific master record
+- `entry` is the current operational assignment/workflow record for the selected reporting period
+- `value` is the operational value payload and may be entirely empty when no value row exists yet
+- `reporting_period`, `page`, and `hierarchy` provide breadcrumb and ownership context for read-only inspection
+- `history` returns recent audit events for the KPI entry and may be empty
+- if the entry exists but the related definition, page, hierarchy context, or reporting period is inactive or missing, the endpoint returns `404`
 
 ### 12.2 `PATCH /api/kpi-entries/:entryId`
 

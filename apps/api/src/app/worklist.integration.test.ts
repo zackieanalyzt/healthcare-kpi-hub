@@ -25,7 +25,8 @@ describe("worklist integration", () => {
     const body = await response.json();
     expect(body.success).toBeTrue();
     expect(body.meta.pagination.page_size).toBe(1);
-    expect(body.meta.pagination.total_items).toBe(1);
+    expect(body.meta.pagination.total_items).toBe(2);
+    expect(body.data.items).toHaveLength(1);
   });
 
   test("editable flag reflects update permission and lock state", async () => {

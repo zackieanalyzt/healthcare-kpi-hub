@@ -175,3 +175,62 @@ export interface KpiPageDetail {
   current_period: KpiPageCurrentPeriod | null;
   assigned_kpis: KpiPageAssignedKpiItem[];
 }
+
+export interface KpiDefinitionSummary {
+  id: string;
+  code: string;
+  name: string;
+  unit: string | null;
+  value_type: string;
+  preset_code: string;
+  owner_label: string | null;
+}
+
+export interface EntryValuePayload {
+  target_value: string | null;
+  actual_value: string | null;
+  progress_value: number | null;
+  note: string | null;
+  extra_json: string | null;
+}
+
+export interface ReportingPeriodSummary {
+  id: string;
+  period_key: string;
+  period_type: string;
+  status: string;
+  starts_at: string;
+  ends_at: string;
+}
+
+export interface AuditHistoryItem {
+  audit_event_id: string;
+  action: string;
+  actor_username: string | null;
+  occurred_at: string;
+  summary: string | null;
+}
+
+export interface KpiEntrySummary {
+  id: string;
+  status: string;
+  assigned_to: string | null;
+  due_at: string | null;
+  updated_at: string;
+  updated_by: string | null;
+  editable: boolean;
+}
+
+export interface KpiEntryDetail {
+  entry: KpiEntrySummary;
+  definition: KpiDefinitionSummary;
+  value: EntryValuePayload;
+  reporting_period: ReportingPeriodSummary;
+  page: KpiPageSummary;
+  hierarchy: {
+    current_node: KpiPageHierarchyNode;
+    parent_node: KpiPageHierarchyNode | null;
+    child_nodes: KpiPageHierarchyNode[];
+  };
+  history: AuditHistoryItem[];
+}

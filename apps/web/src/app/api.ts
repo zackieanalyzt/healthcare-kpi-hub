@@ -1,6 +1,7 @@
 import type {
   ApiResponse,
   AuthenticatedUser,
+  KpiEntryDetail,
   KpiPageDetail,
   NavigationWorkgroup,
   WorklistItem
@@ -63,4 +64,8 @@ export async function fetchWorklist() {
 
 export async function fetchKpiPage(pageId: string) {
   return requestJson<KpiPageDetail>(`/api/kpi-pages/${encodeURIComponent(pageId)}`);
+}
+
+export async function fetchKpiEntry(entryId: string) {
+  return requestJson<KpiEntryDetail>(`/api/kpi-entries/${encodeURIComponent(entryId)}`);
 }

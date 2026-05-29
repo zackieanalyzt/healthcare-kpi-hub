@@ -1,5 +1,6 @@
 import type { Database } from "bun:sqlite";
-import { insertAuditEvent } from "./repository";
+import type { AuditHistoryItem } from "@healthcare-kpi-hub/shared-types";
+import { insertAuditEvent, listRecentAuditHistoryForEntity } from "./repository";
 
 export function recordAuditEvent(
   db: Database,
@@ -22,4 +23,13 @@ export function recordAuditEvent(
     occurred_at: new Date().toISOString(),
     payload_json: event.payload ? JSON.stringify(event.payload) : null
   });
+}
+
+export function getRecentAuditHistoryForEntity(
+  db: Database,
+  entityType: string,
+  entityId: string,
+  limit = 10
+): AuditHistoryItem[] {
+  return listRecentAuditHistoryForEntity(db, entityType, entityId, limit);
 }

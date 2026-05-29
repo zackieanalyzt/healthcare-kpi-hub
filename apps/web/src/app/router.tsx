@@ -4,6 +4,7 @@ import { LoginPage } from "../features/auth/pages/LoginPage";
 import { WorklistPage } from "../features/worklist/pages/WorklistPage";
 import { DashboardPage } from "../features/dashboard/pages/DashboardPage";
 import { KpiPage } from "../features/kpi/pages/KpiPage";
+import { KpiEntryPage } from "../features/kpi/pages/KpiEntryPage";
 import { ImportsPage } from "../features/imports/pages/ImportsPage";
 import { AdminPage } from "../features/admin/pages/AdminPage";
 import { AuditPage } from "../features/audit/pages/AuditPage";
@@ -11,6 +12,11 @@ import { AuditPage } from "../features/audit/pages/AuditPage";
 function KpiPageRoute() {
   const params = useParams();
   return <KpiPage pageId={params.pageId ?? ""} />;
+}
+
+function KpiEntryRoute() {
+  const params = useParams();
+  return <KpiEntryPage entryId={params.entryId ?? ""} />;
 }
 
 export function AppRouter() {
@@ -47,6 +53,14 @@ export function AppRouter() {
           element={
             <AppShell>
               <KpiPageRoute />
+            </AppShell>
+          }
+        />
+        <Route
+          path="/entries/:entryId"
+          element={
+            <AppShell>
+              <KpiEntryRoute />
             </AppShell>
           }
         />

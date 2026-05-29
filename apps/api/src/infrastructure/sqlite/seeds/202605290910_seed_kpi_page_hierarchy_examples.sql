@@ -43,7 +43,8 @@ INSERT OR IGNORE INTO kpi_definitions (
   ('kpd_org_bed_occupancy', 'pag_org_hospital', 'KPI-ORG-001', 'Hospital Bed Occupancy', '%', 'percentage', 'percentage', 'Hospital Executive Board', 10, 1, '2026-05-01T00:00:00Z', '2026-05-01T00:00:00Z'),
   ('kpd_dept_interop', 'pag_dept_digital_health', 'KPI-DEPT-001', 'Interoperability Feed Coverage', '%', 'percentage', 'percentage', 'Digital Health Division', 10, 1, '2026-05-01T00:00:00Z', '2026-05-01T00:00:00Z'),
   ('kpd_unit_bi_latency', 'pag_unit_bi_team', 'KPI-UNIT-001', 'BI Dashboard Delivery Timeliness', '%', 'percentage', 'percentage', 'BI Team', 10, 1, '2026-05-01T00:00:00Z', '2026-05-01T00:00:00Z'),
-  ('kpd_individual_data_quality', 'pag_individual_analyst', 'KPI-IND-001', 'Analyst Data Quality Score', '%', 'percentage', 'percentage', 'Senior KPI Analyst', 10, 1, '2026-05-01T00:00:00Z', '2026-05-01T00:00:00Z');
+  ('kpd_individual_data_quality', 'pag_individual_analyst', 'KPI-IND-001', 'Analyst Data Quality Score', '%', 'percentage', 'percentage', 'Senior KPI Analyst', 10, 1, '2026-05-01T00:00:00Z', '2026-05-01T00:00:00Z'),
+  ('kpd_empty_value_followup', 'pag_unit_bi_team', 'KPI-UNIT-002', 'BI Data Follow-up Backlog', 'cases', 'numeric', 'numeric_target_actual', 'BI Team', 20, 1, '2026-05-01T00:00:00Z', '2026-05-01T00:00:00Z');
 
 INSERT OR IGNORE INTO kpi_entries (
   id,
@@ -59,7 +60,8 @@ INSERT OR IGNORE INTO kpi_entries (
   ('ent_org_bed_occupancy_2026_05', 'kpd_org_bed_occupancy', 'rpt_2026_05', 'submitted', 'usr_manager', '2026-05-31T17:00:00Z', '2026-05-19T09:00:00Z', 'usr_admin', '2026-05-01T00:00:00Z'),
   ('ent_dept_interop_2026_05', 'kpd_dept_interop', 'rpt_2026_05', 'pending', 'usr_manager', '2026-05-30T17:00:00Z', '2026-05-21T10:00:00Z', 'usr_admin', '2026-05-01T00:00:00Z'),
   ('ent_unit_bi_latency_2026_05', 'kpd_unit_bi_latency', 'rpt_2026_05', 'pending', 'usr_viewer', '2026-05-29T17:00:00Z', '2026-05-22T14:00:00Z', 'usr_manager', '2026-05-01T00:00:00Z'),
-  ('ent_individual_data_quality_2026_05', 'kpd_individual_data_quality', 'rpt_2026_05', 'pending', 'usr_manager', '2026-05-28T17:00:00Z', '2026-05-23T11:30:00Z', 'usr_manager', '2026-05-01T00:00:00Z');
+  ('ent_individual_data_quality_2026_05', 'kpd_individual_data_quality', 'rpt_2026_05', 'pending', 'usr_manager', '2026-05-28T17:00:00Z', '2026-05-23T11:30:00Z', 'usr_manager', '2026-05-01T00:00:00Z'),
+  ('ent_empty_value_followup_2026_05', 'kpd_empty_value_followup', 'rpt_2026_05', 'draft', 'usr_editor', '2026-05-27T17:00:00Z', '2026-05-24T08:15:00Z', 'usr_editor', '2026-05-01T00:00:00Z');
 
 INSERT OR IGNORE INTO entry_values (
   id,
@@ -75,3 +77,17 @@ INSERT OR IGNORE INTO entry_values (
   ('val_dept_interop_2026_05', 'ent_dept_interop_2026_05', '95', '89', 0.9368, 'Two legacy feeds are still pending interface remediation.', NULL, '2026-05-21T10:00:00Z'),
   ('val_unit_bi_latency_2026_05', 'ent_unit_bi_latency_2026_05', '98', '96', 0.9795, 'One dashboard release missed the same-day publication target.', NULL, '2026-05-22T14:00:00Z'),
   ('val_individual_data_quality_2026_05', 'ent_individual_data_quality_2026_05', '100', '97', 0.97, 'A small number of records required manual correction before publication.', NULL, '2026-05-23T11:30:00Z');
+
+INSERT OR IGNORE INTO audit_events (
+  id,
+  entity_type,
+  entity_id,
+  action,
+  actor_user_id,
+  actor_username,
+  occurred_at,
+  payload_json
+) VALUES
+  ('aud_ent_org_bed_occupancy_created', 'kpi_entry', 'ent_org_bed_occupancy_2026_05', 'kpi_entry.created', 'usr_admin', 'admin.user', '2026-05-01T09:00:00Z', '{"summary":"Created monthly KPI entry for hospital bed occupancy."}'),
+  ('aud_ent_org_bed_occupancy_updated', 'kpi_entry', 'ent_org_bed_occupancy_2026_05', 'kpi_entry.updated', 'usr_manager', 'manager.user', '2026-05-19T09:00:00Z', '{"summary":"Updated hospital occupancy values after monthly review."}'),
+  ('aud_ent_unit_bi_latency_updated', 'kpi_entry', 'ent_unit_bi_latency_2026_05', 'kpi_entry.updated', 'usr_manager', 'manager.user', '2026-05-22T14:00:00Z', '{"summary":"Recorded dashboard delivery timeliness for the BI team."}');
