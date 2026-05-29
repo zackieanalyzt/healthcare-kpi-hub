@@ -68,6 +68,7 @@ The future read model likely needs conceptual views such as:
 - KPI counts
 - status distribution
 - achievement summary
+- risk summary
 - child unit or team summaries
 - issue and annotation summary
 
@@ -99,6 +100,7 @@ Every card, chart, table, or drill-down row must be able to answer:
 - which `ReportingPeriod` was selected
 - which hierarchy node or owner scope was used
 - which aggregation rule was applied
+- which target rule and threshold rule set were applied
 - which workflow statuses were included or excluded
 - which downstream drill-down target the user can open
 - which permission or scope rule allowed the data to be visible
@@ -123,6 +125,8 @@ Preferred design direction:
 - KPI display driven by metadata on KPI definition and scope
 - KPI calculation and visualization driven by KPI measurement semantics, not hardcoded route assumptions
 - overdue and risk semantics derived from declared rules
+- `achievementStatus` derived from `target_rule`
+- `riskStatus` derived from `threshold_rules` only when configured
 
 ## 7. Aggregation And Status Inclusion Matrix
 
@@ -148,6 +152,7 @@ Additional KPI semantics rule:
 - percentage and ratio KPI aggregation should prefer numerator/denominator roll-up where data allows
 - milestone KPI aggregation should not assume arithmetic averaging
 - boolean KPI aggregation should prefer pass/fail counts or completion rate
+- risk color or traffic-light classification should not be inferred without explicit threshold metadata
 
 ## 8. Data Quality Warnings
 

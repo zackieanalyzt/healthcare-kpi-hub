@@ -84,6 +84,11 @@ Candidate fields:
 - `target_direction`
 - `target_rule_label`
 
+Important concept split:
+
+- `target_rule` = primary condition for achievement or pass/fail
+- `threshold_rules` = optional condition set for risk, traffic-light, or alert display
+
 Candidate `target_operator` values:
 
 - `>=`
@@ -107,6 +112,34 @@ Examples:
 
 - `target_operator = milestone_at_least`
 - `target_milestone_level = 3`
+
+### Threshold examples
+
+#### Percentage KPI
+
+- `target_rule = percentage >= 70`
+- `threshold_rules`:
+  - green: `>= 70`
+  - yellow: `>= 50 and < 70`
+  - red: `< 50`
+
+#### Count KPI
+
+- `target_rule = actual_count >= 100`
+- `threshold_rules`:
+  - green: `>= 100`
+  - yellow: `>= 80 and < 100`
+  - red: `< 80`
+
+#### Milestone KPI
+
+- `target_rule = current_milestone_level >= 3`
+- `threshold_rules` are optional and may map milestone bands to red/yellow/green if explicitly configured
+
+#### Boolean KPI
+
+- `target_rule = completed = true`
+- `threshold_rules` are usually not needed
 
 ## 5. Numerator / Denominator Model
 
@@ -229,6 +262,8 @@ Different KPI types must aggregate differently.
 
 - prefer numerator/denominator roll-up when possible
 - do not average percentages blindly unless explicitly allowed
+- `achievementStatus` should derive from `target_rule`
+- `riskStatus` should derive from `threshold_rules` only when configured
 
 ### Count KPI
 

@@ -101,6 +101,7 @@ This phase is complete only when these design outputs exist:
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
+- [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
 
 ## 6. Scope Of This Design Phase
 
@@ -114,6 +115,7 @@ This phase must answer:
 - what API contract shape is likely needed
 - how KPI measurement semantics should drive chart choice, target logic, validation direction, and aggregation rules
 - which KPI metadata must be first-pass mandatory versus later
+- how `target_rule` and optional `threshold_rules` split achievement from risk display
 - how permission and scope constraints affect visibility and drill-down
 - how UX should improve role differentiation without implementation yet
 

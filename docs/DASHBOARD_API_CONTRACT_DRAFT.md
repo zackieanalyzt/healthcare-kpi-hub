@@ -85,8 +85,10 @@ For KPI summary items, future payloads may also need:
 - `preferredVisualization`
 - `computedValue`
 - `achievementStatus`
+- `riskStatus`
 - `numerator`
 - `denominator`
+- `thresholdRules`
 
 ## 5. Organization Summary Draft
 
@@ -129,6 +131,12 @@ The field names above are illustrative only.
 Important design rule:
 
 Response structure should expose enough semantic metadata so the client does not hardcode KPI-specific meaning by page or by KPI code.
+
+Status semantics should stay explicit:
+
+- `achievementStatus` = pass/fail/unknown based on `targetRule`
+- `riskStatus` = red/yellow/green or equivalent based on `thresholdRules` when configured
+- when `thresholdRules` are absent, `riskStatus` should remain explicit as `null`, `not_configured`, or similar, rather than derived implicitly
 
 ## 6. Department / Workgroup Summary Draft
 

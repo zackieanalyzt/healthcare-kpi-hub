@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `461fe11 docs: add MacBook Codex handoff`
+**Current checkpoint**: `a7ab43a docs: decide KPI measurement metadata baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
@@ -59,6 +59,7 @@ Current operational baseline:
 - [DASHBOARD_UX_FLOW.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_UX_FLOW.md)
 - [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
+- [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
@@ -111,6 +112,8 @@ Recommended next action:
 5. use the dashboard design docs as the current working set for personas, UX flow, read-model design, and API contract draft; keep all design metadata-driven and avoid hardcoding
 6. use the KPI measurement model requirement as a prerequisite for dashboard calculation, target-rule design, visualization choice, and future import design
 7. use the KPI measurement decision baseline to keep first-pass implementation scope conservative and metadata-driven, with no hardcoded KPI-specific logic
+8. keep `target_rule` separate from optional `threshold_rules`, so achievement and risk display do not collapse into one implicit rule
+9. use [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md) before opening schema, API, or UI implementation planning
 
 ## 7. Copy/Paste Starter Text For Next Chat
 

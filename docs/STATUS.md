@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `461fe11 docs: add MacBook Codex handoff`
+**Checkpoint**: `a7ab43a docs: decide KPI measurement metadata baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
@@ -46,6 +46,7 @@
 - current design docs include [DASHBOARD_DESIGN_PHASE_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_DESIGN_PHASE_PLAN.md), [DASHBOARD_UX_FLOW.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_UX_FLOW.md), [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md), and [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - KPI semantics design is additionally captured in [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - first-pass KPI metadata baseline is captured in [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
+- dashboard implementation planning gate is captured in [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
 
 Current controlled pilot package status:
 
@@ -65,6 +66,7 @@ Dashboard requirement note:
 - dashboard implementation is deferred until controlled pilot rehearsal results and feedback triage are recorded
 - owner-led rehearsal feedback adds a future requirement for an organization-first dashboard landing page with hierarchical drill-down
 - future dashboard design should support organization -> department/workgroup -> unit/team -> individual drill-down with KPI summary, status, progress, and annotation visibility
+- threshold rule baseline now distinguishes `achievementStatus` from `riskStatus`, and keeps `threshold_rules` optional rather than mandatory for every KPI
 
 Hospital role-model requirement note:
 

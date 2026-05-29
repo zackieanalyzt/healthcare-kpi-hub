@@ -83,7 +83,7 @@ Reason for the first-pass baseline:
 | `default_denominator_value` | should-have | useful when denominator is template-defined |
 | `calculation_formula_label` | should-have | improves explainability |
 | `preferred_chart_type` | should-have | can guide first-pass UI without hardcoding |
-| `threshold_rules` | should-have | useful for risk and traffic-light interpretation |
+| `threshold_rules` | should-have / optional first-pass | useful for risk and traffic-light interpretation, but not mandatory for every KPI |
 | `milestone_levels` | must-have for milestone | milestone KPI cannot work without ordered level metadata |
 | `target_min_value` | later | needed when range targets are introduced |
 | `target_max_value` | later | needed when range targets are introduced |
@@ -181,7 +181,68 @@ First-pass design direction:
 - issue annotation may live with KPI entry or KPI value context
 - future issue-tracking abstraction may evolve later if needed
 
-## 8. Aggregation Rule Baseline By KPI Type
+## 8. Threshold Rules Baseline
+
+### 8.1 Decision
+
+`threshold_rules` should be first-pass optional or should-have metadata, not mandatory for every KPI.
+
+Reason:
+
+- some KPI definitions only need one target rule for pass/fail
+- some KPI definitions need richer traffic-light or alert display
+- milestone KPI should not be forced into numeric threshold semantics
+- first-pass dashboard should support threshold-based risk display without forcing every KPI template to define it
+- future import should support `threshold_rules` as an optional field
+
+### 8.2 Concept split
+
+- `target_rule` = primary success or pass/fail condition
+- `threshold_rules` = optional secondary classification for risk, traffic-light, or alert display
+
+### 8.3 Status semantics
+
+- `achievementStatus` should be derived from `target_rule`
+- `riskStatus` should be derived from `threshold_rules` when available
+- if `threshold_rules` are not configured, `riskStatus` should remain `null`, `not_configured`, or another explicit non-derived state
+
+Important rule:
+
+Do not infer red/yellow/green semantics from KPI type alone when explicit threshold rules do not exist.
+
+### 8.4 Examples
+
+#### Percentage KPI
+
+- `target_rule`: `percentage >= 70`
+- `threshold_rules`:
+  - green: `>= 70`
+  - yellow: `>= 50 and < 70`
+  - red: `< 50`
+
+#### Count KPI
+
+- `target_rule`: `actual_count >= 100`
+- `threshold_rules`:
+  - green: `>= 100`
+  - yellow: `>= 80 and < 100`
+  - red: `< 80`
+
+#### Milestone KPI
+
+- `target_rule`: `current_milestone_level >= 3`
+- `threshold_rules`: optional
+- possible visualization mapping:
+  - milestone `1-2` = red
+  - milestone `3` = yellow
+  - milestone `4-5` = green
+
+#### Boolean KPI
+
+- `target_rule`: `completed = true`
+- `threshold_rules`: usually not needed
+
+## 9. Aggregation Rule Baseline By KPI Type
 
 | Measurement type | Aggregation rule candidate |
 |---|---|
@@ -198,7 +259,7 @@ Important rule:
 
 `Do not blindly average KPI percentages or milestone levels.`
 
-## 9. Dashboard Read Model Implication
+## 10. Dashboard Read Model Implication
 
 Future dashboard read model should expose semantic fields such as:
 
@@ -208,15 +269,17 @@ Future dashboard read model should expose semantic fields such as:
 - `targetAnnotation`
 - `computedValue`
 - `achievementStatus`
+- `riskStatus`
 - `numerator`
 - `denominator`
 - `aggregationMethod`
+- `thresholdRules`
 - `dataQualityWarnings`
 - `lineageMeta`
 
 These fields are conceptual read-model outputs, not implementation commitments yet.
 
-## 10. Import / Template Implication
+## 11. Import / Template Implication
 
 Future KPI template import should support the first-pass metadata baseline.
 
@@ -241,17 +304,18 @@ Should-have import metadata:
 - `default_denominator_value`
 - `preferred_chart_type`
 - `calculation_formula_label`
+- `threshold_rules`
 
-## 11. Remaining Open Questions
+## 12. Remaining Open Questions
 
 - should denominator override be allowed per period, and if yes under which authority?
 - should percentage KPI expose both raw numerator and computed percentage at the API level by default?
 - should boolean KPI support tri-state conditions later, such as yes/no/not-applicable?
 - should milestone levels be stored as numeric order with separate label list, or as structured objects only?
 - when `ratio` is added, should it be treated separately from `percentage` in first-pass API shape or share the same semantic envelope?
-- should threshold rules be first-pass mandatory for traffic-light display, or can they remain optional in initial rollout?
+- should `threshold_rules` remain generic metadata, or should they later adopt a stricter typed structure?
 
-## 12. Explicit Non-Goals
+## 13. Explicit Non-Goals
 
 This decision document does not:
 
