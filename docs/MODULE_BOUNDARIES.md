@@ -126,6 +126,7 @@
 - public service contracts:
   - getEntry()
   - listEntriesForPage()
+  - validateUpdatePolicy()
   - updateEntry()
 - persistence ownership:
   - `kpi_entries`, `entry_values`
@@ -213,11 +214,13 @@
 ## 3. Dependency Rules
 
 - import module must not call auth internals directly
+- import module must not bypass `kpi_entries` workflow rules when changing KPI entry state in future phases
 - audit module must not mutate business state
 - worklist must not own KPI mutation logic
 - frontend route state must not bypass backend authorization
 - controllers must call services, not repositories directly for business mutations
 - admin module may orchestrate, but not re-implement owned child logic
+- `kpi_entries` service is the mutation authority for `entry_values`; no sibling module may write `entry_values` directly
 
 ---
 
@@ -264,6 +267,7 @@ cross-cutting concern ต้องไม่กลายเป็นทางล�
 
 - audit records for business mutation should be persisted within the same transaction when practical
 - if same-transaction audit is impossible for a flow, mutation must not report success until audit persistence status is known
+- optimistic concurrency checks for KPI mutation occur before value persistence and before audit emission
 
 ---
 

@@ -203,3 +203,55 @@
 - Consequences:
   - current release remains implementation-light and read-only
   - future ownership expansion should evolve toward a typed owner reference model through a dedicated architecture phase rather than ad hoc column growth
+
+## ADR-016: Use a Conservative KPI Entry Mutation Workflow with Optimistic Concurrency
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - KPI update is the first feature that will mutate operational business state in the new application
+  - uncontrolled mutation behavior would risk audit drift, reporting-period inconsistency, and workflow ambiguity
+  - current authorization is permission-based and node-scoped authorization is explicitly deferred
+- Decision:
+  - implement KPI entry mutation through `PATCH /api/kpi-entries/:entryId` only after a conservative workflow design is frozen
+  - require `kpi.update` for mutation; seeded roles with this permission are `admin`, `manager`, and `editor`
+  - do not require assignee equality in the first implementation; assignment-aware restrictions are deferred until a future authorization phase
+  - allow mutation only when the reporting period is `open`, the entry status is not `locked`, and the related page and definition remain active for operational use
+  - use `updated_at` optimistic concurrency comparison in the request body and return `409 CONFLICT_STALE_WRITE` on stale writes
+  - limit the first implementation scope to `actual_value`, `progress_value`, `note`, and explicit workflow status transitions
+  - defer mutation of `assigned_to`, `due_at`, `target_value`, and `extra_json` until later policy review
+  - require imports to mutate operational KPI state only through the same `kpi_entries` service boundary or a future dedicated orchestration path that enforces identical workflow and audit rules
+- Consequences:
+  - the first KPI mutation release will be intentionally narrower than the full future domain surface
+  - service-layer validation becomes the single authority for status transitions, editability checks, optimistic concurrency, and audit emission
+  - import and manual entry updates remain semantically aligned instead of drifting into separate mutation paths
+
+## ADR-017: Emit Field-Level KPI Mutation Audit Events from the Service Layer
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - KPI entry mutation needs traceable audit semantics beyond a generic `kpi_entry.updated` record
+  - future investigation, reconciliation, and compliance work will depend on clearly distinguishing value changes from workflow transitions
+- Decision:
+  - define a KPI mutation audit taxonomy with explicit semantic actions:
+    - `kpi_entry.value_updated`
+    - `kpi_entry.status_changed`
+    - `kpi_entry.assignment_changed`
+    - `kpi_entry.due_date_changed`
+    - `kpi_entry.submitted`
+    - `kpi_entry.returned`
+    - `kpi_entry.locked`
+  - require audit payloads for mutation events to include:
+    - `entry_id`
+    - `definition_id`
+    - `reporting_period_id`
+    - `page_id`
+    - actor identity
+    - old value summary
+    - new value summary
+    - changed field list
+  - keep audit emission in the same service transaction as the business mutation whenever practical
+- Consequences:
+  - implementation will have a stable audit taxonomy before the first mutation endpoint is written
+  - full audit history can grow later without changing the semantic contract of core KPI mutation events

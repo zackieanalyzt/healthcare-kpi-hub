@@ -287,6 +287,9 @@ future evolution note:
 constraints:
 
 - unique `(kpi_definition_id, reporting_period_id)`
+- mutation workflow uses `updated_at` as the optimistic concurrency token
+- ordinary operational mutation is allowed only while the related reporting period is `open`
+- `locked` entries reject ordinary update attempts in the service layer
 
 ### 5.13 `entry_values`
 
@@ -300,6 +303,13 @@ constraints:
 | `note` | `TEXT` | yes | |
 | `extra_json` | `TEXT` | yes | controlled JSON |
 | `updated_at` | `TEXT` | no | UTC |
+
+governance notes:
+
+- `entry_values` is operational data owned by the `kpi_entries` service
+- the first mutation implementation updates only `actual_value`, `progress_value`, and `note`
+- `target_value` and `extra_json` remain deferred from the first mutation release
+- absence of an `entry_values` row is valid before the first operational update
 
 ### 5.14 `import_jobs`
 
@@ -430,6 +440,7 @@ rules:
 - JSON content must be validated by application layer
 - JSON fields must not replace primary relational design
 - `payload_json` must exclude secrets and sensitive credentials
+- `entry_values.extra_json` must not be used to bypass deferred structured mutation policy
 
 ---
 

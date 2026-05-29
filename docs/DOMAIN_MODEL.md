@@ -84,6 +84,12 @@ business invariants:
 - username ต้องไม่ซ้ำ
 - inactive local user ใช้งานระบบไม่ได้แม้ credential ต้นทางถูกต้อง
 
+additional frozen transition rules:
+
+- `pending -> locked` is allowed
+- `draft -> locked` is allowed
+- `locked` has no ordinary outbound transition
+
 audit relevance:
 
 - create user
@@ -243,6 +249,11 @@ business invariants:
 
 validation responsibility:
 
+mutation note:
+
+- `entry_values` must not be mutated directly outside the `kpi_entries` service boundary
+- future imports should reuse the same service-layer validation and audit semantics as manual KPI updates
+
 - admin input validation ใน API layer
 - semantic guardrails ใน service layer
 
@@ -328,6 +339,41 @@ ownership:
 - operationally owned by assigned staff
 - governance owned by system and managers
 
+actor matrix for first mutation implementation:
+
+- `admin`: may update any KPI entry because the role includes `kpi.update`
+- `manager`: may update any KPI entry because the role includes `kpi.update`
+- `editor`: may update any KPI entry because the role includes `kpi.update`
+- `viewer`: may not update KPI entries
+
+actor policy notes:
+
+- current mutation authorization is permission-based, not node-scoped
+- assignment to the current user does not gate update permission in the first mutation release
+- managers may update entries assigned to other users in the current phase
+- future hierarchy-aware or assignee-only restrictions are deferred
+
+first mutation implementation scope:
+
+- allowed mutable fields:
+  - `status`
+  - `actual_value`
+  - `progress_value`
+  - `note`
+- deferred mutable fields:
+  - `assigned_to`
+  - `due_at`
+  - `target_value`
+  - `extra_json`
+
+mutation invariants:
+
+- mutation requires optimistic concurrency comparison against current `updated_at`
+- stale client state must be rejected before any business mutation is persisted
+- value updates must still satisfy `KPIDefinition` preset and value-type rules
+- locked entries must reject all ordinary mutation attempts
+- inactive page or inactive definition blocks operational mutation even if historical reads are still allowed
+
 business invariants:
 
 - หนึ่ง definition ต่อหนึ่ง period มีได้หนึ่ง entry
@@ -336,6 +382,8 @@ business invariants:
 - KPIEntry is the period-scoped execution record and is the primary target for imports, worklist state, and operational audit
 
 status transitions:
+
+frozen transition table for the first mutation release:
 
 - `draft -> pending`
 - `pending -> submitted`
@@ -350,6 +398,7 @@ audit relevance:
 - change status
 - reassign ownership
 - lock/unlock
+- value update, submit, return, and lock must be distinguishable semantic audit events
 
 ### 4.11 EntryValue
 
@@ -447,6 +496,16 @@ flow หลักของระบบ:
 5. user แก้ไข KPIEntry และ EntryValue ตามสิทธิ์
 6. manager หรือระบบเปลี่ยน status/lock ตามงวด
 7. dashboard อ่านข้อมูลสรุปจาก KPIEntry ที่มีอยู่
+
+planned mutation execution sequence:
+
+1. client reads KPI entry detail and stores current `updated_at`
+2. client submits a conservative patch request with allowed fields only
+3. service validates permission, period openness, active page/definition, and entry lock state
+4. service validates optimistic concurrency before any write
+5. service updates `kpi_entries` and `entry_values` in one transaction
+6. service emits semantic audit events in the same mutation flow
+7. client refreshes the read model from persisted state
 
 admin flow:
 

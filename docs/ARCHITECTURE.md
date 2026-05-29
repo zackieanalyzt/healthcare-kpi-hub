@@ -108,6 +108,12 @@ Frontend -> Backend API -> Auth Service -> MariaDB verification -> SQLite user p
 
 Frontend -> API route -> session auth -> RBAC check -> KPI service -> SQLite mutation -> audit emission -> Response
 
+Mutation guardrails for the first KPI update phase:
+
+- backend compares client-supplied `updated_at` with persisted entry state before mutation
+- service layer owns workflow validation, status transitions, and value-rule enforcement
+- imports must not bypass the same KPI entry mutation rules
+
 ### Import Flow
 
 Frontend upload -> Import route -> file validation -> parse -> validation -> preview -> commit -> KPI mutation service -> audit emission -> response

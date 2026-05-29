@@ -761,20 +761,44 @@ Behavior:
 - Permission: `kpi.update`
 - Status codes: `200`, `400`, `401`, `403`, `404`, `409`
 
+Design status:
+
+- this contract section is frozen for implementation design
+- the endpoint is not implemented yet in the current milestone
+- first implementation scope must remain conservative
+
+Actor policy:
+
+- roles with `kpi.update`: `admin`, `manager`, `editor`
+- role without `kpi.update`: `viewer`
+- assignment to the current user does not gate update permission in the first mutation release
+- managers may update entries assigned to other users in the current release
+- node-scoped authorization remains deferred
+
+Field scope for first implementation:
+
+- allowed:
+  - `updated_at`
+  - `status`
+  - `value.actual_value`
+  - `value.progress_value`
+  - `value.note`
+- deferred:
+  - `assigned_to`
+  - `due_at`
+  - `value.target_value`
+  - `value.extra_json`
+
 Request body:
 
 ```json
 {
   "updated_at": "2026-05-20T08:00:00Z",
   "status": "submitted",
-  "assigned_to": "jane.doe",
-  "due_at": "2026-05-31T17:00:00Z",
   "value": {
-    "target_value": "95",
     "actual_value": "92",
     "progress_value": 0.9684,
-    "note": "Updated after district verification",
-    "extra_json": null
+    "note": "Updated after district verification"
   }
 }
 ```
@@ -782,21 +806,127 @@ Request body:
 Validation:
 
 - `updated_at`: required, ISO timestamp
-- `status`: optional, one of `draft,pending,submitted`
-- `assigned_to`: optional, string, max length `100`
-- `due_at`: optional, ISO timestamp or `null`
-- `target_value`: optional, string, max length `100`
+- `status`: optional, one of `draft,pending,submitted,locked`
 - `actual_value`: optional, string, max length `100`
 - `progress_value`: optional, number, 0..1
 - `note`: optional, string, max length `2000`
-- `extra_json`: optional, object or `null`
+
+Required request rules:
+
+- request must include at least one mutable field in addition to `updated_at`
+- unknown top-level fields must be rejected
+- unknown `value` subfields must be rejected
+- `progress_value` may be `null` only if the selected preset allows clearing
+- `note` may be empty string but must still respect maximum length
+
+State transition policy:
+
+| From | To | Allowed in first release | Notes |
+|---|---|---|---|
+| `draft` | `pending` | yes | ordinary progression |
+| `pending` | `submitted` | yes | ordinary submission |
+| `submitted` | `pending` | yes | return for correction |
+| `draft` | `locked` | yes | manager/admin governance action |
+| `pending` | `locked` | yes | manager/admin governance action |
+| `submitted` | `locked` | yes | manager/admin governance action |
+| `locked` | any | no | unlock deferred |
+
+Workflow role notes:
+
+- submit is not a separate permission in the first release; it remains part of `kpi.update`
+- return from `submitted` to `pending` is allowed for authorized users with `kpi.update`
+- lock is allowed for authorized users with `kpi.update` in the first implementation to avoid introducing a second mutation permission prematurely
+- future separation of editor submit vs manager lock remains possible without changing the optimistic concurrency contract
 
 Business validation:
 
 - entry must belong to an open reporting period
 - entry must not be locked
 - current user must satisfy role/permission policy
+- related page must be active for operational use
+- related definition must be active for operational use
 - payload must satisfy preset/value type rules
+
+Conflict policy:
+
+- client must send the last observed `updated_at`
+- backend compares submitted `updated_at` with the current entry `updated_at`
+- mismatch returns `409 CONFLICT_STALE_WRITE`
+- stale write rejection must occur before any state mutation or audit persistence
+
+Success response example:
+
+```json
+{
+  "success": true,
+  "data": {
+    "entry": {
+      "id": "ent_01",
+      "status": "submitted",
+      "assigned_to": "jane.doe",
+      "due_at": "2026-05-31T17:00:00Z",
+      "updated_at": "2026-05-21T10:15:00Z",
+      "updated_by": "editor.user",
+      "editable": true
+    },
+    "definition": {
+      "id": "kpd_01",
+      "code": "KPI-001",
+      "name": "Vaccination Coverage",
+      "unit": "%",
+      "value_type": "percentage",
+      "preset_code": "percentage",
+      "owner_label": "District Epidemiology Team"
+    },
+    "value": {
+      "target_value": "95",
+      "actual_value": "92",
+      "progress_value": 0.9684,
+      "note": "Updated after district verification",
+      "extra_json": null
+    },
+    "reporting_period": {
+      "id": "rpt_01",
+      "period_key": "2026-05",
+      "period_type": "monthly",
+      "status": "open",
+      "starts_at": "2026-05-01T00:00:00Z",
+      "ends_at": "2026-05-31T23:59:59Z"
+    },
+    "page": {
+      "id": "pag_01",
+      "code": "PREVENTION",
+      "name": "Prevention Metrics"
+    },
+    "history": [
+      {
+        "audit_event_id": "aud_02",
+        "action": "kpi_entry.submitted",
+        "actor_username": "editor.user",
+        "occurred_at": "2026-05-21T10:15:00Z",
+        "summary": "Submitted KPI entry after value update."
+      }
+    ]
+  },
+  "meta": {
+    "request_id": "req_01JX...",
+    "timestamp": "2026-05-28T09:00:00Z"
+  }
+}
+```
+
+Validation and workflow error examples:
+
+- `400 VALIDATION_FAILED`
+- `401 AUTH_UNAUTHENTICATED`
+- `403 AUTH_FORBIDDEN`
+- `404 NOT_FOUND_KPI_ENTRY`
+- `404 NOT_FOUND_KPI_ENTRY_CONTEXT`
+- `409 CONFLICT_STALE_WRITE`
+- `409 CONFLICT_ENTRY_LOCKED`
+- `409 CONFLICT_REPORTING_PERIOD_CLOSED`
+- `409 CONFLICT_INVALID_STATUS_TRANSITION`
+- `409 CONFLICT_VALUE_RULE_VIOLATION`
 
 Conflict response example:
 
@@ -819,6 +949,21 @@ Conflict response example:
   }
 }
 ```
+
+Audit expectations for the future implementation:
+
+- pure value changes emit `kpi_entry.value_updated`
+- status changes emit `kpi_entry.status_changed`
+- submit emits `kpi_entry.submitted`
+- return emits `kpi_entry.returned`
+- lock emits `kpi_entry.locked`
+- deferred fields, when supported later, should emit `kpi_entry.assignment_changed` and `kpi_entry.due_date_changed`
+- payloads must include `entry_id`, `definition_id`, `reporting_period_id`, `page_id`, actor identity, changed fields, old summary, and new summary
+
+Import interaction note:
+
+- future imports must not bypass the KPI entry service boundary
+- import-driven entry changes must obey the same workflow, concurrency, and audit semantics unless a future ADR explicitly introduces a separate import override policy
 
 ---
 
