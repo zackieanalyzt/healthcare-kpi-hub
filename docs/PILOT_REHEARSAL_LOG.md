@@ -6,7 +6,7 @@
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date prepared**: `2026-05-29`
-**Rehearsal status**: `Ready for owner-led controlled rehearsal preparation`
+**Rehearsal status**: `Ready for owner-led controlled rehearsal execution`
 **Rehearsal package committed as**: `461fe11 docs: add MacBook Codex handoff`
 
 Preparation note:
@@ -164,20 +164,20 @@ Use one row per executed scenario. Valid results:
 
 | Scenario ID | Scenario | Tester label | Role | Expected result summary | Actual result summary | Result | Evidence path / screenshot | Defect ID | Severity | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| R-01 | Login / logout | | | Login works, logout revokes access | | | | | | |
-| R-02 | Viewer read-only behavior | | | Viewer can read but cannot mutate | | | | | | |
-| R-03 | Editor KPI update flow | | | Editor can update approved fields and see audit history | | | | | | |
-| R-04 | Manager KPI update flow | | | Manager currently behaves like editor for conservative mutation | | | | | | |
-| R-05 | Admin KPI update flow | | | Admin can mutate only within the same conservative scope | | | | | | |
-| R-06 | KPI page navigation and hierarchy context | | | KPI page context is understandable | | | | | | |
-| R-07 | KPI entry detail review | | | Entry detail and history are understandable | | | | | | |
-| R-08 | Edit actual value / progress / note | | | Approved fields save correctly | | | | | | |
-| R-09 | Status transition review | | | Allowed status transitions are clear and save correctly | | | | | | |
-| R-10 | Stale-write two-session scenario | | | Second stale writer is blocked without overwrite | | | | | | |
-| R-11 | Locked entry rejection | | | Locked entry mutation is rejected clearly | | | | | | |
-| R-12 | Invalid value rejection | | | Invalid value is rejected with understandable feedback | | | | | | |
-| R-13 | Audit history review | | | Actor, time, and changed fields are understandable | | | | | | |
-| R-14 | Thai / English message review | | | English and Thai-ready wording are understandable | | | | | | |
+| R-01 | Login / logout | T-01 | editor | Login works, logout revokes access | Login succeeded in browser, logout returned to `/login`, and post-logout `/api/me` returned `401` | pass | `pilot-evidence/2026-05-29/R-01-T-01-editor-login-logout` | | | owner-led browser check via `127.0.0.1:4173/login` plus local API confirmation |
+| R-02 | Viewer read-only behavior | T-01 | viewer | Viewer can read but cannot mutate | Viewer read KPI page and entry successfully; mutation attempt was rejected with `AUTH_FORBIDDEN` | pass | `pilot-evidence/2026-05-29/R-02-T-01-viewer-read-only` | | | current viewer scope is safe in this pass |
+| R-03 | Editor KPI update flow | T-01 | editor | Editor can update approved fields and see audit history | Editor updated approved value fields and audit history recorded `kpi_entry.value_updated` summary | pass | `pilot-evidence/2026-05-29/R-03-T-01-editor-update-flow` | | | owner-led live API mutation check |
+| R-04 | Manager KPI update flow | T-01 | manager | Manager currently behaves like editor for conservative mutation | Manager updated conservative fields successfully and history reflected the manager mutation flow | pass | `pilot-evidence/2026-05-29/R-04-T-01-manager-update-flow` | | | current pilot expectation still matches shared `kpi.update` scope |
+| R-05 | Admin KPI update flow | T-01 | admin | Admin can mutate only within the same conservative scope | Admin updated conservative fields successfully; no extra mutation scope was required for the rehearsal flow | pass | `pilot-evidence/2026-05-29/R-05-T-01-admin-update-flow` | | | current conservative admin baseline remains within scope |
+| R-06 | KPI page navigation and hierarchy context | T-01 | viewer | KPI page context is understandable | Navigation returned workgroups and the Digital Health page showed department context with one child node | pass | `pilot-evidence/2026-05-29/R-06-T-01-viewer-navigation-context` | | | hierarchy context was understandable in this pass |
+| R-07 | KPI entry detail review | T-01 | viewer | Entry detail and history are understandable | KPI definition, reporting period, workflow status, and recent audit history were all present and readable | pass | `pilot-evidence/2026-05-29/R-07-T-01-viewer-entry-detail` | | | latest history remained readable after owner-led updates |
+| R-08 | Edit actual value / progress / note | T-01 | editor | Approved fields save correctly | `actual_value`, `progress_value`, and `note` saved successfully on a live editable entry | pass | `pilot-evidence/2026-05-29/R-08-T-01-editor-approved-fields` | | | disallowed fields were not needed for the rehearsal flow |
+| R-09 | Status transition review | T-01 | editor | Allowed status transitions are clear and save correctly | Entry status changed from `draft` to `pending` and audit history reflected the workflow state change | pass | `pilot-evidence/2026-05-29/R-09-T-01-editor-status-transition` | | | current transition path behaved as expected |
+| R-10 | Stale-write two-session scenario | T-01 | editor | Second stale writer is blocked without overwrite | First session saved successfully; second session was rejected with `CONFLICT_STALE_WRITE` and message `The KPI entry was updated by another user.` | pass | `pilot-evidence/2026-05-29/R-10-T-01-editor-stale-write` | | | no overwrite was observed |
+| R-11 | Locked entry rejection | T-01 | editor | Locked entry mutation is rejected clearly | Locked entry mutation was rejected with `CONFLICT_ENTRY_LOCKED` and clear lock message | pass | `pilot-evidence/2026-05-29/R-11-T-01-editor-locked-entry` | | | lock control remained safe in this pass |
+| R-12 | Invalid value rejection | T-01 | editor | Invalid value is rejected with understandable feedback | Invalid `progress_value` was rejected with `VALIDATION_FAILED` and no invalid save occurred | pass | `pilot-evidence/2026-05-29/R-12-T-01-editor-invalid-value` | | | current validation message is generic but understandable |
+| R-13 | Audit history review | T-01 | editor | Actor, time, and changed fields are understandable | Latest audit entry showed actor `editor.user`, timestamp, changed fields, and readable summary | pass | `pilot-evidence/2026-05-29/R-13-T-01-editor-audit-history` | | | audit readability is acceptable for this internal dry run |
+| R-14 | Thai / English message review | T-01 | editor | English and Thai-ready wording are understandable | Observed English messages were understandable in the browser and live API errors were operationally clear; Thai-ready review remains acceptable for future wiring | pass | `pilot-evidence/2026-05-29/R-14-T-01-editor-message-review` | | | observed messages included login failure, stale-write, locked-entry, and validation responses |
 
 ## 8. Rehearsal Script
 
@@ -534,12 +534,12 @@ Complete before the first live tester session:
 | tester list confirmed | ready | `T-01` project owner / facilitator confirmed for internal dry run |
 | tester role assigned | ready | `T-01` covers `viewer`, `editor`, `manager`, and `admin` |
 | browser and device confirmed | ready | MacBook desktop browser baseline for owner-led rehearsal |
-| rehearsal date and time confirmed | not ready | waiting for tester scheduling |
+| rehearsal date and time confirmed | ready | `2026-05-29`, start `20:31`, expected duration `90 minutes`, timezone `Asia/Bangkok (+07)` |
 | facilitator confirmed | ready | project owner / facilitator |
 | evidence capture owner confirmed | ready | project owner initial evidence capture |
 | defect ID convention confirmed | ready | `PILOT-001`, `PILOT-002`, `PILOT-003` |
 | triage owner confirmed | ready | project owner |
-| seed and test user credentials distributed securely | not ready | credentials are handled out-of-band and are not stored in repository documents |
+| seed and test user credentials distributed securely | ready | credentials are handled out-of-band and are not stored in repository documents |
 | scope reminder delivered | ready | owner-led dry-run scope is documented and broad rollout is explicitly excluded |
 
 ## 12. Rehearsal Execution Summary
@@ -548,21 +548,21 @@ Populate after the rehearsal session:
 
 | Field | Value |
 |---|---|
-| rehearsal date | |
-| facilitator | |
-| rehearsal log owner | |
-| evidence owner | |
-| defect log owner | |
-| total scenarios run | |
-| pass count | |
-| fail count | |
-| blocked count | |
-| defects opened | |
-| S1 count | |
-| S2 count | |
-| S3 count | |
-| S4 count | |
-| recommended outcome | |
+| rehearsal date | `2026-05-29` |
+| facilitator | `T-01 project owner / facilitator` |
+| rehearsal log owner | `T-01 project owner / facilitator` |
+| evidence owner | `T-01 project owner / facilitator` |
+| defect log owner | `T-01 project owner / facilitator` |
+| total scenarios run | `14` |
+| pass count | `14` |
+| fail count | `0` |
+| blocked count | `0` |
+| defects opened | `0` |
+| S1 count | `0` |
+| S2 count | `0` |
+| S3 count | `0` |
+| S4 count | `0` |
+| recommended outcome | `proceed to limited internal pilot` |
 
 ## 13. Go / No-Go Summary
 

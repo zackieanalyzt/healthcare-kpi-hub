@@ -8,7 +8,7 @@
 
 ## 1. Current Readiness Status
 
-- `Ready for owner-led controlled rehearsal preparation`
+- `Ready for owner-led controlled rehearsal execution`
 - not ready for broad rollout
 - feedback must come before feature expansion
 - dashboard visualization requirement is captured as a gated future capability
@@ -17,6 +17,9 @@
 - current tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
 - this rehearsal validates workflow readiness before inviting additional operational testers
 - this is not external operational user pilot feedback
+- rehearsal date is `2026-05-29` with start `20:31` in `Asia/Bangkok (+07)` and expected duration `90 minutes`
+- seed/test credentials are handled securely out-of-band and are not stored in repository documents
+- owner-led dry run results: `14 pass / 0 fail / 0 blocked / 0 defects`
 
 If checkpoint alignment, evidence capture, ownership fields, and tester scheduling are confirmed, this package can move to:
 
@@ -94,12 +97,9 @@ Deferred requirement to remember:
 
 Recommended next action:
 
-1. use the MacBook environment at checkpoint `461fe11` with verification complete
-2. brief the project owner as `T-01` for the owner-led controlled rehearsal / internal dry run
-3. execute scenarios R-01 through R-14 in [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
-4. log defects with [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
-5. triage results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
-6. treat dashboard or role-model feedback during rehearsal as future design input unless it exposes a real safety defect in the current pilot
+1. triage the recorded owner-led rehearsal results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+2. keep the scope fixed until triage confirms whether any wording, audit, or UX refinements are needed
+3. treat dashboard or role-model feedback during triage as future design input unless it exposes a real safety defect in the current pilot
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
@@ -108,7 +108,7 @@ We are continuing healthcare-kpi-hub from checkpoint 461fe11 docs: add MacBook C
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
-Current status: Ready for owner-led controlled rehearsal preparation, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. The current rehearsal is an owner-led controlled rehearsal / internal dry run using T-01 as project owner / facilitator across viewer, editor, manager, and admin. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
+Current status: Ready for owner-led controlled rehearsal execution, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. The current rehearsal is an owner-led controlled rehearsal / internal dry run using T-01 as project owner / facilitator across viewer, editor, manager, and admin. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
 
 Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 

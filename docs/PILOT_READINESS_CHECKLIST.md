@@ -5,7 +5,7 @@
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
-**Status**: `Ready for owner-led controlled rehearsal preparation`
+**Status**: `Ready for owner-led controlled rehearsal execution`
 
 ## 1. Purpose
 
@@ -266,12 +266,12 @@ Complete this checklist before rehearsal execution:
 | tester list confirmed | ready | `T-01` is the project owner and facilitator for the internal dry run |
 | tester role assigned | ready | `T-01` covers `viewer`, `editor`, `manager`, and `admin` |
 | browser and device confirmed | ready | MacBook desktop browser baseline for owner-led rehearsal |
-| rehearsal date and time confirmed | not ready | scheduling not fixed yet |
+| rehearsal date and time confirmed | ready | `2026-05-29`, start `20:31`, expected duration `90 minutes`, timezone `Asia/Bangkok (+07)` |
 | facilitator confirmed | ready | project owner / facilitator |
 | evidence capture owner confirmed | ready | project owner captures initial owner-led evidence |
 | defect ID convention confirmed | ready | `PILOT-001`, `PILOT-002`, `PILOT-003` |
 | triage owner confirmed | ready | project owner |
-| seed and test user credentials distributed securely | not ready | credentials are handled out-of-band and are not stored in repository documents |
+| seed and test user credentials distributed securely | ready | credentials are handled out-of-band and are not stored in repository documents |
 | scope reminder delivered | ready | owner-led dry-run scope is documented and limited to the current conservative KPI workflow |
 
 ## 13. Go / No-Go Decision For Rehearsal Execution

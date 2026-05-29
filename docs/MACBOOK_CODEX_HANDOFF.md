@@ -49,7 +49,7 @@ Implemented baseline:
 
 Current status:
 
-- `Ready for owner-led controlled rehearsal preparation`
+- `Ready for owner-led controlled rehearsal execution`
 - not ready for broad rollout
 - dashboard visualization is captured as a gated future capability
 - hospital role and scope redesign is captured as a gated future capability
@@ -94,10 +94,10 @@ Important:
 
 ## 5. Remaining Rehearsal Logistics To Confirm
 
-These remain the only items still pending in the current readiness pass:
+These items are now confirmed for the current owner-led execution pass:
 
-- rehearsal date and time confirmed
-- seed or test credentials distributed securely
+- rehearsal date and time confirmed as `2026-05-29`, start `20:31`, expected duration `90 minutes`, timezone `Asia/Bangkok (+07)`
+- seed or test credentials distributed securely via out-of-band handling
 
 Already confirmed for the owner-led internal dry run:
 
@@ -169,11 +169,9 @@ If a fresh local DB is needed:
 
 The next sensible step is still:
 
-1. confirm the remaining rehearsal logistics
-2. brief the project owner as `T-01` with `docs/PILOT_TESTER_BRIEF.md`
-3. execute scenarios `R-01` through `R-14`
-4. record evidence and defects
-5. complete post-rehearsal triage before opening any new feature phase
+1. review the owner-led execution results recorded in `docs/PILOT_REHEARSAL_LOG.md`
+2. triage the pass in `docs/PILOT_FEEDBACK_TRIAGE.md`
+3. keep dashboard, import, assignment, due-date, and role-model work gated until triage is complete
 
 ## 10. Starter Prompt For Codex On MacBook
 
@@ -182,7 +180,7 @@ We are continuing healthcare-kpi-hub from checkpoint 461fe11 docs: add MacBook C
 
 The operational KPI workflow is already implemented through auth, navigation, worklist, KPI page detail, KPI entry detail, conservative KPI mutation, stale-write protection, and service-layer semantic audit.
 
-Current status: Ready for owner-led controlled rehearsal preparation. This pass is an owner-led controlled rehearsal / internal dry run with T-01 as the project owner / facilitator across viewer, editor, manager, and admin. Broad rollout is not approved. Dashboard visualization and hospital role-and-scope redesign are captured as gated future capabilities only.
+Current status: Ready for owner-led controlled rehearsal execution. This pass is an owner-led controlled rehearsal / internal dry run with T-01 as the project owner / facilitator across viewer, editor, manager, and admin. The owner-led dry run executed on 2026-05-29 with 14 pass / 0 fail / 0 blocked / 0 defects. Broad rollout is not approved. Dashboard visualization and hospital role-and-scope redesign are captured as gated future capabilities only.
 
 Please read docs/CURRENT_HANDOFF.md, docs/MACBOOK_CODEX_HANDOFF.md, docs/PILOT_READINESS_CHECKLIST.md, docs/PILOT_REHEARSAL_LOG.md, docs/PILOT_FEEDBACK_TRIAGE.md, docs/PILOT_DEFECT_TEMPLATE.md, and docs/PILOT_TESTER_BRIEF.md first.
 

@@ -44,13 +44,15 @@
 
 Current controlled pilot package status:
 
-- `Ready for owner-led controlled rehearsal preparation`
+- `Ready for owner-led controlled rehearsal execution`
 - rehearsal type is `owner-led controlled rehearsal / internal dry run`
 - tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
 - this rehearsal validates workflow readiness before inviting additional operational testers
 - this is not external operational user pilot feedback
 - move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after tester list, tester-role mapping, rehearsal date/time, and secure credential distribution are confirmed
-- current logistics check still shows pending rehearsal date/time confirmation and secure credential handling only
+- rehearsal date/time is confirmed for `2026-05-29 20:31 Asia/Bangkok (+07)` with expected duration `90 minutes`
+- seed/test credentials are handled securely out-of-band and are not stored in repository documents
+- owner-led internal dry run executed with `14 pass / 0 fail / 0 blocked / 0 defects`
 
 Dashboard requirement note:
 
