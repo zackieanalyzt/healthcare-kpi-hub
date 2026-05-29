@@ -58,17 +58,20 @@
 
 - responsibilities:
   - workgroup/section/page read model and admin-safe mutations exposed via admin orchestration
+  - KPI page hierarchy-aware read composition for current page, parent, and child node context
+  - preserve separation between browse navigation and ownership hierarchy semantics
 - allowed dependencies:
   - `shared`, `audit`
 - forbidden dependencies:
   - must not depend on `worklist`
+  - must not assume DAG or multi-parent hierarchy semantics in the current release
 - public service contracts:
   - getNavigationTree()
   - createWorkgroup()
   - createSection()
   - createPage()
 - persistence ownership:
-  - `workgroups`, `sections`, `kpi_pages`
+  - `workgroups`, `sections`, `kpi_pages`, `kpi_page_hierarchy`
 - audit emission ownership:
   - navigation change events
 - transaction ownership:

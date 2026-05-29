@@ -99,6 +99,13 @@
 - seed ownership: domain/application
 - validation responsibility: application and admin service layer
 
+### `kpi_page_hierarchy.hierarchy_level`
+
+- allowed values: `organization`, `department`, `unit`, `individual`
+- seed ownership: domain/application
+- validation responsibility: application layer and read-model composition review
+- governance note: intentionally simplified for the current release; additional levels require controlled migration
+
 ### `kpi_entries.status`
 
 - allowed values: `draft`, `pending`, `submitted`, `locked`
@@ -227,7 +234,30 @@ constraints:
 
 - unique `(kpi_page_id, code)`
 
-### 5.10 `reporting_periods`
+### 5.10 `kpi_page_hierarchy`
+
+| Column | Type | Null | Notes |
+|---|---|---|---|
+| `kpi_page_id` | `TEXT` | no | PK, FK to `kpi_pages.id` |
+| `parent_kpi_page_id` | `TEXT` | yes | FK to `kpi_pages.id` |
+| `hierarchy_level` | `TEXT` | no | governed enum |
+| `owner_label` | `TEXT` | yes | read-only ownership context |
+| `owner_user_id` | `TEXT` | yes | FK to `users.id` |
+| `sort_order` | `INTEGER` | no | sibling ordering |
+
+constraints:
+
+- one hierarchy record per `kpi_page`
+- hierarchy metadata is separate from navigation grouping
+- parent-child hierarchy is page-to-page, not section-to-section
+- current release assumes tree structure, not DAG or multi-parent ownership
+- ownership is modeled only through `owner_label` and optional `owner_user_id` in the current release
+
+future evolution note:
+
+- if ownership must reference roles, committees, teams, workgroups, departments, or other entity classes, evolve toward a typed owner reference model such as `owner_type` plus `owner_reference_id` through a dedicated schema migration
+
+### 5.11 `reporting_periods`
 
 | Column | Type | Null | Notes |
 |---|---|---|---|
@@ -240,7 +270,7 @@ constraints:
 | `created_at` | `TEXT` | no | UTC |
 | `updated_at` | `TEXT` | no | UTC |
 
-### 5.11 `kpi_entries`
+### 5.12 `kpi_entries`
 
 | Column | Type | Null | Notes |
 |---|---|---|---|
@@ -258,7 +288,7 @@ constraints:
 
 - unique `(kpi_definition_id, reporting_period_id)`
 
-### 5.12 `entry_values`
+### 5.13 `entry_values`
 
 | Column | Type | Null | Notes |
 |---|---|---|---|
@@ -271,7 +301,7 @@ constraints:
 | `extra_json` | `TEXT` | yes | controlled JSON |
 | `updated_at` | `TEXT` | no | UTC |
 
-### 5.13 `import_jobs`
+### 5.14 `import_jobs`
 
 | Column | Type | Null | Notes |
 |---|---|---|---|
@@ -282,7 +312,7 @@ constraints:
 | `created_at` | `TEXT` | no | UTC |
 | `summary_json` | `TEXT` | yes | controlled JSON |
 
-### 5.14 `audit_events`
+### 5.15 `audit_events`
 
 | Column | Type | Null | Notes |
 |---|---|---|---|
@@ -308,6 +338,9 @@ constraints:
 | `sections` | `workgroup_id` | `workgroups.id` | `CASCADE` | `RESTRICT` |
 | `kpi_pages` | `section_id` | `sections.id` | `CASCADE` | `RESTRICT` |
 | `kpi_definitions` | `kpi_page_id` | `kpi_pages.id` | `CASCADE` | `RESTRICT` |
+| `kpi_page_hierarchy` | `kpi_page_id` | `kpi_pages.id` | `CASCADE` | `CASCADE` |
+| `kpi_page_hierarchy` | `parent_kpi_page_id` | `kpi_pages.id` | `CASCADE` | `SET NULL` |
+| `kpi_page_hierarchy` | `owner_user_id` | `users.id` | `CASCADE` | `SET NULL` |
 | `kpi_entries` | `kpi_definition_id` | `kpi_definitions.id` | `CASCADE` | `RESTRICT` |
 | `kpi_entries` | `reporting_period_id` | `reporting_periods.id` | `CASCADE` | `RESTRICT` |
 | `kpi_entries` | `assigned_to_user_id` | `users.id` | `CASCADE` | `SET NULL` |
@@ -332,12 +365,14 @@ guidance:
 - unique index on `sections(workgroup_id, code)`
 - unique index on `kpi_pages(section_id, code)`
 - unique index on `kpi_definitions(kpi_page_id, code)`
+- unique index on `kpi_page_hierarchy.kpi_page_id`
 - unique index on `reporting_periods.period_key`
 - unique index on `kpi_entries(kpi_definition_id, reporting_period_id)`
 - unique index on `entry_values.kpi_entry_id`
 - index on `sessions.user_id`
 - index on `sections.workgroup_id`
 - index on `kpi_pages.section_id`
+- index on `kpi_page_hierarchy(parent_kpi_page_id, sort_order)`
 - index on `kpi_definitions.kpi_page_id`
 - index on `kpi_entries.reporting_period_id`
 - index on `kpi_entries.assigned_to_user_id`

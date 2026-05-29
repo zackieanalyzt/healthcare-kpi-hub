@@ -471,13 +471,83 @@ Response:
       "description": "Monthly prevention KPIs",
       "section": {
         "id": "sec_01",
+        "code": "DC",
         "name": "Disease Control"
       },
       "workgroup": {
         "id": "wrk_01",
+        "code": "PH",
         "name": "Public Health"
       }
-    }
+    },
+    "hierarchy": {
+      "current_node": {
+        "page_id": "pag_01",
+        "code": "PREVENTION",
+        "name": "Prevention Metrics",
+        "hierarchy_level": "unit",
+        "owner_label": "Disease Control Unit",
+        "owner_user": null
+      },
+      "parent_node": {
+        "page_id": "pag_parent",
+        "code": "PROMOTION",
+        "name": "Promotion Metrics",
+        "hierarchy_level": "department",
+        "owner_label": "Health Promotion Division",
+        "owner_user": null
+      },
+      "child_nodes": [
+        {
+          "page_id": "pag_child",
+          "code": "ANALYST",
+          "name": "KPI Analyst Page",
+          "hierarchy_level": "individual",
+          "owner_label": "Senior KPI Analyst",
+          "owner_user": {
+            "id": "usr_02",
+            "username": "editor.user",
+            "full_name": "Editor User"
+          }
+        }
+      ]
+    },
+    "current_period": {
+      "id": "rpt_01",
+      "period_key": "2026-05",
+      "status": "open",
+      "starts_at": "2026-05-01T00:00:00Z",
+      "ends_at": "2026-05-31T23:59:59Z"
+    },
+    "assigned_kpis": [
+      {
+        "definition": {
+          "id": "kpd_01",
+          "code": "KPI-001",
+          "name": "Vaccination Coverage",
+          "unit": "%",
+          "value_type": "percentage",
+          "preset_code": "percentage",
+          "owner_label": "District Epidemiology Team"
+        },
+        "assignment": {
+          "entry_id": "ent_01",
+          "status": "pending",
+          "assigned_to": "jane.doe",
+          "due_at": "2026-05-31T17:00:00Z",
+          "updated_at": "2026-05-20T08:00:00Z",
+          "updated_by": "john.manager",
+          "editable": true
+        },
+        "value": {
+          "target_value": "95",
+          "actual_value": "91",
+          "progress_value": 0.9579,
+          "note": "Awaiting final district confirmation",
+          "extra_json": null
+        }
+      }
+    ]
   },
   "meta": {
     "request_id": "req_01JX...",
@@ -485,6 +555,30 @@ Response:
   }
 }
 ```
+
+Behavior:
+
+- returns a hierarchy-aware read model for the requested KPI page
+- navigation grouping and ownership hierarchy are not assumed to be the same concern
+- `current_node`, `parent_node`, and `child_nodes` describe ownership hierarchy context
+- hierarchy is intentionally tree-structured in the current release; `parent_node` is singular and may be `null`
+- `assigned_kpis` contains KPI assignments attached to the current node for the current open reporting period
+- when no open reporting period exists, `current_period` may be `null` and `assigned_kpis` still reflects configured KPI definitions with no current assignment row
+- when the page exists but has no KPI assignments, `assigned_kpis` is an empty array
+- `definition` inside `assigned_kpis` represents template semantics; `assignment` and `value` represent the current period operational projection for this node
+- `owner_label` plus optional `owner_user` is the only ownership model exposed in the current release
+
+Hierarchy level allowed values:
+
+- `organization`
+- `department`
+- `unit`
+- `individual`
+
+Notes:
+
+- these hierarchy levels are intentionally simplified for the current release
+- additional levels such as `division`, `section`, `program`, or `committee` require controlled migration and contract revision before use
 
 ### 11.2 `GET /api/kpi-pages/:pageId/entries`
 

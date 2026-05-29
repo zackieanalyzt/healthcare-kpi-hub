@@ -125,3 +125,81 @@
   - create a stable baseline checkpoint before KPI page read-only expansion and any mutation workflow work
 - Consequences:
   - docs, changelog, verification commands, commit, and tag must be produced as part of the baseline freeze
+
+## ADR-011: Separate KPI Ownership Hierarchy from Navigation Grouping
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - KPI ownership is hierarchical from organization down to individual
+  - the existing navigation model is grouped by workgroup, section, and page for operational browsing
+  - overloading navigation sections alone to represent ownership hierarchy would create drift between UI grouping and domain ownership
+- Decision:
+  - keep `workgroups -> sections -> kpi_pages` as the navigation and browse structure
+  - treat a `kpi_page` as a hierarchy-aware node by attaching read-only hierarchy metadata through dedicated page hierarchy records
+  - use `GET /api/kpi-pages/:pageId` as the hierarchy-aware read model that returns current node, parent node, child nodes, and KPI assignments
+- Consequences:
+  - KPI page detail can be hierarchy-aware without coupling the entire navigation tree to ownership semantics
+  - future hierarchy mutations can be designed independently from read-only page composition
+  - seed data and frontend detail screens must display hierarchy context explicitly
+
+## ADR-012: Treat KPIDefinition as a KPI Template, Not a Period-Specific Master Record
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - KPI meaning must remain stable across reporting periods unless a controlled versioning change is introduced
+  - worklist, imports, and dashboards need repeatable KPI semantics that can spawn period-specific operational entries
+  - a period-specific master record model would blur the boundary between KPI design and KPI execution
+- Decision:
+  - treat `KPIDefinition` as a template-level record that defines stable KPI semantics for future operational use
+  - treat `KPIEntry` as the period-specific operational instance of one `KPIDefinition`
+  - keep imports and dashboards anchored to `KPIEntry` and `EntryValue`, while preserving semantic lineage back to `KPIDefinition`
+- Consequences:
+  - future reporting periods can create or reference entries from stable templates without redefining KPI meaning each cycle
+  - dashboard aggregation can group operational results by template lineage while respecting period-specific values
+  - KPI versioning must clone or revise templates through controlled semantics rather than mutating historical meaning in place
+  - audit trails should distinguish template governance events from operational entry/value events
+
+## ADR-013: KPI Ownership Hierarchy Is Intentionally Tree-Structured
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - current read-only hierarchy implementation links one `kpi_page` to at most one parent page
+  - healthcare ownership can become cross-functional, but multi-parent support would change validation, navigation, imports, dashboards, and authorization semantics significantly
+- Decision:
+  - current KPI ownership hierarchy intentionally assumes a tree structure
+  - each hierarchy node may have zero or one parent, and zero-to-many children
+  - DAG and multi-parent ownership models are explicitly deferred to a future architecture phase
+- Consequences:
+  - current schema and API remain simpler and deterministic for read-only expansion
+  - future cross-functional ownership requires an ADR, schema evolution, and contract revision before implementation
+
+## ADR-014: Simplify Hierarchy Levels for the Current Release
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - the first hierarchy-aware release needs a small, understandable ownership vocabulary
+  - legacy organizations may contain additional concepts such as division, section, program, or committee
+- Decision:
+  - constrain hierarchy levels to `organization`, `department`, `unit`, and `individual` for the current release
+  - treat these levels as intentionally simplified, not exhaustive
+- Consequences:
+  - current read models and seeds stay comprehensible and repeatable
+  - if additional levels become necessary, they must be introduced through controlled migration, enum governance updates, and API contract revision
+
+## ADR-015: Keep Ownership Modeling Simple with `owner_label` and Optional `owner_user_id`
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - current read-only hierarchy needs to display ownership context without introducing a new polymorphic ownership subsystem
+  - future ownership may include role, committee, team, workgroup, department, or other non-user entities
+- Decision:
+  - keep the current implementation limited to `owner_label` plus optional `owner_user_id`
+  - do not introduce `owner_type` or `owner_reference` yet
+- Consequences:
+  - current release remains implementation-light and read-only
+  - future ownership expansion should evolve toward a typed owner reference model through a dedicated architecture phase rather than ad hoc column growth

@@ -1,6 +1,7 @@
 import type {
   ApiResponse,
   AuthenticatedUser,
+  KpiPageDetail,
   NavigationWorkgroup,
   WorklistItem
 } from "@healthcare-kpi-hub/shared-types";
@@ -58,4 +59,8 @@ export async function fetchNavigation() {
 
 export async function fetchWorklist() {
   return requestJson<{ items: WorklistItem[] }>("/api/worklist");
+}
+
+export async function fetchKpiPage(pageId: string) {
+  return requestJson<KpiPageDetail>(`/api/kpi-pages/${encodeURIComponent(pageId)}`);
 }

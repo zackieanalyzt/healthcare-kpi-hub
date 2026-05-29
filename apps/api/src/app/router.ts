@@ -11,11 +11,17 @@ import {
   logoutSession
 } from "../modules/auth/service";
 import { recordAuditEvent } from "../modules/audit/service";
-import { getNavigationTree } from "../modules/navigation/service";
+import { getKpiPageDetail, getNavigationTree } from "../modules/navigation/service";
 import { getWorklist } from "../modules/worklist/service";
 import { requireAuthenticated, requirePermission } from "./middleware/rbac";
 
-type RouteHandler = (request: Request, context: AppContext) => Promise<Response> | Response;
+type RouteParams = Record<string, string>;
+
+type RouteHandler = (
+  request: Request,
+  context: AppContext,
+  params: RouteParams
+) => Promise<Response> | Response;
 
 interface RouteDefinition {
   method: string;
@@ -23,6 +29,11 @@ interface RouteDefinition {
   auth: "public" | "authenticated";
   permission?: PermissionCode;
   handler: RouteHandler;
+}
+
+interface MatchedRoute {
+  definition: RouteDefinition;
+  params: RouteParams;
 }
 
 function parseJsonBody<T>(request: Request): Promise<T> {
@@ -51,6 +62,38 @@ function attachCookies(response: Response, cookies: string[]): Response {
     statusText: response.statusText,
     headers
   });
+}
+
+function matchPath(pattern: string, pathname: string): RouteParams | null {
+  const patternParts = pattern.split("/").filter(Boolean);
+  const pathParts = pathname.split("/").filter(Boolean);
+
+  if (patternParts.length !== pathParts.length) {
+    return null;
+  }
+
+  const params: RouteParams = {};
+
+  for (let index = 0; index < patternParts.length; index += 1) {
+    const patternPart = patternParts[index];
+    const pathPart = pathParts[index];
+
+    if (patternPart.startsWith(":")) {
+      const paramName = patternPart.slice(1);
+      if (!paramName || !pathPart) {
+        return null;
+      }
+
+      params[paramName] = decodeURIComponent(pathPart);
+      continue;
+    }
+
+    if (patternPart !== pathPart) {
+      return null;
+    }
+  }
+
+  return params;
 }
 
 function handleHealth(context: AppContext): Response {
@@ -310,6 +353,28 @@ function handleWorklist(request: Request, context: AppContext): Response {
   );
 }
 
+function handleKpiPageDetail(
+  context: AppContext,
+  params: RouteParams
+): Response {
+  const authFailure = requirePermission(context, PERMISSIONS.KPI_READ);
+  if (authFailure) {
+    return authFailure;
+  }
+
+  const pageId = params.pageId?.trim() ?? "";
+  if (!pageId) {
+    throw new AppError("VALIDATION_FAILED", "Request validation failed.", 400, [
+      { field: "pageId", issue: "required" }
+    ]);
+  }
+
+  return jsonSuccess(
+    getKpiPageDetail(context.db, pageId, context.user?.username ?? null),
+    context.requestId
+  );
+}
+
 export function createRouter(): RouteDefinition[] {
   return [
     {
@@ -362,8 +427,33 @@ export function createRouter(): RouteDefinition[] {
       auth: "authenticated",
       permission: PERMISSIONS.WORKLIST_READ,
       handler: (request, context) => handleWorklist(request, context)
+    },
+    {
+      method: "GET",
+      pathname: "/api/kpi-pages/:pageId",
+      auth: "authenticated",
+      permission: PERMISSIONS.KPI_READ,
+      handler: (_request, context, params) => handleKpiPageDetail(context, params)
     }
   ];
+}
+
+function findRoute(request: Request, pathname: string): MatchedRoute | null {
+  for (const route of createRouter()) {
+    if (route.method !== request.method) {
+      continue;
+    }
+
+    const params = matchPath(route.pathname, pathname);
+    if (params) {
+      return {
+        definition: route,
+        params
+      };
+    }
+  }
+
+  return null;
 }
 
 export async function dispatchRoute(
@@ -371,10 +461,7 @@ export async function dispatchRoute(
   pathname: string,
   context: AppContext
 ): Promise<Response> {
-  const routes = createRouter();
-  const match = routes.find(
-    (route) => route.method === request.method && route.pathname === pathname
-  );
+  const match = findRoute(request, pathname);
 
   if (!match) {
     return jsonFailure(
@@ -387,19 +474,19 @@ export async function dispatchRoute(
     );
   }
 
-  if (match.auth === "authenticated") {
+  if (match.definition.auth === "authenticated") {
     const authFailure = requireAuthenticated(context);
     if (authFailure) {
       return authFailure;
     }
   }
 
-  if (match.permission) {
-    const permissionFailure = requirePermission(context, match.permission);
+  if (match.definition.permission) {
+    const permissionFailure = requirePermission(context, match.definition.permission);
     if (permissionFailure) {
       return permissionFailure;
     }
   }
 
-  return match.handler(request, context);
+  return match.definition.handler(request, context, match.params);
 }

@@ -11,6 +11,12 @@ export type PermissionCode =
   | "admin.users"
   | "audit.read";
 
+export type HierarchyLevelCode =
+  | "organization"
+  | "department"
+  | "unit"
+  | "individual";
+
 export interface ApiMeta {
   request_id: string;
   timestamp: string;
@@ -91,4 +97,81 @@ export interface WorklistItem {
   due_at: string | null;
   updated_at: string;
   editable: boolean;
+}
+
+export interface KpiPageHierarchyNode {
+  page_id: string;
+  code: string;
+  name: string;
+  hierarchy_level: HierarchyLevelCode;
+  owner_label: string | null;
+  owner_user: {
+    id: string;
+    username: string;
+    full_name: string | null;
+  } | null;
+}
+
+export interface KpiPageSummary {
+  id: string;
+  code: string;
+  name: string;
+  description: string | null;
+  section: {
+    id: string;
+    code: string;
+    name: string;
+  };
+  workgroup: {
+    id: string;
+    code: string;
+    name: string;
+  };
+}
+
+export interface KpiPageCurrentPeriod {
+  id: string;
+  period_key: string;
+  status: string;
+  starts_at: string;
+  ends_at: string;
+}
+
+export interface KpiPageAssignedKpiItem {
+  definition: {
+    id: string;
+    code: string;
+    name: string;
+    unit: string | null;
+    value_type: string;
+    preset_code: string;
+    owner_label: string | null;
+  };
+  assignment: {
+    entry_id: string | null;
+    status: string | null;
+    assigned_to: string | null;
+    due_at: string | null;
+    updated_at: string | null;
+    updated_by: string | null;
+    editable: boolean;
+  };
+  value: {
+    target_value: string | null;
+    actual_value: string | null;
+    progress_value: number | null;
+    note: string | null;
+    extra_json: string | null;
+  };
+}
+
+export interface KpiPageDetail {
+  page: KpiPageSummary;
+  hierarchy: {
+    current_node: KpiPageHierarchyNode;
+    parent_node: KpiPageHierarchyNode | null;
+    child_nodes: KpiPageHierarchyNode[];
+  };
+  current_period: KpiPageCurrentPeriod | null;
+  assigned_kpis: KpiPageAssignedKpiItem[];
 }

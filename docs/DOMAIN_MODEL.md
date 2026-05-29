@@ -199,17 +199,22 @@ operational relationship:
 
 - ผู้ใช้เข้าถึง KPI operations ผ่าน page
 - page เป็นบริบทสำคัญของ worklist deep-link
+- page also represents a hierarchy-aware ownership node through separate hierarchy metadata
+- hierarchy context and navigation grouping are related but not the same concern
 
 invariants:
 
 - page ต้องอยู่ใต้ section เดียว
 - inactive page ไม่ควรรับ definition ใหม่หรือแสดงใน navigation ปกติ
+- page hierarchy may have one parent page and zero-to-many child pages
+- hierarchy levels are constrained to `organization`, `department`, `unit`, `individual`
 
 ### 4.8 KPIDefinition
 
 purpose:
 
 - นิยาม KPI แบบ template-driven ที่ระบุ code, name, unit, preset, และ rules พื้นฐาน
+- acts as the template-level semantic definition for future operational KPI entries
 
 ownership:
 
@@ -218,6 +223,10 @@ ownership:
 operational relationship:
 
 - definition เป็นต้นทางของ KPIEntry ในแต่ละ reporting period
+- definition is not itself the operational reporting record for a period
+- one definition may produce many period-specific entries over time
+- imports should target operational entries and values while preserving lineage back to the originating definition
+- dashboards should aggregate period results by operational entry data and may group by definition lineage
 
 lifecycle:
 
@@ -230,6 +239,7 @@ business invariants:
 - code ต้อง unique ภายใน page
 - preset_code ต้องอยู่ใน allowed preset catalog
 - ห้ามแก้ definition แบบทำลายความหมายของ historical entries โดยไม่มี controlled migration/versioning
+- a definition must preserve stable KPI meaning across periods until a controlled versioning event replaces it
 
 validation responsibility:
 
@@ -239,6 +249,7 @@ validation responsibility:
 audit relevance:
 
 - definition create/update/deactivate
+- definition version replacement is semantically distinct from ordinary entry updates and must be audited as governance change
 
 ### 4.9 ReportingPeriod
 
@@ -322,6 +333,7 @@ business invariants:
 - หนึ่ง definition ต่อหนึ่ง period มีได้หนึ่ง entry
 - status transition ต้องเป็นไปตาม workflow policy
 - due date และ assignment ต้องสอดคล้องกับการทำงานจริง ไม่ใช่ metadata ลอย
+- KPIEntry is the period-scoped execution record and is the primary target for imports, worklist state, and operational audit
 
 status transitions:
 

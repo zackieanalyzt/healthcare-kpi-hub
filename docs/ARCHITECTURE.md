@@ -21,9 +21,11 @@ This document now reflects the verified foundation baseline as of `2026-05-28`.
 - session persistence stores hashed tokens only
 - RBAC resolves from SQLite roles and permissions
 - `GET /api/me`, `GET /api/navigation`, and `GET /api/worklist` work end-to-end
+- `GET /api/kpi-pages/:pageId` is the hierarchy-aware KPI page read model
 - live MariaDB authentication is verified through config-driven mapping
 - the currently verified upstream mapping is `personnel.username/password/fname/lname`
 - the verified legacy auth settings are `MARIADB_ACTIVE_COLUMN=none` and `MARIADB_PASSWORD_HASH_MODE=md5`
+- KPI ownership hierarchy is modeled separately from navigation grouping
 
 This is the stable foundation checkpoint before KPI page read-only expansion and any new mutation workflow.
 
@@ -52,6 +54,7 @@ operational problem ที่ระบบแก้:
 - worklist-first UX
 - hybrid config with guardrails
 - relational-first persistence
+- hierarchy-aware KPI ownership read models
 - service-layer audit
 - deny-by-default security
 - SQLite operational simplicity
@@ -77,6 +80,7 @@ operational problem ที่ระบบแก้:
 
 - application source of truth
 - เก็บ users, sessions, navigation, KPI definitions, reporting periods, KPI entries, import jobs, audit events
+- stores KPI page hierarchy metadata separately from navigation grouping so ownership context is not flattened into sidebar structure
 
 ### MariaDB Auth Source
 
@@ -129,6 +133,8 @@ Frontend upload -> Import route -> file validation -> parse -> validation -> pre
 - reporting periods
 - KPI entries and values
 - editability rules
+- hierarchy-aware KPI page detail composition
+- clear separation between template governance and period-specific operational records
 
 ### Admin
 
@@ -159,6 +165,7 @@ Frontend upload -> Import route -> file validation -> parse -> validation -> pre
 - form input capture
 - CSRF token submission
 - permission-aware UI hiding or disabling
+- hierarchy context presentation for KPI page detail
 
 ### Backend Responsibilities
 
@@ -192,6 +199,7 @@ Frontend upload -> Import route -> file validation -> parse -> validation -> pre
 - app users and roles
 - sessions
 - navigation model
+- KPI page hierarchy metadata
 - KPI definitions
 - reporting periods
 - KPI entries and values
@@ -204,6 +212,8 @@ Frontend upload -> Import route -> file validation -> parse -> validation -> pre
 - plaintext session token storage
 - frontend-authored authoritative timestamps
 - free-form JSON replacing primary relational model
+- forcing ownership hierarchy to be inferred only from navigation sections
+- treating period-specific KPI execution records as if they were template definitions
 
 ---
 
@@ -286,6 +296,9 @@ intentionally deferred:
 - advanced workflow engine
 - fully dynamic schema builder
 - real-time collaboration
+- DAG or multi-parent KPI ownership hierarchy
+- polymorphic ownership references such as `owner_type` / `owner_reference`
+- expanded hierarchy vocabularies such as division, program, committee, or section-level ownership
 
 ---
 
