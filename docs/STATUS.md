@@ -1,6 +1,7 @@
 # Project Status
 
-**Checkpoint**: `9285764 docs: add pilot rehearsal log`
+**Checkpoint**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Previous baseline**: `9285764 docs: add pilot rehearsal log`
 **Date**: `2026-05-29`
 
 ## Verified
@@ -34,3 +35,8 @@
 - review [PILOT_READINESS_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_READINESS_CHECKLIST.md)
 - execute with [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
 - triage with [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+
+Current controlled pilot package status:
+
+- `Ready for controlled pilot rehearsal package review`
+- move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after checkpoint alignment, ownership fields, evidence capture convention, defect ID convention, and tester logistics are confirmed

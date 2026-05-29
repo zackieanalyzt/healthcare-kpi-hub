@@ -1,7 +1,8 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `based on 9285764 docs: add pilot rehearsal log`
+**Current checkpoint**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Previous baseline**: `9285764 docs: add pilot rehearsal log`
 **Date**: `2026-05-29`
 
 ## 1. Current Readiness Status
@@ -10,9 +11,9 @@
 - not ready for broad rollout
 - feedback must come before feature expansion
 
-If the team confirms facilitator readiness and tester logistics, this package can move to:
+If checkpoint alignment, evidence capture, ownership fields, and tester scheduling are confirmed, this package can move to:
 
-- `Ready for controlled pilot rehearsal execution`
+- `Ready for controlled pilot rehearsal execution pending tester scheduling`
 
 ## 2. Completed Capabilities
 
@@ -80,16 +81,17 @@ Deferred requirement to remember:
 
 Recommended next action:
 
-1. review the pilot package with the dev team
-2. brief testers using [PILOT_TESTER_BRIEF.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_TESTER_BRIEF.md)
-3. execute scenarios R-01 through R-14 in [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
-4. log defects with [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
-5. triage results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+1. align pilot logistics fields and conventions in the rehearsal docs
+2. confirm facilitator, rehearsal log owner, evidence owner, defect log owner, triage owner, and decision owner
+3. brief testers using [PILOT_TESTER_BRIEF.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_TESTER_BRIEF.md)
+4. execute scenarios R-01 through R-14 in [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
+5. log defects with [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
+6. triage results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 9285764 docs: add pilot rehearsal log.
+We are continuing healthcare-kpi-hub from checkpoint 82fc153 docs: harden controlled pilot rehearsal package.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 

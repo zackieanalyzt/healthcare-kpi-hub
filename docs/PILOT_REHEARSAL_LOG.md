@@ -1,11 +1,12 @@
 # Pilot Rehearsal Log
 
 **Purpose**: Controlled pilot rehearsal execution and structured feedback capture for the current conservative KPI workflow
-**Commit under test**: `9285764`
-**Commit message**: `docs: add pilot rehearsal log`
+**Commit under test**: `82fc153`
+**Commit message**: `docs: harden controlled pilot rehearsal package`
+**Previous baseline**: `9285764 docs: add pilot rehearsal log`
 **Date prepared**: `2026-05-29`
 **Rehearsal status**: `Ready for controlled pilot rehearsal package review`
-**Rehearsal package committed as**: `9285764 docs: add pilot rehearsal log`
+**Rehearsal package committed as**: `82fc153 docs: harden controlled pilot rehearsal package`
 
 Preparation note:
 
@@ -61,7 +62,7 @@ Not in scope for this rehearsal:
 | backend env for local rehearsal | `NODE_ENV=development`, `AUTH_PROVIDER=dev` |
 | recommended local API port | `3015` |
 | data store | local SQLite app database |
-| target commit baseline | `9285764` |
+| target commit baseline | `82fc153` |
 | rehearsal audience | internal pilot testers only |
 
 Notes:
@@ -70,7 +71,55 @@ Notes:
 - do not treat dev auth as a production baseline
 - if a pristine state is required, recreate the ignored local SQLite database and rerun migrate and seed
 
-## 4. Participants
+## 4. Logistics Ownership
+
+Fill these fields before rehearsal execution:
+
+| Field | Value |
+|---|---|
+| Facilitator | TBD |
+| Rehearsal log owner | TBD |
+| Evidence owner | TBD |
+| Defect log owner | TBD |
+| Triage owner | TBD |
+| Decision owner | TBD |
+
+## 5. Evidence And Defect Conventions
+
+Defect ID format:
+
+- `PILOT-001`, `PILOT-002`, `PILOT-003`, and so on
+- use a three-digit running number
+- do not reuse a previous defect ID
+- open one defect record per distinct defect
+- log suggestions and future feature requests as feedback or `S4 observation` unless they affect workflow safety or pilot comprehension
+
+Examples:
+
+- `PILOT-001: R-10 stale-write message is unclear for editor user`
+- `PILOT-002: R-13 audit history wording is misleading`
+
+Suggested evidence location:
+
+- `docs/pilot-evidence/YYYY-MM-DD/`
+
+Screenshot naming convention:
+
+- `R-<scenario>-<tester-label>-<role>-<short-topic>.png`
+
+Examples:
+
+- `docs/pilot-evidence/2026-05-29/R-10-T-02-editor-stale-write.png`
+- `docs/pilot-evidence/2026-05-29/R-13-T-03-manager-audit-history.png`
+
+Evidence handling note:
+
+- evidence files may be stored outside git if they contain sensitive or operational data
+- if evidence is stored outside git, record only the evidence path or reference in this rehearsal log
+- do not capture passwords, session tokens, real patient data, or unnecessary personal information
+- redact or mask sensitive information before sharing screenshots
+
+## 6. Participants
 
 Populate before rehearsal. Avoid sensitive personal details.
 
@@ -90,7 +139,7 @@ Seeded roles available for local rehearsal:
 | `manager` | `manager.user` | same current `kpi.update` baseline as editor |
 | `admin` | `admin.user` | conservative mutation allowed |
 
-## 5. Scenario Execution Summary Table
+## 7. Scenario Execution Summary Table
 
 Use one row per executed scenario. Valid results:
 
@@ -116,7 +165,7 @@ Use one row per executed scenario. Valid results:
 | R-13 | Audit history review | | | Actor, time, and changed fields are understandable | | | | | | |
 | R-14 | Thai / English message review | | | English and Thai-ready wording are understandable | | | | | | |
 
-## 6. Rehearsal Script
+## 8. Rehearsal Script
 
 ### R-01 Login / Logout
 
@@ -439,7 +488,7 @@ Capture:
 - wording suggestions
 - defect ID only if the issue materially affects pilot understanding
 
-## 7. Feedback Capture Table
+## 9. Feedback Capture Table
 
 Use one row per meaningful tester comment.
 
@@ -447,7 +496,7 @@ Use one row per meaningful tester comment.
 |---|---|---|---|---|---|---|---|---|
 | | | | defect / suggestion / training note | | | | S1 / S2 / S3 / S4 | yes / no |
 
-## 8. Defect / Issue Table
+## 10. Defect / Issue Table
 
 Severity reference:
 
@@ -462,7 +511,24 @@ Open a formal record using [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-
 |---|---|---|---|---|---|---|---|---|
 | | S1 / S2 / S3 / S4 | | | | fix before pilot / fix after pilot / documentation only / not a defect / needs design decision | | open / triaged / resolved | |
 
-## 9. Rehearsal Execution Summary
+## 11. Tester Logistics Readiness
+
+Complete before the first live tester session:
+
+| Item | Status | Notes |
+|---|---|---|
+| tester list confirmed | ready / not ready / TBD | |
+| tester role assigned | ready / not ready / TBD | |
+| browser and device confirmed | ready / not ready / TBD | |
+| rehearsal date and time confirmed | ready / not ready / TBD | |
+| facilitator confirmed | ready / not ready / TBD | |
+| evidence capture owner confirmed | ready / not ready / TBD | |
+| defect ID convention confirmed | ready / not ready / TBD | |
+| triage owner confirmed | ready / not ready / TBD | |
+| seed and test user credentials distributed securely | ready / not ready / TBD | |
+| scope reminder delivered | ready / not ready / TBD | |
+
+## 12. Rehearsal Execution Summary
 
 Populate after the rehearsal session:
 
@@ -470,6 +536,9 @@ Populate after the rehearsal session:
 |---|---|
 | rehearsal date | |
 | facilitator | |
+| rehearsal log owner | |
+| evidence owner | |
+| defect log owner | |
 | total scenarios run | |
 | pass count | |
 | fail count | |
@@ -481,7 +550,7 @@ Populate after the rehearsal session:
 | S4 count | |
 | recommended outcome | |
 
-## 10. Go / No-Go Summary
+## 13. Go / No-Go Summary
 
 Use this section for the immediate rehearsal outcome:
 
@@ -504,7 +573,7 @@ Current preparation recommendation:
   - move to execution only after facilitator readiness and tester logistics are confirmed
   - send results to [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 
-## 11. Local Baseline Notes
+## 14. Local Baseline Notes
 
 Known preparation baseline before external tester execution:
 
@@ -512,7 +581,7 @@ Known preparation baseline before external tester execution:
 - browser-based real tester walkthrough remains pending
 - no external operational tester feedback has been recorded yet
 
-## 12. Windows SQLite Observation
+## 15. Windows SQLite Observation
 
 Observation status:
 

@@ -1,7 +1,8 @@
 # Pilot Readiness Checklist
 
-**Checkpoint commit**: `9285764`
-**Checkpoint message**: `docs: add pilot rehearsal log`
+**Checkpoint commit**: `82fc153`
+**Checkpoint message**: `docs: harden controlled pilot rehearsal package`
+**Previous baseline**: `9285764 docs: add pilot rehearsal log`
 **Date**: `2026-05-29`
 **Status**: `Ready for controlled pilot rehearsal package review`
 
@@ -165,11 +166,39 @@ Every executed scenario should capture at least:
 - screenshot path or evidence reference when available
 - linked defect ID if a defect was opened
 
+Suggested evidence location:
+
+- `docs/pilot-evidence/YYYY-MM-DD/`
+
+Screenshot naming convention:
+
+- `R-<scenario>-<tester-label>-<role>-<short-topic>.png`
+
+Examples:
+
+- `docs/pilot-evidence/2026-05-29/R-10-T-02-editor-stale-write.png`
+- `docs/pilot-evidence/2026-05-29/R-13-T-03-manager-audit-history.png`
+
+Evidence handling note:
+
+- evidence files may be stored outside git if they contain sensitive or operational data
+- if evidence is stored outside git, record only the evidence path or reference in the rehearsal log
+- do not capture passwords, session tokens, real patient data, or unnecessary personal information
+- redact or mask sensitive information before sharing screenshots
+
 Preferred capture locations:
 
 - scenario rows in [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
 - formal defect entries using [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
 - triage summary in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+
+Defect ID convention:
+
+- `PILOT-001`, `PILOT-002`, `PILOT-003`, and so on
+- use a three-digit running number
+- do not reuse an old defect ID
+- open one defect record per distinct defect
+- record future feature requests as `S4 observation` or feedback items instead of defects unless pilot safety or comprehension is affected
 
 ## 10. Automated Baseline Verification
 
@@ -206,7 +235,24 @@ Mitigations:
 - recreate local SQLite state if a pristine rehearsal baseline is needed
 - keep the scope fixed to the current conservative KPI workflow
 
-## 12. Go / No-Go Decision For Rehearsal Execution
+## 12. Tester Logistics Readiness
+
+Complete this checklist before rehearsal execution:
+
+| Item | Status | Notes |
+|---|---|---|
+| tester list confirmed | ready / not ready / TBD | |
+| tester role assigned | ready / not ready / TBD | |
+| browser and device confirmed | ready / not ready / TBD | |
+| rehearsal date and time confirmed | ready / not ready / TBD | |
+| facilitator confirmed | ready / not ready / TBD | |
+| evidence capture owner confirmed | ready / not ready / TBD | |
+| defect ID convention confirmed | ready / not ready / TBD | |
+| triage owner confirmed | ready / not ready / TBD | |
+| seed and test user credentials distributed securely | ready / not ready / TBD | |
+| scope reminder delivered | ready / not ready / TBD | |
+
+## 13. Go / No-Go Decision For Rehearsal Execution
 
 Use this decision table during package review:
 
@@ -227,7 +273,7 @@ Recommendation:
 - **Go for controlled pilot rehearsal package review**
 - move to rehearsal execution only after the team confirms facilitator readiness and tester logistics
 
-## 13. Recommended Next Step
+## 14. Recommended Next Step
 
 After this checklist passes:
 

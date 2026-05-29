@@ -1,7 +1,8 @@
 # Pilot Feedback Triage
 
 **Purpose**: Structured triage for controlled pilot rehearsal feedback and scope decisions
-**Baseline checkpoint**: `9285764 docs: add pilot rehearsal log`
+**Baseline checkpoint**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Previous baseline**: `9285764 docs: add pilot rehearsal log`
 **Current status**: `for post-rehearsal triage only`
 
 ## 1. Purpose
@@ -27,8 +28,10 @@ Complete after rehearsal:
 | Field | Value |
 |---|---|
 | rehearsal date | |
-| checkpoint under review | `9285764` or later reviewed checkpoint |
+| checkpoint under review | `82fc153` or later reviewed checkpoint |
 | facilitator | |
+| triage owner | |
+| decision owner | |
 | total testers | |
 | total scenarios planned | 14 |
 | total scenarios executed | |
@@ -50,13 +53,33 @@ Keep this lightweight and avoid detailed personal information.
 | T-03 | | manager | | |
 | T-04 | | admin | | |
 
-## 5. Defect Classification Table
+## 5. Ownership
+
+Fill these fields before triage starts:
+
+| Field | Value |
+|---|---|
+| Facilitator | TBD |
+| Triage owner | TBD |
+| Decision owner | TBD |
+| Evidence owner | TBD |
+| Defect log owner | TBD |
+
+## 6. Defect Classification Table
+
+Defect ID convention:
+
+- `PILOT-001`, `PILOT-002`, `PILOT-003`, and so on
+- use a three-digit running number
+- do not reuse a previous defect ID
+- open one defect record per distinct defect
+- future feature requests belong in feedback or `S4 observation` unless they affect workflow safety or pilot comprehension
 
 | Defect ID | Scenario | Severity | Summary | Suspected area | Triage decision | Owner | Status | Notes |
 |---|---|---|---|---|---|---|---|---|
 | | | S1 / S2 / S3 / S4 | | auth/session / RBAC / navigation / worklist / KPI page / KPI entry detail / mutation / stale-write/concurrency / audit history / Thai/English message / data seed / other | fix before pilot / fix after pilot / documentation only / not a defect / needs design decision | | open / triaged / resolved | |
 
-## 6. Feedback Classification Table
+## 7. Feedback Classification Table
 
 Use this for non-defect feedback, wording, training, and design observations.
 
@@ -64,7 +87,7 @@ Use this for non-defect feedback, wording, training, and design observations.
 |---|---|---|---|---|---|---|---|
 | | | wording / usability / training / audit readability / role expectation / future request | S1 / S2 / S3 / S4 | | refine wording / refine UX / add documentation / keep for future design phase / no action | | |
 
-## 7. Severity Rule
+## 8. Severity Rule
 
 | Severity | Meaning | Typical outcome |
 |---|---|---|
@@ -80,7 +103,7 @@ Examples:
 - `S3 minor`: wording issue, layout issue, small friction in data entry
 - `S4 observation`: user suggestion, future workflow request, note about training material
 
-## 8. Decision Options
+## 9. Decision Options
 
 Choose one primary decision after triage:
 
@@ -98,7 +121,7 @@ Record the decision:
 | pause feature expansion because S1/S2 issues exist | yes / no | |
 | open next design phase | yes / no | |
 
-## 9. Next-Phase Candidate List
+## 10. Next-Phase Candidate List
 
 Only consider a next design phase after triage is complete.
 
@@ -116,7 +139,7 @@ Deferred requirement reminder:
 - future import must support multiple formats including `.xlsx`, `.json`, `.csv`, and other appropriate validated formats
 - no import workflow may bypass validation, concurrency, or audit
 
-## 10. Scope Guard Rule
+## 11. Scope Guard Rule
 
 Until a triage decision is recorded here, do not start:
 
@@ -128,7 +151,7 @@ Until a triage decision is recorded here, do not start:
 
 This rule applies even if requests or observations arise during rehearsal.
 
-## 11. Recommended Action Summary
+## 12. Recommended Action Summary
 
 Use this section as the final triage output:
 

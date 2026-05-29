@@ -86,6 +86,23 @@ The facilitator may ask for:
 - what you expected
 - what actually happened
 
+Suggested evidence reference format:
+
+- evidence folder: `docs/pilot-evidence/YYYY-MM-DD/`
+- screenshot file: `R-<scenario>-<tester-label>-<role>-<short-topic>.png`
+
+Examples:
+
+- `docs/pilot-evidence/2026-05-29/R-10-T-02-editor-stale-write.png`
+- `docs/pilot-evidence/2026-05-29/R-13-T-03-manager-audit-history.png`
+
+Privacy note:
+
+- do not capture passwords or session tokens in screenshots
+- do not capture real patient data
+- share only the minimum personal or operational context needed for the review
+- redact sensitive information before sending evidence to the team
+
 ## 7. How To Separate Defect From Suggestion
 
 Treat it as a `defect` when:
@@ -102,6 +119,8 @@ Treat it as a `suggestion` when:
 - layout could be clearer
 - the workflow needs training or a tooltip
 - you want a future feature that is not part of this round
+
+Future requests such as import, dashboard, assignment, or due date workflows should be recorded as feedback or `S4 observation`, not opened as immediate development tasks in this rehearsal round.
 
 ## 8. Scope Reminder
 
