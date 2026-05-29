@@ -45,6 +45,10 @@ Dashboard values must preserve lineage back to `KPIDefinition`, `KPIEntry`, `Ent
 
 Dashboard and aggregation logic must not bypass workflow status, validation, permission, audit, or data quality rules.
 
+Related semantic design input:
+
+- [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
+
 ## 5. Organization-First Landing Requirement
 
 Owner-led rehearsal and product review confirmed an important future requirement:
@@ -140,6 +144,16 @@ This level should support:
 
 Chart selection must follow KPI semantics, not visual preference alone.
 
+Visualization choice must be driven by:
+
+- `measurement_type`
+- `target_direction`
+- `aggregation_method`
+- `reporting_period`
+- `hierarchy_level`
+
+Do not hardcode chart selection by page alone.
+
 | KPI characteristic | Suitable visualization |
 |---|---|
 | actual vs target | bullet chart, gauge, progress bar |
@@ -163,13 +177,24 @@ Pie and donut charts should be used carefully:
 
 In a future dashboard design phase, `KPIDefinition` may require dashboard-oriented metadata such as:
 
+- `measurement_type`
 - `preferred_chart_type`
 - `allowed_chart_types`
 - `aggregation_method`
+- `target_operator`
 - `target_direction`
+- `target_value`
+- `target_min_value`
+- `target_max_value`
 - `display_unit`
 - `decimal_places`
+- `numerator_label`
+- `denominator_label`
+- `denominator_source`
 - `threshold_rules`
+- `milestone_levels`
+- `target_annotation`
+- `calculation_formula_label`
 - `traffic_light_rules`
 - `dashboard_group`
 - `dashboard_order`
@@ -215,6 +240,10 @@ Dashboard outputs must remain explainable and auditable.
 
 Before any dashboard implementation begins, the team must decide:
 
+- how KPI measurement types are represented consistently
+- how target operators and target annotations are modeled
+- how percentage and ratio KPI roll-up should use numerator and denominator semantics
+- how milestone KPI roll-up should behave
 - which KPI statuses are eligible for dashboard inclusion
 - how `draft`, `pending`, `submitted`, and `locked` should be counted
 - how missing values should be handled
@@ -251,6 +280,7 @@ Expected future scope:
 
 - define dashboard personas
 - define KPI-to-chart mapping rules
+- define KPI measurement model and target-rule model
 - define dashboard metadata on KPI definitions
 - define aggregation rules
 - define status inclusion rules

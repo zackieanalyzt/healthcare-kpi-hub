@@ -26,6 +26,7 @@ Future dashboard API must be:
 - lineage-aware
 - hierarchy-aware
 - metadata-driven
+- KPI-semantics-aware
 
 It must not rely on hardcoded role-page routing or hardcoded hierarchy labels.
 
@@ -74,6 +75,15 @@ Common response concepts may include:
 - `dataQualityWarnings`
 - `lineageMeta`
 
+For KPI summary items, future payloads may also need:
+
+- `measurementType`
+- `measurementUnit`
+- `targetRule`
+- `targetAnnotation`
+- `aggregationMethod`
+- `preferredVisualization`
+
 ## 5. Organization Summary Draft
 
 Example concept:
@@ -112,6 +122,10 @@ Example concept:
 
 The field names above are illustrative only.
 
+Important design rule:
+
+Response structure should expose enough semantic metadata so the client does not hardcode KPI-specific meaning by page or by KPI code.
+
 ## 6. Department / Workgroup Summary Draft
 
 Expected concepts:
@@ -136,6 +150,7 @@ Expected concepts:
 - due context
 - actual vs target summary
 - progress summary
+- KPI measurement semantics where needed for rendering
 - links to KPI entry detail
 - audit availability indicator
 
@@ -177,6 +192,8 @@ The API contract should allow warnings such as:
 
 Warnings should be structured data, not only human-readable strings.
 
+Future API contract should also support explicit target and calculation explanation fields where the UI needs to explain KPI meaning to users.
+
 ## 11. Non-Goals
 
 This draft does not commit to:
@@ -195,6 +212,7 @@ This draft is sufficient when it:
 - proposes candidate endpoint families
 - proposes summary response concepts
 - explains drill-down linking strategy
+- makes room for KPI measurement semantics and target explanation
 - states permission and scope constraints
 - avoids hardcoded route logic and role assumptions
 - remains clearly separated from implementation work

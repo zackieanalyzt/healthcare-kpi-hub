@@ -27,6 +27,10 @@ Dashboard values should derive from the existing operational model:
 - hierarchy node or KPI page ownership context
 - audit history where relevant
 
+Related semantic design input:
+
+- [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
+
 ## 3. Read Model Responsibilities
 
 The dashboard read model should answer:
@@ -34,6 +38,8 @@ The dashboard read model should answer:
 - what KPI population belongs to the current scope
 - what reporting period is currently selected
 - what workflow statuses exist in that scope
+- what KPI measurement types exist in that scope
+- what target rules and threshold semantics apply
 - what achievement, risk, or overdue signals should be shown
 - what child hierarchy nodes are available for drill-down
 - what KPI items or entry links support investigation
@@ -112,6 +118,7 @@ Preferred design direction:
 - status inclusion rules declared explicitly
 - hierarchy traversal based on parent-child metadata
 - KPI display driven by metadata on KPI definition and scope
+- KPI calculation and visualization driven by KPI measurement semantics, not hardcoded route assumptions
 - overdue and risk semantics derived from declared rules
 
 ## 7. Aggregation And Status Inclusion Matrix
@@ -132,6 +139,12 @@ The following questions remain design decisions and should not be hardcoded prem
 | department roll-up rule | `aggregate from child scope under explicit rules` | no direct hardcoded summary |
 | unit roll-up rule | `aggregate from unit-owned KPI entries under explicit rules` | scope-aware |
 | individual roll-up rule | `derived from assigned KPI entries` | useful for workload and detail view |
+
+Additional KPI semantics rule:
+
+- percentage and ratio KPI aggregation should prefer numerator/denominator roll-up where data allows
+- milestone KPI aggregation should not assume arithmetic averaging
+- boolean KPI aggregation should prefer pass/fail counts or completion rate
 
 ## 8. Data Quality Warnings
 
@@ -163,6 +176,7 @@ This design is sufficient when it explains:
 - source entities
 - hierarchy-based read-model levels
 - lineage and traceability rules
+- relationship to KPI measurement semantics and target rules
 - conservative status inclusion defaults
 - open questions that still need approval
 - explicit avoidance of hardcoded behavior

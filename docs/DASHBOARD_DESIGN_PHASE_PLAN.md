@@ -33,6 +33,7 @@ Primary source documents:
 5. [CURRENT_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/CURRENT_HANDOFF.md)
 6. [STATUS.md](D:/home/github/healthcare-kpi-hub/docs/STATUS.md)
 7. [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
+8. [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 
 Key feedback captured from owner-led rehearsal and product review:
 
@@ -97,6 +98,7 @@ This phase is complete only when these design outputs exist:
 - [DASHBOARD_UX_FLOW.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_UX_FLOW.md)
 - [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
+- [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 
 ## 6. Scope Of This Design Phase
 
@@ -108,6 +110,7 @@ This phase must answer:
 - which statuses count for workload, risk, and achievement
 - what KPI-to-chart mapping rules should govern visualization choice
 - what API contract shape is likely needed
+- how KPI measurement semantics should drive chart choice, target logic, validation direction, and aggregation rules
 - how permission and scope constraints affect visibility and drill-down
 - how UX should improve role differentiation without implementation yet
 
@@ -130,6 +133,7 @@ The design phase is acceptable when the docs answer:
 
 - what dashboard content belongs at organization, department, unit, and individual levels
 - how dashboard data should derive from current entities
+- how KPI measurement semantics and target rules shape dashboard meaning
 - which aggregation and status-inclusion questions remain open
 - which chart types fit which KPI semantics
 - what the draft API contract should expose

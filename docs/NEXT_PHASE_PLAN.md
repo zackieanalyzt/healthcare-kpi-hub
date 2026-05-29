@@ -32,6 +32,7 @@ Future dashboard design should include this captured requirement:
 Reference documents for deferred design candidates:
 
 - [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
+- [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 
 ## Explicit Non-Goals
@@ -59,6 +60,7 @@ Dashboard Design Phase entry criteria:
 - explicit scope decision is recorded
 - no S1 or S2 blocker remains open
 - organization-first dashboard requirement is accepted as design input
+- KPI measurement model requirement is accepted as design input
 
 ## Exit Criteria
 
