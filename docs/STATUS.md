@@ -1,7 +1,8 @@
 # Project Status
 
-**Checkpoint**: `82fc153 docs: harden controlled pilot rehearsal package`
-**Previous baseline**: `9285764 docs: add pilot rehearsal log`
+**Checkpoint**: `9da19ff docs: align pilot rehearsal logistics`
+**Previous baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Earlier baseline**: `9285764 docs: add pilot rehearsal log`
 **Date**: `2026-05-29`
 
 ## Verified
@@ -23,6 +24,7 @@
 - KPI template import design and implementation
 - operational KPI value import design and implementation
 - dashboard or aggregation
+- dashboard visualization implementation
 - assignment editing
 - due date editing
 - advanced permission redesign
@@ -35,8 +37,14 @@
 - review [PILOT_READINESS_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_READINESS_CHECKLIST.md)
 - execute with [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
 - triage with [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+- capture future dashboard requirements in [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
 
 Current controlled pilot package status:
 
 - `Ready for controlled pilot rehearsal package review`
 - move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after checkpoint alignment, ownership fields, evidence capture convention, defect ID convention, and tester logistics are confirmed
+
+Dashboard requirement note:
+
+- `healthcare-kpi-hub` is both an operational KPI management system and a future KPI dashboard and visualization platform
+- dashboard implementation is deferred until controlled pilot rehearsal results and feedback triage are recorded

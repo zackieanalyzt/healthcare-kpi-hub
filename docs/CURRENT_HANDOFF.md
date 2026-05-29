@@ -1,8 +1,9 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `82fc153 docs: harden controlled pilot rehearsal package`
-**Previous baseline**: `9285764 docs: add pilot rehearsal log`
+**Current checkpoint**: `9da19ff docs: align pilot rehearsal logistics`
+**Previous baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Earlier baseline**: `9285764 docs: add pilot rehearsal log`
 **Date**: `2026-05-29`
 
 ## 1. Current Readiness Status
@@ -43,6 +44,7 @@ Current operational baseline:
 - [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 - [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
 - [PILOT_TESTER_BRIEF.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_TESTER_BRIEF.md)
+- [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
 
 ## 4. What Must Not Be Expanded Yet
 
@@ -68,6 +70,7 @@ Deferred requirement to remember:
 - Template Import affects `KPIDefinition`
 - Operational KPI Value Import affects `KPIEntry` and `EntryValue`
 - future import must not bypass workflow, validation, concurrency, or audit
+- future dashboard visualization is a core product capability, but implementation is gated until controlled pilot rehearsal results and feedback triage are recorded
 
 ## 5. Known Risks
 
@@ -96,6 +99,8 @@ We are continuing healthcare-kpi-hub from checkpoint 82fc153 docs: harden contro
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
 Current status: Ready for controlled pilot rehearsal package review, not broad rollout. Do not expand into import, dashboard, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
+
+Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 
 Please read docs/CURRENT_HANDOFF.md, docs/PILOT_READINESS_CHECKLIST.md, docs/PILOT_REHEARSAL_LOG.md, docs/PILOT_FEEDBACK_TRIAGE.md, docs/PILOT_DEFECT_TEMPLATE.md, and docs/PILOT_TESTER_BRIEF.md first, then help with controlled pilot rehearsal execution or pilot feedback triage.
 ```

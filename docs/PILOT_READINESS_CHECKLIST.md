@@ -62,6 +62,7 @@ Explicitly out of scope in this phase:
 - KPI template creation or import
 - operational KPI value import
 - dashboard or aggregation
+- dashboard visualization implementation
 - assignment editing
 - due date editing
 - target value editing
@@ -122,6 +123,11 @@ Every scenario below should be understandable to a tester or facilitator before 
 | R-12 | Invalid value rejection | yes | yes | yes | yes | yes |
 | R-13 | Audit history review | yes | yes | yes | yes | yes |
 | R-14 | Thai / English message review | yes | yes | yes | yes | yes |
+
+Dashboard note for current pilot scope:
+
+- if testers ask for dashboard views, charts, or visual summaries, record them as `S4 observation` or `future request`
+- do not treat missing dashboard screens as a defect in the current conservative pilot workflow
 
 ## 7. Scenario Expectations Summary
 

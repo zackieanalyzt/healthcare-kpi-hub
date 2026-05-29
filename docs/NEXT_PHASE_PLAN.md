@@ -1,36 +1,46 @@
 # Next Phase Plan
 
-**Starting Point**: `v0.2-foundation-live-auth-verified`
-**Date**: 2026-05-28
+**Starting Point**: `9da19ff docs: align pilot rehearsal logistics`
+**Date**: 2026-05-29
 
 ## Goal
 
-Begin KPI page read-only expansion from the frozen foundation baseline without introducing mutation workflow drift.
+Preserve the controlled pilot rehearsal gate and capture the next design candidates without starting implementation prematurely.
 
 ## Recommended Scope
 
-- implement `GET /api/kpi-pages/:pageId`
-- implement read-only KPI page detail composition from SQLite
-- preserve current auth, RBAC, session, CSRF, and logging contracts
-- add frontend KPI page read-only route and loading/error/empty states
-- extend seeds only as needed for deterministic KPI page read-only scenarios
+- complete controlled pilot rehearsal
+- complete pilot feedback triage
+- make an explicit scope decision before the next feature phase
+- keep future dashboard capability documented without implementing it yet
+
+Suggested future design candidates after triage:
+
+- Assignment and Due-Date Workflow Design
+- KPI Template Import Design
+- Operational KPI Value Import Design
+- Dashboard and KPI Visualization Design Phase
 
 ## Explicit Non-Goals
 
-- KPI value mutation
-- import commit
-- dashboard aggregation redesign
-- admin mutation UX
+- dashboard implementation
+- chart library integration
+- dashboard API implementation
+- dashboard migration or schema change
+- import workflow implementation
+- assignment or due-date workflow implementation
+- advanced permission redesign
 - async jobs or realtime
 
 ## Entry Criteria
 
+- controlled pilot rehearsal results are recorded
+- pilot feedback triage is recorded
+- scope decision is made explicitly
 - baseline verification remains green
-- no unresolved auth or session regressions
-- no ADR changes required for auth, RBAC, or persistence ownership
 
 ## Exit Criteria
 
-- KPI page read-only slice works end-to-end
-- tests cover auth boundary, empty state, and not-found behavior
-- docs are updated if route contracts or seed expectations change
+- next design phase is selected intentionally
+- dashboard remains gated until post-triage scope approval
+- docs are updated with the chosen next phase and rationale

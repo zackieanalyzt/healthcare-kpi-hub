@@ -87,6 +87,12 @@ Use this for non-defect feedback, wording, training, and design observations.
 |---|---|---|---|---|---|---|---|
 | | | wording / usability / training / audit readability / role expectation / future request | S1 / S2 / S3 / S4 | | refine wording / refine UX / add documentation / keep for future design phase / no action | | |
 
+Dashboard requests during current pilot scope:
+
+- record them as `S4 observation` or `future request`
+- do not convert them directly into dashboard implementation work during current pilot rehearsal
+- route them to [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md) and future scope decision review
+
 ## 8. Severity Rule
 
 | Severity | Meaning | Typical outcome |
@@ -131,6 +137,7 @@ Only consider a next design phase after triage is complete.
 | KPI Template Import Design | yes / no | |
 | Operational KPI Value Import Design | yes / no | |
 | Dashboard/Aggregation Design | yes / no | |
+| Dashboard and KPI Visualization Design Phase | yes / no | |
 
 Deferred requirement reminder:
 
@@ -138,6 +145,8 @@ Deferred requirement reminder:
 - Operational KPI Value Import affects `KPIEntry` and `EntryValue`
 - future import must support multiple formats including `.xlsx`, `.json`, `.csv`, and other appropriate validated formats
 - no import workflow may bypass validation, concurrency, or audit
+- future dashboard visualization requirement is captured in [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
+- dashboard implementation is deferred until controlled pilot rehearsal results and feedback triage are recorded
 
 ## 11. Scope Guard Rule
 

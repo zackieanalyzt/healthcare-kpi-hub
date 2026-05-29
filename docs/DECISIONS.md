@@ -255,3 +255,21 @@
 - Consequences:
   - implementation will have a stable audit taxonomy before the first mutation endpoint is written
   - full audit history can grow later without changing the semantic contract of core KPI mutation events
+
+## ADR-018: Treat Dashboard Visualization as a Core but Gated Product Capability
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - the product must serve both operational KPI entry workflow and KPI performance interpretation
+  - dashboard visualization is not optional presentation polish; it is a core future product capability
+  - uncontrolled dashboard implementation before pilot feedback would risk misaligned aggregation, status semantics, and misleading charts
+- Decision:
+  - treat `healthcare-kpi-hub` as both an operational KPI management system and a KPI dashboard and visualization platform
+  - defer dashboard implementation until controlled pilot rehearsal results and feedback triage are recorded
+  - require future dashboard and aggregation design to preserve lineage back to `KPIDefinition`, `KPIEntry`, `EntryValue`, `ReportingPeriod`, and organization hierarchy
+  - require dashboard aggregation logic to respect workflow status, validation, permission, audit, and data quality rules
+- Consequences:
+  - dashboard design becomes a first-class future phase rather than an ad hoc UI extension
+  - chart selection must follow KPI semantics and comparison needs, not generic visualization preference
+  - dashboard APIs, metadata, and read models must be designed explicitly after pilot scope decisions
