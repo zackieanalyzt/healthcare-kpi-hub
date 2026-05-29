@@ -55,6 +55,10 @@ Current operational baseline:
 - [PILOT_TESTER_BRIEF.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_TESTER_BRIEF.md)
 - [MACBOOK_CODEX_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/MACBOOK_CODEX_HANDOFF.md)
 - [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
+- [DASHBOARD_DESIGN_PHASE_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_DESIGN_PHASE_PLAN.md)
+- [DASHBOARD_UX_FLOW.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_UX_FLOW.md)
+- [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
+- [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 
 ## 4. What Must Not Be Expanded Yet
@@ -102,6 +106,7 @@ Recommended next action:
 2. open `Dashboard and KPI Visualization Design Phase` only
 3. keep scope guard active: no dashboard implementation, no chart library, no dashboard API, no aggregation service, and no landing page behavior change yet
 4. keep role-model feedback and dashboard landing feedback as design inputs unless a future run exposes a real workflow safety defect
+5. use the dashboard design docs as the current working set for personas, UX flow, read-model design, and API contract draft; keep all design metadata-driven and avoid hardcoding
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
