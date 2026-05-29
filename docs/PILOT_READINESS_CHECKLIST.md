@@ -1,9 +1,9 @@
 # Pilot Readiness Checklist
 
-**Checkpoint commit**: `0705d7b`
-**Checkpoint message**: `docs: finalize controlled pilot rehearsal logistics`
-**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Checkpoint commit**: `461fe11`
+**Checkpoint message**: `docs: add MacBook Codex handoff`
+**Previous baseline**: `792dd3d docs: capture hospital role and scope model`
+**Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
 **Status**: `Ready for owner-led controlled rehearsal preparation`
 
@@ -22,6 +22,14 @@ This document is not for:
 - broad rollout approval
 - new feature design approval
 - bypassing backend validation, concurrency, or audit rules
+
+Current rehearsal mode for this pass:
+
+- `owner-led controlled rehearsal / internal dry run`
+- `T-01 = project owner / facilitator`
+- `T-01` covers `viewer`, `editor`, `manager`, and `admin`
+- this rehearsal validates workflow readiness before inviting additional operational testers
+- this is not external operational user pilot feedback
 
 ## 2. Related Pilot Documents
 
@@ -88,7 +96,7 @@ Explicitly out of scope in this phase:
   - current Chromium-based browser
   - Firefox
 - primary local verification environment:
-  - Windows
+  - MacBook desktop browser baseline
 
 Operational note:
 
@@ -189,8 +197,9 @@ Screenshot naming convention:
 
 Examples:
 
-- `docs/pilot-evidence/2026-05-29/R-10-T-02-editor-stale-write.png`
-- `docs/pilot-evidence/2026-05-29/R-13-T-03-manager-audit-history.png`
+- `docs/pilot-evidence/2026-05-29/R-03-T-01-editor-update-flow.png`
+- `docs/pilot-evidence/2026-05-29/R-10-T-01-editor-stale-write.png`
+- `docs/pilot-evidence/2026-05-29/R-13-T-01-manager-audit-history.png`
 
 Evidence handling note:
 
@@ -254,16 +263,16 @@ Complete this checklist before rehearsal execution:
 
 | Item | Status | Notes |
 |---|---|---|
-| tester list confirmed | not ready | tester names are still pending scheduling confirmation |
-| tester role assigned | not ready | role mapping depends on confirmed tester list |
-| browser and device confirmed | ready | desktop Chromium baseline, Firefox fallback |
+| tester list confirmed | ready | `T-01` is the project owner and facilitator for the internal dry run |
+| tester role assigned | ready | `T-01` covers `viewer`, `editor`, `manager`, and `admin` |
+| browser and device confirmed | ready | MacBook desktop browser baseline for owner-led rehearsal |
 | rehearsal date and time confirmed | not ready | scheduling not fixed yet |
-| facilitator confirmed | ready | digital health team lead |
-| evidence capture owner confirmed | ready | assigned facilitator assistant |
+| facilitator confirmed | ready | project owner / facilitator |
+| evidence capture owner confirmed | ready | project owner captures initial owner-led evidence |
 | defect ID convention confirmed | ready | `PILOT-001`, `PILOT-002`, `PILOT-003` |
 | triage owner confirmed | ready | project owner |
-| seed and test user credentials distributed securely | not ready | distribute only after tester list is fixed |
-| scope reminder delivered | ready | covered in tester brief and facilitator package |
+| seed and test user credentials distributed securely | not ready | credentials are handled out-of-band and are not stored in repository documents |
+| scope reminder delivered | ready | owner-led dry-run scope is documented and limited to the current conservative KPI workflow |
 
 ## 13. Go / No-Go Decision For Rehearsal Execution
 

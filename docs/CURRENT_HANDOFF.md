@@ -1,9 +1,9 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `792dd3d docs: capture hospital role and scope model`
-**Previous baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
-**Earlier baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Current checkpoint**: `461fe11 docs: add MacBook Codex handoff`
+**Previous baseline**: `792dd3d docs: capture hospital role and scope model`
+**Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
 
 ## 1. Current Readiness Status
@@ -13,6 +13,10 @@
 - feedback must come before feature expansion
 - dashboard visualization requirement is captured as a gated future capability
 - hospital role and scope model is captured as a gated future capability
+- current rehearsal type is `owner-led controlled rehearsal / internal dry run`
+- current tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
+- this rehearsal validates workflow readiness before inviting additional operational testers
+- this is not external operational user pilot feedback
 
 If checkpoint alignment, evidence capture, ownership fields, and tester scheduling are confirmed, this package can move to:
 
@@ -90,22 +94,21 @@ Deferred requirement to remember:
 
 Recommended next action:
 
-1. align pilot logistics fields and conventions in the rehearsal docs
-2. confirm facilitator, rehearsal log owner, evidence owner, defect log owner, triage owner, and decision owner
-3. brief testers using [PILOT_TESTER_BRIEF.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_TESTER_BRIEF.md)
-4. execute scenarios R-01 through R-14 in [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
-5. log defects with [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
-6. triage results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
-7. treat dashboard or role-model feedback during rehearsal as future design input unless it exposes a real safety defect in the current pilot
+1. use the MacBook environment at checkpoint `461fe11` with verification complete
+2. brief the project owner as `T-01` for the owner-led controlled rehearsal / internal dry run
+3. execute scenarios R-01 through R-14 in [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
+4. log defects with [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
+5. triage results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
+6. treat dashboard or role-model feedback during rehearsal as future design input unless it exposes a real safety defect in the current pilot
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 792dd3d docs: capture hospital role and scope model.
+We are continuing healthcare-kpi-hub from checkpoint 461fe11 docs: add MacBook Codex handoff.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
-Current status: Ready for owner-led controlled rehearsal preparation, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
+Current status: Ready for owner-led controlled rehearsal preparation, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. The current rehearsal is an owner-led controlled rehearsal / internal dry run using T-01 as project owner / facilitator across viewer, editor, manager, and admin. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
 
 Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 
@@ -113,5 +116,5 @@ Hospital authorization must eventually separate organizational position, system 
 
 If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
-Please read docs/CURRENT_HANDOFF.md, docs/PILOT_READINESS_CHECKLIST.md, docs/PILOT_REHEARSAL_LOG.md, docs/PILOT_FEEDBACK_TRIAGE.md, docs/PILOT_DEFECT_TEMPLATE.md, and docs/PILOT_TESTER_BRIEF.md first, then help with controlled pilot rehearsal execution or pilot feedback triage.
+Please read docs/CURRENT_HANDOFF.md, docs/PILOT_READINESS_CHECKLIST.md, docs/PILOT_REHEARSAL_LOG.md, docs/PILOT_FEEDBACK_TRIAGE.md, docs/PILOT_DEFECT_TEMPLATE.md, and docs/PILOT_TESTER_BRIEF.md first, then help with owner-led controlled rehearsal execution or pilot feedback triage.
 ```

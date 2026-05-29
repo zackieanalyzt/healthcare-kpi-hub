@@ -1,8 +1,8 @@
 # Project Status
 
-**Checkpoint**: `792dd3d docs: capture hospital role and scope model`
-**Previous baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
-**Earlier baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Checkpoint**: `461fe11 docs: add MacBook Codex handoff`
+**Previous baseline**: `792dd3d docs: capture hospital role and scope model`
+**Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
 
 ## Verified
@@ -45,8 +45,12 @@
 Current controlled pilot package status:
 
 - `Ready for owner-led controlled rehearsal preparation`
+- rehearsal type is `owner-led controlled rehearsal / internal dry run`
+- tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
+- this rehearsal validates workflow readiness before inviting additional operational testers
+- this is not external operational user pilot feedback
 - move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after tester list, tester-role mapping, rehearsal date/time, and secure credential distribution are confirmed
-- current logistics check still shows pending tester confirmation and scheduling
+- current logistics check still shows pending rehearsal date/time confirmation and secure credential handling only
 
 Dashboard requirement note:
 

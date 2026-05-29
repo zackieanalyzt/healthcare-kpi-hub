@@ -1,13 +1,13 @@
 # Pilot Rehearsal Log
 
 **Purpose**: Controlled pilot rehearsal execution and structured feedback capture for the current conservative KPI workflow
-**Commit under test**: `0705d7b`
-**Commit message**: `docs: finalize controlled pilot rehearsal logistics`
-**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Commit under test**: `461fe11`
+**Commit message**: `docs: add MacBook Codex handoff`
+**Previous baseline**: `792dd3d docs: capture hospital role and scope model`
+**Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date prepared**: `2026-05-29`
 **Rehearsal status**: `Ready for owner-led controlled rehearsal preparation`
-**Rehearsal package committed as**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
+**Rehearsal package committed as**: `461fe11 docs: add MacBook Codex handoff`
 
 Preparation note:
 
@@ -15,6 +15,10 @@ Preparation note:
 - it supports tester evidence capture and later triage
 - it does not claim that broad rollout is approved
 - it does not authorize feature expansion before feedback triage
+- this pass is an `owner-led controlled rehearsal / internal dry run`
+- `T-01` is the project owner / facilitator and covers `viewer`, `editor`, `manager`, and `admin`
+- this pass validates workflow readiness before inviting additional operational testers
+- this is not external operational user pilot feedback
 
 ## 1. Related Pilot Documents
 
@@ -68,8 +72,8 @@ Scope reminder:
 | backend env for local rehearsal | `NODE_ENV=development`, `AUTH_PROVIDER=dev` |
 | recommended local API port | `3015` |
 | data store | local SQLite app database |
-| target commit baseline | `0705d7b` |
-| rehearsal audience | internal pilot testers only |
+| target commit baseline | `461fe11` |
+| rehearsal audience | project owner internal dry run first, then additional internal testers if approved |
 
 Notes:
 
@@ -83,10 +87,10 @@ Fill these fields before rehearsal execution:
 
 | Field | Value |
 |---|---|
-| Facilitator | Digital health team lead |
-| Rehearsal log owner | Assigned dev and facilitator |
-| Evidence owner | Assigned facilitator assistant |
-| Defect log owner | Assigned dev recorder |
+| Facilitator | Project owner / facilitator |
+| Rehearsal log owner | Project owner / facilitator |
+| Evidence owner | Project owner initial capture |
+| Defect log owner | Project owner initial capture |
 | Triage owner | Project owner |
 | Decision owner | Project owner and steering reviewer |
 
@@ -117,8 +121,9 @@ Screenshot naming convention:
 
 Examples:
 
-- `docs/pilot-evidence/2026-05-29/R-10-T-02-editor-stale-write.png`
-- `docs/pilot-evidence/2026-05-29/R-13-T-03-manager-audit-history.png`
+- `docs/pilot-evidence/2026-05-29/R-03-T-01-editor-update-flow.png`
+- `docs/pilot-evidence/2026-05-29/R-10-T-01-editor-stale-write.png`
+- `docs/pilot-evidence/2026-05-29/R-13-T-01-manager-audit-history.png`
 
 Evidence handling note:
 
@@ -134,10 +139,10 @@ Populate before rehearsal. Avoid sensitive personal details.
 
 | Tester label | Work context | Test role | Browser | Notes |
 |---|---|---|---|---|
-| T-01 | | viewer | | |
-| T-02 | | editor | | |
-| T-03 | | manager | | |
-| T-04 | | admin | | |
+| T-01 | project owner / facilitator | viewer | MacBook desktop browser | owner-led internal dry run |
+| T-01 | project owner / facilitator | editor | MacBook desktop browser | owner-led internal dry run |
+| T-01 | project owner / facilitator | manager | MacBook desktop browser | owner-led internal dry run |
+| T-01 | project owner / facilitator | admin | MacBook desktop browser | owner-led internal dry run |
 
 Seeded roles available for local rehearsal:
 
@@ -526,16 +531,16 @@ Complete before the first live tester session:
 
 | Item | Status | Notes |
 |---|---|---|
-| tester list confirmed | not ready | small tester group not yet named |
-| tester role assigned | not ready | role mapping depends on confirmed tester list |
-| browser and device confirmed | ready | desktop Chromium baseline, Firefox fallback |
+| tester list confirmed | ready | `T-01` project owner / facilitator confirmed for internal dry run |
+| tester role assigned | ready | `T-01` covers `viewer`, `editor`, `manager`, and `admin` |
+| browser and device confirmed | ready | MacBook desktop browser baseline for owner-led rehearsal |
 | rehearsal date and time confirmed | not ready | waiting for tester scheduling |
-| facilitator confirmed | ready | digital health team lead |
-| evidence capture owner confirmed | ready | assigned facilitator assistant |
+| facilitator confirmed | ready | project owner / facilitator |
+| evidence capture owner confirmed | ready | project owner initial evidence capture |
 | defect ID convention confirmed | ready | `PILOT-001`, `PILOT-002`, `PILOT-003` |
 | triage owner confirmed | ready | project owner |
-| seed and test user credentials distributed securely | not ready | distribute only after tester list is confirmed |
-| scope reminder delivered | ready | covered by tester brief and facilitator guide |
+| seed and test user credentials distributed securely | not ready | credentials are handled out-of-band and are not stored in repository documents |
+| scope reminder delivered | ready | owner-led dry-run scope is documented and broad rollout is explicitly excluded |
 
 ## 12. Rehearsal Execution Summary
 

@@ -1,9 +1,9 @@
 # Pilot Feedback Triage
 
 **Purpose**: Structured triage for controlled pilot rehearsal feedback and scope decisions
-**Baseline checkpoint**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
-**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Baseline checkpoint**: `461fe11 docs: add MacBook Codex handoff`
+**Previous baseline**: `792dd3d docs: capture hospital role and scope model`
+**Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Current status**: `for post-rehearsal triage only`
 
 ## 1. Purpose
@@ -11,6 +11,14 @@
 This document turns rehearsal results into a clear decision. It exists to prevent premature feature expansion and to ensure that feedback from a small controlled pilot rehearsal is reviewed consistently before the project moves forward.
 
 This document must not be used to justify broad rollout without evidence from rehearsal execution.
+
+Current rehearsal context for the next pass:
+
+- `owner-led controlled rehearsal / internal dry run`
+- `T-01 = project owner / facilitator`
+- `T-01` covers `viewer`, `editor`, `manager`, and `admin`
+- this rehearsal validates workflow readiness before inviting additional operational testers
+- this is not external operational user pilot feedback
 
 ## 2. Input Documents
 
@@ -49,10 +57,10 @@ Keep this lightweight and avoid detailed personal information.
 
 | Tester label | Work context | Role tested | Browser | Notes |
 |---|---|---|---|---|
-| T-01 | | viewer | | |
-| T-02 | | editor | | |
-| T-03 | | manager | | |
-| T-04 | | admin | | |
+| T-01 | project owner / facilitator | viewer | MacBook desktop browser | owner-led internal dry run |
+| T-01 | project owner / facilitator | editor | MacBook desktop browser | owner-led internal dry run |
+| T-01 | project owner / facilitator | manager | MacBook desktop browser | owner-led internal dry run |
+| T-01 | project owner / facilitator | admin | MacBook desktop browser | owner-led internal dry run |
 
 ## 5. Ownership
 
@@ -60,11 +68,11 @@ Fill these fields before triage starts:
 
 | Field | Value |
 |---|---|
-| Facilitator | Digital health team lead |
+| Facilitator | Project owner / facilitator |
 | Triage owner | Project owner |
 | Decision owner | Project owner and steering reviewer |
-| Evidence owner | Assigned facilitator assistant |
-| Defect log owner | Assigned dev recorder |
+| Evidence owner | Project owner initial capture |
+| Defect log owner | Project owner initial capture |
 
 ## 6. Defect Classification Table
 

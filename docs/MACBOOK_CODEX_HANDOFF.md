@@ -1,8 +1,8 @@
 # MacBook Codex Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current repo checkpoint**: `792dd3d docs: capture hospital role and scope model`
-**Pilot execution baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
+**Current repo checkpoint**: `461fe11 docs: add MacBook Codex handoff`
+**Pilot execution baseline**: `792dd3d docs: capture hospital role and scope model`
 **Date**: `2026-05-29`
 **Purpose**: practical handoff for continuing this repo on a MacBook with Codex
 
@@ -15,6 +15,7 @@ The repository moved through these documentation checkpoints today:
 3. `c312ea6 docs: capture KPI dashboard visualization requirements`
 4. `0705d7b docs: finalize controlled pilot rehearsal logistics`
 5. `792dd3d docs: capture hospital role and scope model`
+6. `461fe11 docs: add MacBook Codex handoff`
 
 What these commits achieved:
 
@@ -23,6 +24,7 @@ What these commits achieved:
 - added ownership fields and tester logistics checklists
 - captured dashboard visualization as a core future capability, but gated after pilot feedback triage
 - captured hospital role and authorization scope design as a future capability, but gated after pilot feedback triage
+- added a MacBook-specific handoff checkpoint for continuing the owner-led rehearsal on this machine
 
 ## 2. Current Product State
 
@@ -51,6 +53,10 @@ Current status:
 - not ready for broad rollout
 - dashboard visualization is captured as a gated future capability
 - hospital role and scope redesign is captured as a gated future capability
+- current rehearsal type is `owner-led controlled rehearsal / internal dry run`
+- current tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
+- this rehearsal validates workflow readiness before inviting additional operational testers
+- this is not external operational user pilot feedback
 
 ## 3. What Has Not Been Implemented Yet
 
@@ -88,12 +94,19 @@ Important:
 
 ## 5. Remaining Rehearsal Logistics To Confirm
 
-These were still pending in the last readiness pass:
+These remain the only items still pending in the current readiness pass:
 
-- tester list confirmed
-- tester-role mapping confirmed
 - rehearsal date and time confirmed
 - seed or test credentials distributed securely
+
+Already confirmed for the owner-led internal dry run:
+
+- tester list confirmed as `T-01`
+- tester-role mapping confirmed as `T-01 -> viewer, editor, manager, admin`
+- facilitator confirmed as project owner / facilitator
+- evidence capture owner confirmed for the initial owner-led pass
+
+Credentials are handled out-of-band and are not stored in repository documents.
 
 Do not invent these values in docs.
 
@@ -134,7 +147,7 @@ bun run --cwd apps/web test
 
 Expected result:
 
-- current commit should include `792dd3d` or a later approved checkpoint
+- current commit should include `461fe11` or a later approved checkpoint
 - working tree should be clean
 - verification should pass
 
@@ -157,7 +170,7 @@ If a fresh local DB is needed:
 The next sensible step is still:
 
 1. confirm the remaining rehearsal logistics
-2. brief testers with `docs/PILOT_TESTER_BRIEF.md`
+2. brief the project owner as `T-01` with `docs/PILOT_TESTER_BRIEF.md`
 3. execute scenarios `R-01` through `R-14`
 4. record evidence and defects
 5. complete post-rehearsal triage before opening any new feature phase
@@ -165,11 +178,11 @@ The next sensible step is still:
 ## 10. Starter Prompt For Codex On MacBook
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 792dd3d docs: capture hospital role and scope model.
+We are continuing healthcare-kpi-hub from checkpoint 461fe11 docs: add MacBook Codex handoff.
 
 The operational KPI workflow is already implemented through auth, navigation, worklist, KPI page detail, KPI entry detail, conservative KPI mutation, stale-write protection, and service-layer semantic audit.
 
-Current status: Ready for owner-led controlled rehearsal preparation. Broad rollout is not approved. Dashboard visualization and hospital role-and-scope redesign are captured as gated future capabilities only.
+Current status: Ready for owner-led controlled rehearsal preparation. This pass is an owner-led controlled rehearsal / internal dry run with T-01 as the project owner / facilitator across viewer, editor, manager, and admin. Broad rollout is not approved. Dashboard visualization and hospital role-and-scope redesign are captured as gated future capabilities only.
 
 Please read docs/CURRENT_HANDOFF.md, docs/MACBOOK_CODEX_HANDOFF.md, docs/PILOT_READINESS_CHECKLIST.md, docs/PILOT_REHEARSAL_LOG.md, docs/PILOT_FEEDBACK_TRIAGE.md, docs/PILOT_DEFECT_TEMPLATE.md, and docs/PILOT_TESTER_BRIEF.md first.
 
