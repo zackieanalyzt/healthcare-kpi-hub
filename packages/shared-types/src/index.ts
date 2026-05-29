@@ -234,3 +234,15 @@ export interface KpiEntryDetail {
   };
   history: AuditHistoryItem[];
 }
+
+export interface KpiEntryMutationValueInput {
+  actual_value?: string;
+  progress_value?: number;
+  note?: string;
+}
+
+export interface KpiEntryMutationRequest {
+  updated_at: string;
+  status?: string;
+  value?: KpiEntryMutationValueInput;
+}

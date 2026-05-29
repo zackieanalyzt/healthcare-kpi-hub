@@ -1,6 +1,7 @@
 import type {
   ApiResponse,
   AuthenticatedUser,
+  KpiEntryMutationRequest,
   KpiEntryDetail,
   KpiPageDetail,
   NavigationWorkgroup,
@@ -68,4 +69,17 @@ export async function fetchKpiPage(pageId: string) {
 
 export async function fetchKpiEntry(entryId: string) {
   return requestJson<KpiEntryDetail>(`/api/kpi-entries/${encodeURIComponent(entryId)}`);
+}
+
+export async function updateKpiEntry(
+  entryId: string,
+  payload: KpiEntryMutationRequest
+) {
+  return requestJson<KpiEntryDetail>(`/api/kpi-entries/${encodeURIComponent(entryId)}`, {
+    method: "PATCH",
+    headers: {
+      "X-CSRF-Token": readCsrfTokenFromCookie() ?? ""
+    },
+    body: JSON.stringify(payload)
+  });
 }

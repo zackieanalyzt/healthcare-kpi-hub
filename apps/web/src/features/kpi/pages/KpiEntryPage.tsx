@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { KpiEntryDetail } from "@healthcare-kpi-hub/shared-types";
-import { fetchKpiEntry } from "../../../app/api";
+import type {
+  ApiFailure,
+  KpiEntryDetail,
+  KpiEntryMutationRequest
+} from "@healthcare-kpi-hub/shared-types";
+import { fetchKpiEntry, updateKpiEntry } from "../../../app/api";
 
 function renderLevel(level: KpiEntryDetail["hierarchy"]["current_node"]["hierarchy_level"]) {
   switch (level) {
@@ -18,18 +22,66 @@ function renderLevel(level: KpiEntryDetail["hierarchy"]["current_node"]["hierarc
   }
 }
 
+function allowedNextStatuses(status: string) {
+  switch (status) {
+    case "draft":
+      return ["draft", "pending", "locked"];
+    case "pending":
+      return ["pending", "submitted", "locked"];
+    case "submitted":
+      return ["submitted", "pending", "locked"];
+    default:
+      return [status];
+  }
+}
+
+function formatApiError(error: ApiFailure["error"]) {
+  switch (error.code) {
+    case "CONFLICT_STALE_WRITE":
+      return "This KPI entry was updated by someone else. Refresh and try again.";
+    case "CONFLICT_ENTRY_LOCKED":
+      return "This KPI entry is locked and can no longer be edited.";
+    case "CONFLICT_REPORTING_PERIOD_CLOSED":
+      return "This KPI entry belongs to a reporting period that is no longer open.";
+    case "AUTH_FORBIDDEN":
+      return "You do not have permission to update this KPI entry.";
+    case "VALIDATION_FAILED":
+      return error.details?.[0]
+        ? `Validation failed: ${error.details[0].field} (${error.details[0].issue})`
+        : error.message;
+    default:
+      return error.message;
+  }
+}
+
 export function KpiEntryPage({ entryId }: { entryId: string }) {
   const [detail, setDetail] = useState<KpiEntryDetail | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [notFound, setNotFound] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [statusDraft, setStatusDraft] = useState("");
+  const [actualValueDraft, setActualValueDraft] = useState("");
+  const [progressValueDraft, setProgressValueDraft] = useState("");
+  const [noteDraft, setNoteDraft] = useState("");
+
+  function resetDrafts(nextDetail: KpiEntryDetail) {
+    setStatusDraft(nextDetail.entry.status);
+    setActualValueDraft(nextDetail.value.actual_value ?? "");
+    setProgressValueDraft(
+      nextDetail.value.progress_value === null ? "" : String(nextDetail.value.progress_value)
+    );
+    setNoteDraft(nextDetail.value.note ?? "");
+  }
 
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
       setLoading(true);
-      setError(null);
+      setLoadError(null);
       setNotFound(false);
 
       try {
@@ -41,6 +93,7 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
 
         if (response.success) {
           setDetail(response.data);
+          resetDrafts(response.data);
         } else if (
           response.error.code === "NOT_FOUND_KPI_ENTRY" ||
           response.error.code === "NOT_FOUND_KPI_ENTRY_CONTEXT"
@@ -49,12 +102,12 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
           setNotFound(true);
         } else {
           setDetail(null);
-          setError(response.error.message);
+          setLoadError(response.error.message);
         }
       } catch {
         if (!cancelled) {
           setDetail(null);
-          setError("Unable to reach the API.");
+          setLoadError("Unable to reach the API.");
         }
       }
 
@@ -77,11 +130,11 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
     );
   }
 
-  if (error) {
+  if (loadError) {
     return (
       <section>
         <h1>KPI Entry</h1>
-        <p>KPI entry error: {error}</p>
+        <p>KPI entry error: {loadError}</p>
       </section>
     );
   }
@@ -102,6 +155,65 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
     detail.value.note !== null ||
     detail.value.extra_json !== null;
 
+  async function handleSave() {
+    if (!detail) {
+      return;
+    }
+
+    const payload: KpiEntryMutationRequest = {
+      updated_at: detail.entry.updated_at
+    };
+
+    if (statusDraft !== detail.entry.status) {
+      payload.status = statusDraft;
+    }
+
+    const value: KpiEntryMutationRequest["value"] = {};
+    if (actualValueDraft !== (detail.value.actual_value ?? "")) {
+      value.actual_value = actualValueDraft;
+    }
+
+    if (progressValueDraft !== (detail.value.progress_value === null ? "" : String(detail.value.progress_value))) {
+      value.progress_value = Number(progressValueDraft);
+    }
+
+    if (noteDraft !== (detail.value.note ?? "")) {
+      value.note = noteDraft;
+    }
+
+    if (Object.keys(value).length > 0) {
+      payload.value = value;
+    }
+
+    setSaving(true);
+    setSaveError(null);
+
+    if (
+      progressValueDraft.trim() === "" &&
+      progressValueDraft !==
+        (detail.value.progress_value === null ? "" : String(detail.value.progress_value))
+    ) {
+      setSaveError("Progress value cannot be cleared in this first mutation release.");
+      setSaving(false);
+      return;
+    }
+
+    try {
+      const response = await updateKpiEntry(entryId, payload);
+      if (response.success) {
+        setDetail(response.data);
+        resetDrafts(response.data);
+        setEditMode(false);
+      } else {
+        setSaveError(formatApiError(response.error));
+      }
+    } catch {
+      setSaveError("Unable to save KPI entry changes.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <section style={{ display: "grid", gap: "1rem" }}>
       <nav style={{ fontSize: "0.95rem", color: "#4b5563" }}>
@@ -110,14 +222,38 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
         <span>{detail.definition.code}</span>
       </nav>
 
-      <header>
-        <h1 style={{ marginBottom: "0.25rem" }}>{detail.definition.name}</h1>
-        <p style={{ margin: 0, color: "#4b5563" }}>
-          {detail.definition.code}
-          {detail.definition.unit ? ` (${detail.definition.unit})` : ""}
-          {" · "}
-          {detail.reporting_period.period_key}
-        </p>
+      <header style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+        <div>
+          <h1 style={{ marginBottom: "0.25rem" }}>{detail.definition.name}</h1>
+          <p style={{ margin: 0, color: "#4b5563" }}>
+            {detail.definition.code}
+            {detail.definition.unit ? ` (${detail.definition.unit})` : ""}
+            {" ยท "}
+            {detail.reporting_period.period_key}
+          </p>
+        </div>
+        {detail.entry.editable ? (
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "start" }}>
+            {!editMode ? (
+              <button type="button" onClick={() => setEditMode(true)}>
+                Edit entry
+              </button>
+            ) : (
+              <>
+                <button type="button" onClick={() => {
+                  resetDrafts(detail);
+                  setEditMode(false);
+                  setSaveError(null);
+                }}>
+                  Cancel
+                </button>
+                <button type="button" onClick={() => void handleSave()} disabled={saving}>
+                  {saving ? "Saving..." : "Save changes"}
+                </button>
+              </>
+            )}
+          </div>
+        ) : null}
       </header>
 
       <div
@@ -129,7 +265,20 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
       >
         <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
           <h2 style={{ marginTop: 0 }}>Workflow</h2>
-          <div>Status: {detail.entry.status}</div>
+          {editMode && detail.entry.editable ? (
+            <label style={{ display: "grid", gap: "0.35rem" }}>
+              <span>Status</span>
+              <select value={statusDraft} onChange={(event) => setStatusDraft(event.target.value)}>
+                {allowedNextStatuses(detail.entry.status).map((statusOption) => (
+                  <option key={statusOption} value={statusOption}>
+                    {statusOption}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : (
+            <div>Status: {detail.entry.status}</div>
+          )}
           <div>Assigned to: {detail.entry.assigned_to ?? "-"}</div>
           <div>Due at: {detail.entry.due_at ?? "-"}</div>
           <div>Updated at: {detail.entry.updated_at}</div>
@@ -157,8 +306,35 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
 
       <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
         <h2 style={{ marginTop: 0 }}>Current Value</h2>
-        {!hasValue ? (
+        {!hasValue && !editMode ? (
           <p style={{ margin: 0 }}>No value has been recorded for this KPI entry yet.</p>
+        ) : editMode && detail.entry.editable ? (
+          <div style={{ display: "grid", gap: "0.75rem", maxWidth: "32rem" }}>
+            <div>Target: {detail.value.target_value ?? "-"}</div>
+            <label style={{ display: "grid", gap: "0.35rem" }}>
+              <span>Actual</span>
+              <input
+                value={actualValueDraft}
+                onChange={(event) => setActualValueDraft(event.target.value)}
+              />
+            </label>
+            <label style={{ display: "grid", gap: "0.35rem" }}>
+              <span>Progress</span>
+              <input
+                value={progressValueDraft}
+                onChange={(event) => setProgressValueDraft(event.target.value)}
+                inputMode="decimal"
+              />
+            </label>
+            <label style={{ display: "grid", gap: "0.35rem" }}>
+              <span>Note</span>
+              <textarea
+                value={noteDraft}
+                onChange={(event) => setNoteDraft(event.target.value)}
+                rows={4}
+              />
+            </label>
+          </div>
         ) : (
           <div style={{ display: "grid", gap: "0.35rem" }}>
             <div>Target: {detail.value.target_value ?? "-"}</div>
@@ -169,6 +345,12 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
           </div>
         )}
       </article>
+
+      {saveError ? (
+        <article style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "0.5rem", padding: "1rem", color: "#991b1b" }}>
+          <strong>Save error:</strong> {saveError}
+        </article>
+      ) : null}
 
       <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
         <h2 style={{ marginTop: 0 }}>Recent History</h2>

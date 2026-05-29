@@ -11,7 +11,7 @@ import {
   logoutSession
 } from "../modules/auth/service";
 import { recordAuditEvent } from "../modules/audit/service";
-import { getKpiEntryDetail } from "../modules/kpi-entries/service";
+import { getKpiEntryDetail, updateKpiEntry } from "../modules/kpi-entries/service";
 import { getKpiPageDetail, getNavigationTree } from "../modules/navigation/service";
 import { getWorklist } from "../modules/worklist/service";
 import { requireAuthenticated, requirePermission } from "./middleware/rbac";
@@ -398,6 +398,34 @@ function handleKpiEntryDetail(
   );
 }
 
+async function handleKpiEntryPatch(
+  request: Request,
+  context: AppContext,
+  params: RouteParams
+): Promise<Response> {
+  const authFailure = requirePermission(context, PERMISSIONS.KPI_UPDATE);
+  if (authFailure) {
+    return authFailure;
+  }
+
+  const entryId = params.entryId?.trim() ?? "";
+  if (!entryId) {
+    throw new AppError("VALIDATION_FAILED", "Request validation failed.", 400, [
+      { field: "entryId", issue: "required" }
+    ]);
+  }
+
+  const body = await parseJsonBody<unknown>(request);
+
+  return jsonSuccess(
+    updateKpiEntry(context.db, entryId, body, {
+      userId: context.user!.id,
+      username: context.user!.username
+    }),
+    context.requestId
+  );
+}
+
 export function createRouter(): RouteDefinition[] {
   return [
     {
@@ -464,6 +492,13 @@ export function createRouter(): RouteDefinition[] {
       auth: "authenticated",
       permission: PERMISSIONS.KPI_READ,
       handler: (_request, context, params) => handleKpiEntryDetail(context, params)
+    },
+    {
+      method: "PATCH",
+      pathname: "/api/kpi-entries/:entryId",
+      auth: "authenticated",
+      permission: PERMISSIONS.KPI_UPDATE,
+      handler: (request, context, params) => handleKpiEntryPatch(request, context, params)
     }
   ];
 }
