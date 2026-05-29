@@ -1,8 +1,8 @@
 # Project Status
 
-**Checkpoint**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
-**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Checkpoint**: `792dd3d docs: capture hospital role and scope model`
+**Previous baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
+**Earlier baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
 **Date**: `2026-05-29`
 
 ## Verified
@@ -35,6 +35,7 @@
 
 - use the controlled pilot rehearsal package before any large feature expansion
 - read [CURRENT_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/CURRENT_HANDOFF.md)
+- read [MACBOOK_CODEX_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/MACBOOK_CODEX_HANDOFF.md) when continuing on another machine
 - review [PILOT_READINESS_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_READINESS_CHECKLIST.md)
 - execute with [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
 - triage with [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)

@@ -1,9 +1,9 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
-**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Current checkpoint**: `792dd3d docs: capture hospital role and scope model`
+**Previous baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
+**Earlier baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
 **Date**: `2026-05-29`
 
 ## 1. Current Readiness Status
@@ -46,6 +46,7 @@ Current operational baseline:
 - [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 - [PILOT_DEFECT_TEMPLATE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_DEFECT_TEMPLATE.md)
 - [PILOT_TESTER_BRIEF.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_TESTER_BRIEF.md)
+- [MACBOOK_CODEX_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/MACBOOK_CODEX_HANDOFF.md)
 - [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 
@@ -100,7 +101,7 @@ Recommended next action:
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 0705d7b docs: finalize controlled pilot rehearsal logistics.
+We are continuing healthcare-kpi-hub from checkpoint 792dd3d docs: capture hospital role and scope model.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
@@ -109,6 +110,8 @@ Current status: Ready for owner-led controlled rehearsal preparation, with dashb
 Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 
 Hospital authorization must eventually separate organizational position, system role, and hierarchy scope, but the current controlled rehearsal still uses only viewer/editor/manager/admin. See docs/ROLE_AND_SCOPE_REQUIREMENTS.md.
+
+If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
 Please read docs/CURRENT_HANDOFF.md, docs/PILOT_READINESS_CHECKLIST.md, docs/PILOT_REHEARSAL_LOG.md, docs/PILOT_FEEDBACK_TRIAGE.md, docs/PILOT_DEFECT_TEMPLATE.md, and docs/PILOT_TESTER_BRIEF.md first, then help with controlled pilot rehearsal execution or pilot feedback triage.
 ```
