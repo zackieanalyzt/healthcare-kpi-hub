@@ -34,6 +34,7 @@ Primary source documents:
 6. [STATUS.md](D:/home/github/healthcare-kpi-hub/docs/STATUS.md)
 7. [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
 8. [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
+9. [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 
 Key feedback captured from owner-led rehearsal and product review:
 
@@ -99,6 +100,7 @@ This phase is complete only when these design outputs exist:
 - [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
+- [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 
 ## 6. Scope Of This Design Phase
 
@@ -111,6 +113,7 @@ This phase must answer:
 - what KPI-to-chart mapping rules should govern visualization choice
 - what API contract shape is likely needed
 - how KPI measurement semantics should drive chart choice, target logic, validation direction, and aggregation rules
+- which KPI metadata must be first-pass mandatory versus later
 - how permission and scope constraints affect visibility and drill-down
 - how UX should improve role differentiation without implementation yet
 

@@ -60,6 +60,7 @@ Current operational baseline:
 - [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
+- [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 
 ## 4. What Must Not Be Expanded Yet
@@ -109,6 +110,7 @@ Recommended next action:
 4. keep role-model feedback and dashboard landing feedback as design inputs unless a future run exposes a real workflow safety defect
 5. use the dashboard design docs as the current working set for personas, UX flow, read-model design, and API contract draft; keep all design metadata-driven and avoid hardcoding
 6. use the KPI measurement model requirement as a prerequisite for dashboard calculation, target-rule design, visualization choice, and future import design
+7. use the KPI measurement decision baseline to keep first-pass implementation scope conservative and metadata-driven, with no hardcoded KPI-specific logic
 
 ## 7. Copy/Paste Starter Text For Next Chat
 

@@ -28,6 +28,10 @@ This document does not implement:
 - import implementation
 - KPI mutation behavior changes
 
+Related decision baseline:
+
+- [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
+
 ## 2. Why KPI Measurement Type Matters
 
 `healthcare-kpi-hub` must not assume all KPIs behave like one generic numeric field.

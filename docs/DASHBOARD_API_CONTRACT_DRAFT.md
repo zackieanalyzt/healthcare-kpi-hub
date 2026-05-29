@@ -83,6 +83,10 @@ For KPI summary items, future payloads may also need:
 - `targetAnnotation`
 - `aggregationMethod`
 - `preferredVisualization`
+- `computedValue`
+- `achievementStatus`
+- `numerator`
+- `denominator`
 
 ## 5. Organization Summary Draft
 
@@ -193,6 +197,12 @@ The API contract should allow warnings such as:
 Warnings should be structured data, not only human-readable strings.
 
 Future API contract should also support explicit target and calculation explanation fields where the UI needs to explain KPI meaning to users.
+
+For milestone KPI, future API shape may also need:
+
+- `currentMilestoneLevel`
+- `targetMilestoneLevel`
+- `milestoneLevels`
 
 ## 11. Non-Goals
 

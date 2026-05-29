@@ -30,6 +30,7 @@ Dashboard values should derive from the existing operational model:
 Related semantic design input:
 
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
+- [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 
 ## 3. Read Model Responsibilities
 
@@ -56,6 +57,7 @@ The future read model likely needs conceptual views such as:
 - risk counts
 - overdue counts
 - achievement summary
+- measurement-type-aware summary logic
 - child department or workgroup summaries
 - top issues and annotation summary
 
@@ -76,6 +78,7 @@ The future read model likely needs conceptual views such as:
 - KPI item summaries
 - actual vs target summary
 - progress summary
+- semantic fields such as numerator, denominator, milestone level, or boolean completion where relevant
 - owner and due context
 - entry links
 
