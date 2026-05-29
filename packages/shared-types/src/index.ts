@@ -209,6 +209,9 @@ export interface AuditHistoryItem {
   actor_username: string | null;
   occurred_at: string;
   summary: string | null;
+  changed_fields?: string[] | null;
+  old_summary?: Record<string, unknown> | null;
+  new_summary?: Record<string, unknown> | null;
 }
 
 export interface KpiEntrySummary {

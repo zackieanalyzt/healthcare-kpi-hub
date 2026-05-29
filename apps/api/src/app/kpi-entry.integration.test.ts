@@ -34,6 +34,22 @@ function buildAuthHeaders(
   };
 }
 
+function countAuditEventsForEntry(
+  db: ReturnType<typeof createTestEnvironment>["db"],
+  entryId: string
+) {
+  const row = db
+    .query(
+      `SELECT COUNT(*) AS count
+       FROM audit_events
+       WHERE entity_type = 'kpi_entry'
+         AND entity_id = ?1`
+    )
+    .get(entryId) as { count: number };
+
+  return row.count;
+}
+
 describe("kpi entry integration", () => {
   test("returns entry detail with definition, page, period, value, hierarchy, and history", async () => {
     const { handler, env } = createTestEnvironment();
@@ -125,8 +141,9 @@ describe("kpi entry integration", () => {
   });
 
   test("successful combined value and status update emits semantic audit", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_dept_interop_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_dept_interop_2026_05", {
@@ -150,6 +167,12 @@ describe("kpi entry integration", () => {
     expect(body.data.entry.status).toBe("submitted");
     expect(body.data.value.actual_value).toBe("91");
     expect(body.data.history[0].action).toBe("kpi_entry.submitted");
+    expect(body.data.history[0].changed_fields).toContain("status");
+    expect(body.data.history[0].changed_fields).toContain("value.actual_value");
+    expect(body.data.history[0].old_summary?.status).toBe("pending");
+    expect(body.data.history[0].new_summary?.status).toBe("submitted");
+    expect(body.data.history[0].summary).toContain("Submitted KPI entry");
+    expect(countAuditEventsForEntry(db, "ent_dept_interop_2026_05")).toBe(auditCountBefore + 1);
   });
 
   test("unauthenticated requests are rejected", async () => {
@@ -212,8 +235,9 @@ describe("kpi entry integration", () => {
   });
 
   test("forbidden mutation requests are rejected", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "viewer.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_empty_value_followup_2026_05", {
@@ -230,6 +254,7 @@ describe("kpi entry integration", () => {
     const body = await response.json();
     expect(body.success).toBeFalse();
     expect(body.error.code).toBe("AUTH_FORBIDDEN");
+    expect(countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05")).toBe(auditCountBefore);
   });
 
   test("missing entries return not found", async () => {
@@ -337,6 +362,7 @@ describe("kpi entry integration", () => {
     const { handler, env, db } = createTestEnvironment();
     db.query("UPDATE reporting_periods SET status = 'closed' WHERE id = 'rpt_2026_05'").run();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_empty_value_followup_2026_05", {
@@ -352,11 +378,13 @@ describe("kpi entry integration", () => {
     expect(response.status).toBe(409);
     const body = await response.json();
     expect(body.error.code).toBe("CONFLICT_REPORTING_PERIOD_CLOSED");
+    expect(countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05")).toBe(auditCountBefore);
   });
 
   test("locked entry is rejected", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_home_visit_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_home_visit_2026_05", {
@@ -372,11 +400,13 @@ describe("kpi entry integration", () => {
     expect(response.status).toBe(409);
     const body = await response.json();
     expect(body.error.code).toBe("CONFLICT_ENTRY_LOCKED");
+    expect(countAuditEventsForEntry(db, "ent_home_visit_2026_05")).toBe(auditCountBefore);
   });
 
   test("stale updated_at returns conflict", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_empty_value_followup_2026_05", {
@@ -392,11 +422,13 @@ describe("kpi entry integration", () => {
     expect(response.status).toBe(409);
     const body = await response.json();
     expect(body.error.code).toBe("CONFLICT_STALE_WRITE");
+    expect(countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05")).toBe(auditCountBefore);
   });
 
   test("invalid progress_value is rejected", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_empty_value_followup_2026_05", {
@@ -412,6 +444,7 @@ describe("kpi entry integration", () => {
     expect(response.status).toBe(400);
     const body = await response.json();
     expect(body.error.code).toBe("VALIDATION_FAILED");
+    expect(countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05")).toBe(auditCountBefore);
   });
 
   test("unknown top-level fields are rejected", async () => {
@@ -505,8 +538,9 @@ describe("kpi entry integration", () => {
   });
 
   test("deferred value.extra_json field is rejected", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_empty_value_followup_2026_05", {
@@ -526,11 +560,13 @@ describe("kpi entry integration", () => {
     const body = await response.json();
     expect(body.error.code).toBe("VALIDATION_FAILED");
     expect(body.error.details.some((detail: { field: string }) => detail.field === "value.extra_json")).toBeTrue();
+    expect(countAuditEventsForEntry(db, "ent_empty_value_followup_2026_05")).toBe(auditCountBefore);
   });
 
   test("invalid status transition is rejected", async () => {
-    const { handler, env } = createTestEnvironment();
+    const { handler, env, db } = createTestEnvironment();
     const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_dept_interop_2026_05");
 
     const response = await handler(
       new Request("http://localhost/api/kpi-entries/ent_dept_interop_2026_05", {
@@ -546,6 +582,31 @@ describe("kpi entry integration", () => {
     expect(response.status).toBe(409);
     const body = await response.json();
     expect(body.error.code).toBe("CONFLICT_INVALID_STATUS_TRANSITION");
+    expect(countAuditEventsForEntry(db, "ent_dept_interop_2026_05")).toBe(auditCountBefore);
+  });
+
+  test("invalid value rule is rejected without creating audit history", async () => {
+    const { handler, env, db } = createTestEnvironment();
+    const { sessionCookie, csrfCookie } = await loginAs(handler, env, "editor.user");
+    const auditCountBefore = countAuditEventsForEntry(db, "ent_dept_interop_2026_05");
+
+    const response = await handler(
+      new Request("http://localhost/api/kpi-entries/ent_dept_interop_2026_05", {
+        method: "PATCH",
+        headers: buildAuthHeaders(env, sessionCookie, csrfCookie),
+        body: JSON.stringify({
+          updated_at: "2026-05-21T10:00:00Z",
+          value: {
+            actual_value: "101"
+          }
+        })
+      })
+    );
+
+    expect(response.status).toBe(409);
+    const body = await response.json();
+    expect(body.error.code).toBe("CONFLICT_VALUE_RULE_VIOLATION");
+    expect(countAuditEventsForEntry(db, "ent_dept_interop_2026_05")).toBe(auditCountBefore);
   });
 
   test("audit event is created with semantic payload", async () => {
@@ -583,10 +644,22 @@ describe("kpi entry integration", () => {
     expect(auditRow).not.toBeNull();
     expect(auditRow?.action).toBe("kpi_entry.status_changed");
     const payload = JSON.parse(auditRow!.payload_json) as {
+      entry_id: string;
+      definition_id: string;
+      reporting_period_id: string;
+      page_id: string;
+      actor_user_id: string;
+      actor_username: string;
       changed_fields: string[];
       old_summary: Record<string, unknown>;
       new_summary: Record<string, unknown>;
     };
+    expect(payload.entry_id).toBe("ent_empty_value_followup_2026_05");
+    expect(payload.definition_id).toBe("kpd_empty_value_followup");
+    expect(payload.reporting_period_id).toBe("rpt_2026_05");
+    expect(payload.page_id).toBe("pag_unit_bi_team");
+    expect(payload.actor_user_id).toBe("usr_editor");
+    expect(payload.actor_username).toBe("editor.user");
     expect(payload.changed_fields).toContain("status");
     expect(payload.changed_fields).toContain("value.actual_value");
     expect(payload.old_summary.status).toBe("draft");

@@ -62,13 +62,35 @@ export function listRecentAuditHistoryForEntity(
 
   return rows.map((row) => {
     let summary: string | null = null;
+    let changedFields: string[] | null = null;
+    let oldSummary: Record<string, unknown> | null = null;
+    let newSummary: Record<string, unknown> | null = null;
 
     if (row.payload_json) {
       try {
-        const payload = JSON.parse(row.payload_json) as { summary?: unknown };
+        const payload = JSON.parse(row.payload_json) as {
+          summary?: unknown;
+          changed_fields?: unknown;
+          old_summary?: unknown;
+          new_summary?: unknown;
+        };
         summary = typeof payload.summary === "string" ? payload.summary : null;
+        changedFields = Array.isArray(payload.changed_fields)
+          ? payload.changed_fields.filter((value): value is string => typeof value === "string")
+          : null;
+        oldSummary =
+          payload.old_summary && typeof payload.old_summary === "object" && !Array.isArray(payload.old_summary)
+            ? (payload.old_summary as Record<string, unknown>)
+            : null;
+        newSummary =
+          payload.new_summary && typeof payload.new_summary === "object" && !Array.isArray(payload.new_summary)
+            ? (payload.new_summary as Record<string, unknown>)
+            : null;
       } catch {
         summary = null;
+        changedFields = null;
+        oldSummary = null;
+        newSummary = null;
       }
     }
 
@@ -77,7 +99,10 @@ export function listRecentAuditHistoryForEntity(
       action: row.action,
       actor_username: row.actor_username,
       occurred_at: row.occurred_at,
-      summary
+      summary,
+      changed_fields: changedFields,
+      old_summary: oldSummary,
+      new_summary: newSummary
     };
   });
 }

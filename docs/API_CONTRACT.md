@@ -731,10 +731,26 @@ Response:
     "history": [
       {
         "audit_event_id": "aud_01",
-        "action": "kpi_entry.updated",
+        "action": "kpi_entry.value_updated",
         "actor_username": "john.manager",
         "occurred_at": "2026-05-20T08:00:00Z",
-        "summary": "Updated KPI values after district review."
+        "summary": "Updated KPI entry fields: value.actual_value, value.progress_value.",
+        "changed_fields": [
+          "value.actual_value",
+          "value.progress_value"
+        ],
+        "old_summary": {
+          "status": "pending",
+          "actual_value": "80",
+          "progress_value": 0.84,
+          "note": "Awaiting district confirmation"
+        },
+        "new_summary": {
+          "status": "pending",
+          "actual_value": "85",
+          "progress_value": 0.89,
+          "note": "Updated after district review"
+        }
       }
     ]
   },
@@ -753,6 +769,7 @@ Behavior:
 - `value` is the operational value payload and may be entirely empty when no value row exists yet
 - `reporting_period`, `page`, and `hierarchy` provide breadcrumb and ownership context for read-only inspection
 - `history` returns recent audit events for the KPI entry and may be empty
+- `history.summary` is a human-readable audit summary intended for operational users; `changed_fields`, `old_summary`, and `new_summary` provide structured context for UI rendering
 - if the entry exists but the related definition, page, hierarchy context, or reporting period is inactive or missing, the endpoint returns `404`
 
 ### 12.2 `PATCH /api/kpi-entries/:entryId`
@@ -763,9 +780,8 @@ Behavior:
 
 Design status:
 
-- this contract section is frozen for implementation design
-- the endpoint is not implemented yet in the current milestone
-- first implementation scope must remain conservative
+- this endpoint is implemented in the current milestone
+- the first implementation scope remains conservative and intentionally limited
 
 Actor policy:
 
@@ -904,7 +920,25 @@ Success response example:
         "action": "kpi_entry.submitted",
         "actor_username": "editor.user",
         "occurred_at": "2026-05-21T10:15:00Z",
-        "summary": "Submitted KPI entry after value update."
+        "summary": "Submitted KPI entry with changes to status, value.actual_value, value.progress_value, value.note.",
+        "changed_fields": [
+          "status",
+          "value.actual_value",
+          "value.progress_value",
+          "value.note"
+        ],
+        "old_summary": {
+          "status": "pending",
+          "actual_value": "91",
+          "progress_value": 0.9579,
+          "note": "Awaiting final district confirmation"
+        },
+        "new_summary": {
+          "status": "submitted",
+          "actual_value": "92",
+          "progress_value": 0.9684,
+          "note": "Updated after district verification"
+        }
       }
     ]
   },

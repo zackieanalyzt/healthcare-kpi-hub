@@ -1,58 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type {
-  ApiFailure,
-  KpiEntryDetail,
-  KpiEntryMutationRequest
-} from "@healthcare-kpi-hub/shared-types";
+import type { KpiEntryDetail } from "@healthcare-kpi-hub/shared-types";
 import { fetchKpiEntry, updateKpiEntry } from "../../../app/api";
-
-function renderLevel(level: KpiEntryDetail["hierarchy"]["current_node"]["hierarchy_level"]) {
-  switch (level) {
-    case "organization":
-      return "Organization";
-    case "department":
-      return "Department";
-    case "unit":
-      return "Unit / Team";
-    case "individual":
-      return "Individual";
-    default:
-      return level;
-  }
-}
-
-function allowedNextStatuses(status: string) {
-  switch (status) {
-    case "draft":
-      return ["draft", "pending", "locked"];
-    case "pending":
-      return ["pending", "submitted", "locked"];
-    case "submitted":
-      return ["submitted", "pending", "locked"];
-    default:
-      return [status];
-  }
-}
-
-function formatApiError(error: ApiFailure["error"]) {
-  switch (error.code) {
-    case "CONFLICT_STALE_WRITE":
-      return "This KPI entry was updated by someone else. Refresh and try again.";
-    case "CONFLICT_ENTRY_LOCKED":
-      return "This KPI entry is locked and can no longer be edited.";
-    case "CONFLICT_REPORTING_PERIOD_CLOSED":
-      return "This KPI entry belongs to a reporting period that is no longer open.";
-    case "AUTH_FORBIDDEN":
-      return "You do not have permission to update this KPI entry.";
-    case "VALIDATION_FAILED":
-      return error.details?.[0]
-        ? `Validation failed: ${error.details[0].field} (${error.details[0].issue})`
-        : error.message;
-    default:
-      return error.message;
-  }
-}
+import {
+  buildConservativeMutationPayload,
+  formatAuditHistoryItem,
+  getAllowedNextStatuses,
+  getClientMutationMessage,
+  getKpiEntryMutationErrorMessage,
+  renderHierarchyLevel
+} from "../kpi-entry-ui";
 
 export function KpiEntryPage({ entryId }: { entryId: string }) {
   const [detail, setDetail] = useState<KpiEntryDetail | null>(null);
@@ -160,55 +117,33 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
       return;
     }
 
-    const payload: KpiEntryMutationRequest = {
-      updated_at: detail.entry.updated_at
-    };
-
-    if (statusDraft !== detail.entry.status) {
-      payload.status = statusDraft;
-    }
-
-    const value: KpiEntryMutationRequest["value"] = {};
-    if (actualValueDraft !== (detail.value.actual_value ?? "")) {
-      value.actual_value = actualValueDraft;
-    }
-
-    if (progressValueDraft !== (detail.value.progress_value === null ? "" : String(detail.value.progress_value))) {
-      value.progress_value = Number(progressValueDraft);
-    }
-
-    if (noteDraft !== (detail.value.note ?? "")) {
-      value.note = noteDraft;
-    }
-
-    if (Object.keys(value).length > 0) {
-      payload.value = value;
-    }
-
-    setSaving(true);
     setSaveError(null);
 
-    if (
-      progressValueDraft.trim() === "" &&
-      progressValueDraft !==
-        (detail.value.progress_value === null ? "" : String(detail.value.progress_value))
-    ) {
-      setSaveError("Progress value cannot be cleared in this first mutation release.");
-      setSaving(false);
+    const payloadResult = buildConservativeMutationPayload(detail, {
+      status: statusDraft,
+      actualValue: actualValueDraft,
+      progressValue: progressValueDraft,
+      note: noteDraft
+    });
+
+    if (!payloadResult.ok) {
+      setSaveError(payloadResult.message);
       return;
     }
 
+    setSaving(true);
+
     try {
-      const response = await updateKpiEntry(entryId, payload);
+      const response = await updateKpiEntry(entryId, payloadResult.payload);
       if (response.success) {
         setDetail(response.data);
         resetDrafts(response.data);
         setEditMode(false);
       } else {
-        setSaveError(formatApiError(response.error));
+        setSaveError(getKpiEntryMutationErrorMessage(response.error));
       }
     } catch {
-      setSaveError("Unable to save KPI entry changes.");
+      setSaveError(getClientMutationMessage("NETWORK_ERROR"));
     } finally {
       setSaving(false);
     }
@@ -222,13 +157,20 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
         <span>{detail.definition.code}</span>
       </nav>
 
-      <header style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "1rem",
+          flexWrap: "wrap"
+        }}
+      >
         <div>
           <h1 style={{ marginBottom: "0.25rem" }}>{detail.definition.name}</h1>
           <p style={{ margin: 0, color: "#4b5563" }}>
             {detail.definition.code}
             {detail.definition.unit ? ` (${detail.definition.unit})` : ""}
-            {" ยท "}
+            {" - "}
             {detail.reporting_period.period_key}
           </p>
         </div>
@@ -240,11 +182,14 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
               </button>
             ) : (
               <>
-                <button type="button" onClick={() => {
-                  resetDrafts(detail);
-                  setEditMode(false);
-                  setSaveError(null);
-                }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    resetDrafts(detail);
+                    setEditMode(false);
+                    setSaveError(null);
+                  }}
+                >
                   Cancel
                 </button>
                 <button type="button" onClick={() => void handleSave()} disabled={saving}>
@@ -263,13 +208,20 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
           gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))"
         }}
       >
-        <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
+        <article
+          style={{
+            background: "#ffffff",
+            border: "1px solid #d1d5db",
+            borderRadius: "0.5rem",
+            padding: "1rem"
+          }}
+        >
           <h2 style={{ marginTop: 0 }}>Workflow</h2>
           {editMode && detail.entry.editable ? (
             <label style={{ display: "grid", gap: "0.35rem" }}>
               <span>Status</span>
               <select value={statusDraft} onChange={(event) => setStatusDraft(event.target.value)}>
-                {allowedNextStatuses(detail.entry.status).map((statusOption) => (
+                {getAllowedNextStatuses(detail.entry.status).map((statusOption) => (
                   <option key={statusOption} value={statusOption}>
                     {statusOption}
                   </option>
@@ -286,7 +238,14 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
           <div>Editable: {detail.entry.editable ? "Yes" : "No"}</div>
         </article>
 
-        <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
+        <article
+          style={{
+            background: "#ffffff",
+            border: "1px solid #d1d5db",
+            borderRadius: "0.5rem",
+            padding: "1rem"
+          }}
+        >
           <h2 style={{ marginTop: 0 }}>Template Context</h2>
           <div>Preset: {detail.definition.preset_code}</div>
           <div>Value Type: {detail.definition.value_type}</div>
@@ -295,16 +254,37 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
           <div>Period Status: {detail.reporting_period.status}</div>
         </article>
 
-        <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
+        <article
+          style={{
+            background: "#ffffff",
+            border: "1px solid #d1d5db",
+            borderRadius: "0.5rem",
+            padding: "1rem"
+          }}
+        >
           <h2 style={{ marginTop: 0 }}>Hierarchy Context</h2>
-          <div>Current Level: {renderLevel(detail.hierarchy.current_node.hierarchy_level)}</div>
-          <div>Current Owner: {detail.hierarchy.current_node.owner_user?.full_name ?? detail.hierarchy.current_node.owner_label ?? "-"}</div>
+          <div>
+            Current Level: {renderHierarchyLevel(detail.hierarchy.current_node.hierarchy_level)}
+          </div>
+          <div>
+            Current Owner:{" "}
+            {detail.hierarchy.current_node.owner_user?.full_name ??
+              detail.hierarchy.current_node.owner_label ??
+              "-"}
+          </div>
           <div>Parent: {detail.hierarchy.parent_node?.name ?? "-"}</div>
           <div>Child Nodes: {detail.hierarchy.child_nodes.length}</div>
         </article>
       </div>
 
-      <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
+      <article
+        style={{
+          background: "#ffffff",
+          border: "1px solid #d1d5db",
+          borderRadius: "0.5rem",
+          padding: "1rem"
+        }}
+      >
         <h2 style={{ marginTop: 0 }}>Current Value</h2>
         {!hasValue && !editMode ? (
           <p style={{ margin: 0 }}>No value has been recorded for this KPI entry yet.</p>
@@ -347,25 +327,61 @@ export function KpiEntryPage({ entryId }: { entryId: string }) {
       </article>
 
       {saveError ? (
-        <article style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: "0.5rem", padding: "1rem", color: "#991b1b" }}>
+        <article
+          style={{
+            background: "#fef2f2",
+            border: "1px solid #fecaca",
+            borderRadius: "0.5rem",
+            padding: "1rem",
+            color: "#991b1b"
+          }}
+        >
           <strong>Save error:</strong> {saveError}
         </article>
       ) : null}
 
-      <article style={{ background: "#ffffff", border: "1px solid #d1d5db", borderRadius: "0.5rem", padding: "1rem" }}>
+      <article
+        style={{
+          background: "#ffffff",
+          border: "1px solid #d1d5db",
+          borderRadius: "0.5rem",
+          padding: "1rem"
+        }}
+      >
         <h2 style={{ marginTop: 0 }}>Recent History</h2>
         {detail.history.length === 0 ? (
           <p style={{ margin: 0 }}>No audit history is available for this KPI entry yet.</p>
         ) : (
           <div style={{ display: "grid", gap: "0.75rem" }}>
-            {detail.history.map((item) => (
-              <div key={item.audit_event_id} style={{ border: "1px solid #e5e7eb", borderRadius: "0.5rem", padding: "0.75rem" }}>
-                <div style={{ fontWeight: 700 }}>{item.action}</div>
-                <div>Actor: {item.actor_username ?? "-"}</div>
-                <div>Occurred at: {item.occurred_at}</div>
-                <div>Summary: {item.summary ?? "-"}</div>
-              </div>
-            ))}
+            {detail.history.map((item) => {
+              const presentation = formatAuditHistoryItem(item);
+
+              return (
+                <div
+                  key={item.audit_event_id}
+                  style={{
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.5rem",
+                    padding: "0.75rem"
+                  }}
+                >
+                  <div style={{ fontWeight: 700 }}>{presentation.title}</div>
+                  <div>Actor: {item.actor_username ?? "-"}</div>
+                  <div>Occurred at: {item.occurred_at}</div>
+                  <div>Action: {item.action}</div>
+                  {presentation.changedFieldsLabel ? (
+                    <div>Changed fields: {presentation.changedFieldsLabel}</div>
+                  ) : null}
+                  {presentation.previousStateLabel ? (
+                    <div>Before: {presentation.previousStateLabel}</div>
+                  ) : null}
+                  {presentation.nextStateLabel ? (
+                    <div>After: {presentation.nextStateLabel}</div>
+                  ) : null}
+                  {item.summary ? <div>Recorded summary: {item.summary}</div> : null}
+                </div>
+              );
+            })}
           </div>
         )}
       </article>
