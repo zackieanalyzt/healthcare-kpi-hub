@@ -45,7 +45,98 @@ Dashboard values must preserve lineage back to `KPIDefinition`, `KPIEntry`, `Ent
 
 Dashboard and aggregation logic must not bypass workflow status, validation, permission, audit, or data quality rules.
 
-## 5. KPI-To-Chart Mapping
+## 5. Organization-First Landing Requirement
+
+Owner-led rehearsal and product review confirmed an important future requirement:
+
+- after login, the default landing experience should begin at an `Organization KPI Dashboard`
+- the system should not drop users directly into a unit or team KPI page as the primary first screen
+- the future dashboard must provide organization-wide KPI overview before drill-down into lower hierarchy levels
+
+Expected future landing content:
+
+- total KPIs
+- completed KPIs
+- pending KPIs
+- at-risk KPIs
+- overdue KPIs
+- overall achievement percentage
+- current reporting period
+- issue, note, or annotation summary
+- summary cards and charts aligned to KPI semantics
+
+Required future drill-down path:
+
+`Organization -> Department / Workgroup -> Unit / Team -> Individual KPI detail`
+
+This hierarchy-first navigation model must preserve lineage back to:
+
+- `KPIDefinition`
+- `KPIEntry`
+- `EntryValue`
+- `ReportingPeriod`
+- hierarchy node and owner scope
+- audit history where relevant
+
+The future dashboard must support overview first, then drill-down inspection, then mutation only where workflow state and permission allow.
+
+## 6. Future Dashboard Levels
+
+### 6.1 Organization dashboard
+
+Default future landing page after login:
+
+- hospital or organization KPI overview
+- KPI summary cards
+- progress overview
+- status distribution
+- risk or overdue summary
+- department ranking or department summary
+- trend view if period history exists
+
+### 6.2 Department or workgroup summary
+
+From the organization dashboard, users should drill down into groups such as:
+
+- `Public Health`
+- `Digital Health Division`
+- `Nursing Division`
+
+Each summary should show:
+
+- total KPIs in scope
+- completed, pending, and at-risk counts
+- achievement percentage
+- child units or teams
+- top issues and drill-down links
+
+### 6.3 Unit or team summary
+
+This level connects the future dashboard flow to pages similar to the current KPI page UI.
+
+Each unit or team summary should show:
+
+- hierarchy context
+- assigned KPI items
+- KPI status
+- actual, target, and progress summary
+- owner
+- due date
+- audit or history access
+- drill-down to individual level where available
+
+### 6.4 Individual KPI detail
+
+This level should support:
+
+- KPI entry detail
+- actual, progress, and note review or mutation if allowed
+- status review
+- audit history
+- note and annotation review
+- stale-write, locked-entry, and invalid-value behavior
+
+## 7. KPI-To-Chart Mapping
 
 Chart selection must follow KPI semantics, not visual preference alone.
 
@@ -68,7 +159,7 @@ Pie and donut charts should be used carefully:
 - avoid them when users need precise comparison between close values
 - prefer bars, scorecards, or tables when interpretability matters more than visual compactness
 
-## 6. Future Dashboard Metadata
+## 8. Future Dashboard Metadata
 
 In a future dashboard design phase, `KPIDefinition` may require dashboard-oriented metadata such as:
 
@@ -105,7 +196,7 @@ Possible `aggregation_method` values:
 
 These are requirement candidates only. They are not approved schema changes in this commit.
 
-## 7. Dashboard Lineage Rule
+## 9. Dashboard Lineage Rule
 
 Every dashboard card, chart, or derived table must be able to answer:
 
@@ -120,7 +211,7 @@ Every dashboard card, chart, or derived table must be able to answer:
 
 Dashboard outputs must remain explainable and auditable.
 
-## 8. Dashboard Decision Questions Before Implementation
+## 10. Dashboard Decision Questions Before Implementation
 
 Before any dashboard implementation begins, the team must decide:
 
@@ -132,8 +223,23 @@ Before any dashboard implementation begins, the team must decide:
 - how aggregation by organization hierarchy should behave
 - how drill-down should respect permission boundaries
 - how dashboard data quality warnings should be displayed
+- how annotation, note, and issue summaries should roll up by hierarchy level
+- whether the default landing page should vary by role and scope
 
-## 9. Future Design Phase
+## 11. Role-Aware Landing And Scope Behavior
+
+Future dashboard landing should be role-aware and scope-aware.
+
+Examples for future design:
+
+- `executive`: default landing page is organization-wide dashboard
+- `department_manager`: default landing page may be organization dashboard filtered to department scope, or a department dashboard
+- `unit_manager`: default landing page may be unit or team dashboard
+- `staff_editor` or `editor`: default landing may emphasize assigned KPI worklist, but still allow dashboard visibility where permission allows
+- `viewer`: can view dashboards within assigned scope but cannot mutate KPI data
+- `system_admin`: may access system administration functions, but should not automatically become business approver or executive dashboard owner
+
+## 12. Future Design Phase
 
 Suggested future phase:
 
@@ -154,8 +260,11 @@ Expected future scope:
 - define dashboard API contract
 - prototype a read-only dashboard
 - ensure drill-down links back to KPI entry detail
+- define organization-first landing behavior
+- define annotation and issue roll-up rules
+- define role-aware landing defaults without bypassing workflow or permission controls
 
-## 10. Explicit Non-Goals For This Requirement Capture
+## 13. Explicit Non-Goals For This Requirement Capture
 
 This commit does not:
 
@@ -171,8 +280,9 @@ This commit does not:
 - implement import workflow
 - implement assignment or due-date workflow
 - start the advanced permission model
+- change default landing page behavior in the current implementation
 
-## 11. Pilot Scope Reminder
+## 14. Pilot Scope Reminder
 
 Current controlled pilot rehearsal still tests only the conservative KPI workflow:
 
@@ -193,5 +303,6 @@ If testers ask for dashboard capability during this phase, capture it as:
 
 - `S4 observation`
 - `future request`
+- `organization-first dashboard landing page with hierarchical drill-down`
 
 It is not a defect in the current pilot scope.

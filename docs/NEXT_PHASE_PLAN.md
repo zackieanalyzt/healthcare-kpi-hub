@@ -22,6 +22,13 @@ Suggested future design candidates after triage:
 - Dashboard and KPI Visualization Design Phase
 - Hospital Role and Authorization Scope Design Phase
 
+Future dashboard design should include this captured requirement:
+
+- `Organization-first dashboard landing page with hierarchical drill-down`
+- default future flow: `Login -> Organization Dashboard Landing Page -> Department / Workgroup -> Unit / Team -> Individual KPI detail`
+- include KPI summary, progress, status distribution, risk or overdue indicators, annotation summary, and hierarchy-based drill-down
+- keep role-aware landing behavior as a design concern for the post-triage dashboard phase
+
 Reference documents for deferred design candidates:
 
 - [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
@@ -51,3 +58,4 @@ Reference documents for deferred design candidates:
 - dashboard remains gated until post-triage scope approval
 - role and scope redesign remains gated until post-triage scope approval
 - docs are updated with the chosen next phase and rationale
+- organization-first dashboard landing requirement remains captured even if current pilot scope stays fixed

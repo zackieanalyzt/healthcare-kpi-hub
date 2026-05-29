@@ -58,6 +58,8 @@ Dashboard requirement note:
 
 - `healthcare-kpi-hub` is both an operational KPI management system and a future KPI dashboard and visualization platform
 - dashboard implementation is deferred until controlled pilot rehearsal results and feedback triage are recorded
+- owner-led rehearsal feedback adds a future requirement for an organization-first dashboard landing page with hierarchical drill-down
+- future dashboard design should support organization -> department/workgroup -> unit/team -> individual drill-down with KPI summary, status, progress, and annotation visibility
 
 Hospital role-model requirement note:
 

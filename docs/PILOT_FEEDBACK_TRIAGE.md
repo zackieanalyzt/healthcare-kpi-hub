@@ -102,6 +102,14 @@ Dashboard requests during current pilot scope:
 - do not convert them directly into dashboard implementation work during current pilot rehearsal
 - route them to [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md) and future scope decision review
 
+Captured owner-led rehearsal dashboard/navigation feedback:
+
+- `S4 observation / future dashboard requirement`
+- requirement: `Organization-first dashboard landing page with hierarchical drill-down`
+- desired future flow: `Login -> Organization Dashboard Landing Page -> Department / Workgroup drill-down -> Unit / Team KPI page -> KPI entry detail`
+- reason: current UI starts too deep in the hierarchy for executive or organization-level review
+- follow-up document: [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
+
 Hospital role-model requests during current pilot scope:
 
 - record them as `S4 observation` or future role-model requirement unless a current workflow safety issue is exposed

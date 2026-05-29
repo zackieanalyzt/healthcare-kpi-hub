@@ -82,6 +82,7 @@ Deferred requirement to remember:
 - Operational KPI Value Import affects `KPIEntry` and `EntryValue`
 - future import must not bypass workflow, validation, concurrency, or audit
 - future dashboard visualization is a core product capability, but implementation is gated until controlled pilot rehearsal results and feedback triage are recorded
+- owner-led rehearsal feedback adds a future requirement for an organization-first dashboard landing page with hierarchy drill-down
 - future hospital role and authorization scope redesign is required, but implementation is gated until controlled pilot rehearsal results and feedback triage are recorded
 
 ## 5. Known Risks
@@ -100,6 +101,7 @@ Recommended next action:
 1. triage the recorded owner-led rehearsal results in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 2. keep the scope fixed until triage confirms whether any wording, audit, or UX refinements are needed
 3. treat dashboard or role-model feedback during triage as future design input unless it exposes a real safety defect in the current pilot
+4. keep the captured organization-first dashboard landing requirement in the dashboard design backlog; do not implement it before triage opens that phase
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
@@ -111,6 +113,7 @@ The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read mod
 Current status: Ready for owner-led controlled rehearsal execution, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. The current rehearsal is an owner-led controlled rehearsal / internal dry run using T-01 as project owner / facilitator across viewer, editor, manager, and admin. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
 
 Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
+The latest product feedback also requests an organization-first dashboard landing page with drill-down from organization to department, unit, and individual KPI detail. Capture this in docs and triage, but do not implement it during the current rehearsal pass.
 
 Hospital authorization must eventually separate organizational position, system role, and hierarchy scope, but the current controlled rehearsal still uses only viewer/editor/manager/admin. See docs/ROLE_AND_SCOPE_REQUIREMENTS.md.
 
