@@ -273,3 +273,22 @@
   - dashboard design becomes a first-class future phase rather than an ad hoc UI extension
   - chart selection must follow KPI semantics and comparison needs, not generic visualization preference
   - dashboard APIs, metadata, and read models must be designed explicitly after pilot scope decisions
+
+## ADR-019: Separate Organizational Position from System Role and Authorization Scope
+
+- Status: Accepted
+- Date: 2026-05-29
+- Context:
+  - the current controlled rehearsal uses only `viewer`, `editor`, `manager`, and `admin`
+  - real hospital structures include directors, department heads, unit leads, operational staff, and IT administrators whose business meaning does not map cleanly to one static application role
+  - a one-to-one mapping between job title and system role would blur business responsibility, technical administration, and hierarchy scope
+- Decision:
+  - future authorization design must separate organizational position from system role
+  - future authorization must be modeled as `system role + hierarchy scope + explicit permission`
+  - keep the current pilot role set unchanged for controlled rehearsal
+  - capture future role-model expectations in documentation before any RBAC redesign or schema work
+- Consequences:
+  - the future role model should evolve toward roles such as `executive`, `department_manager`, `unit_manager`, `staff_editor`, `viewer`, and `system_admin`
+  - `system_admin` must remain distinct from business approver roles such as `executive`
+  - role, scope, permission, and workflow redesign must be gated until controlled rehearsal results and feedback triage are recorded
+  - rehearsal feedback about role semantics should be logged as future design input unless it exposes a real workflow safety defect in the current pilot

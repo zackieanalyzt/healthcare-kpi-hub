@@ -1,6 +1,6 @@
 # Next Phase Plan
 
-**Starting Point**: `9da19ff docs: align pilot rehearsal logistics`
+**Starting Point**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: 2026-05-29
 
 ## Goal
@@ -20,6 +20,12 @@ Suggested future design candidates after triage:
 - KPI Template Import Design
 - Operational KPI Value Import Design
 - Dashboard and KPI Visualization Design Phase
+- Hospital Role and Authorization Scope Design Phase
+
+Reference documents for deferred design candidates:
+
+- [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
+- [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 
 ## Explicit Non-Goals
 
@@ -43,4 +49,5 @@ Suggested future design candidates after triage:
 
 - next design phase is selected intentionally
 - dashboard remains gated until post-triage scope approval
+- role and scope redesign remains gated until post-triage scope approval
 - docs are updated with the chosen next phase and rationale

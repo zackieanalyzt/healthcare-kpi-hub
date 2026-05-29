@@ -1,11 +1,11 @@
 # Pilot Readiness Checklist
 
-**Checkpoint commit**: `c312ea6`
-**Checkpoint message**: `docs: capture KPI dashboard visualization requirements`
-**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
-**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Checkpoint commit**: `0705d7b`
+**Checkpoint message**: `docs: finalize controlled pilot rehearsal logistics`
+**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
 **Date**: `2026-05-29`
-**Status**: `Ready for controlled pilot rehearsal package review`
+**Status**: `Ready for owner-led controlled rehearsal preparation`
 
 ## 1. Purpose
 
@@ -129,6 +129,11 @@ Dashboard note for current pilot scope:
 
 - if testers ask for dashboard views, charts, or visual summaries, record them as `S4 observation` or `future request`
 - do not treat missing dashboard screens as a defect in the current conservative pilot workflow
+
+Hospital role-model note for current pilot scope:
+
+- if testers ask for hospital-specific roles such as executive, department head, unit lead, or IT admin distinctions, record them as `S4 observation` or future role-model requirement
+- do not treat the absence of the future role model as a defect in the current conservative pilot workflow unless current authorization allows unsafe behavior
 
 ## 7. Scenario Expectations Summary
 

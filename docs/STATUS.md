@@ -1,8 +1,8 @@
 # Project Status
 
-**Checkpoint**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
-**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Checkpoint**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
+**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
 **Date**: `2026-05-29`
 
 ## Verified
@@ -25,6 +25,7 @@
 - operational KPI value import design and implementation
 - dashboard or aggregation
 - dashboard visualization implementation
+- hospital role and authorization scope redesign implementation
 - assignment editing
 - due date editing
 - advanced permission redesign
@@ -38,14 +39,21 @@
 - execute with [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
 - triage with [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 - capture future dashboard requirements in [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
+- capture future hospital role and scope requirements in [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 
 Current controlled pilot package status:
 
-- `Ready for controlled pilot rehearsal package review`
-- move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after checkpoint alignment, ownership fields, evidence capture convention, defect ID convention, and tester logistics are confirmed
+- `Ready for owner-led controlled rehearsal preparation`
+- move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after tester list, tester-role mapping, rehearsal date/time, and secure credential distribution are confirmed
 - current logistics check still shows pending tester confirmation and scheduling
 
 Dashboard requirement note:
 
 - `healthcare-kpi-hub` is both an operational KPI management system and a future KPI dashboard and visualization platform
 - dashboard implementation is deferred until controlled pilot rehearsal results and feedback triage are recorded
+
+Hospital role-model requirement note:
+
+- organizational position must remain separate from system role and authorization scope
+- future authorization should evolve toward `role + scope + permission`
+- current controlled rehearsal still uses only `viewer`, `editor`, `manager`, and `admin`

@@ -1,13 +1,13 @@
 # Pilot Rehearsal Log
 
 **Purpose**: Controlled pilot rehearsal execution and structured feedback capture for the current conservative KPI workflow
-**Commit under test**: `c312ea6`
-**Commit message**: `docs: capture KPI dashboard visualization requirements`
-**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
-**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Commit under test**: `0705d7b`
+**Commit message**: `docs: finalize controlled pilot rehearsal logistics`
+**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
 **Date prepared**: `2026-05-29`
-**Rehearsal status**: `Ready for controlled pilot rehearsal package review`
-**Rehearsal package committed as**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Rehearsal status**: `Ready for owner-led controlled rehearsal preparation`
+**Rehearsal package committed as**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 
 Preparation note:
 
@@ -53,6 +53,11 @@ Not in scope for this rehearsal:
 - unlock workflow
 - advanced permission redesign
 
+Scope reminder:
+
+- dashboard requests during rehearsal belong in `S4 observation` or future request handling
+- hospital role-model requests during rehearsal belong in `S4 observation` or future role-model requirement handling unless the current pilot authorization is unsafe
+
 ## 3. Environment
 
 | Field | Value |
@@ -63,7 +68,7 @@ Not in scope for this rehearsal:
 | backend env for local rehearsal | `NODE_ENV=development`, `AUTH_PROVIDER=dev` |
 | recommended local API port | `3015` |
 | data store | local SQLite app database |
-| target commit baseline | `c312ea6` |
+| target commit baseline | `0705d7b` |
 | rehearsal audience | internal pilot testers only |
 
 Notes:

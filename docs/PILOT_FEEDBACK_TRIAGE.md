@@ -1,9 +1,9 @@
 # Pilot Feedback Triage
 
 **Purpose**: Structured triage for controlled pilot rehearsal feedback and scope decisions
-**Baseline checkpoint**: `c312ea6 docs: capture KPI dashboard visualization requirements`
-**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
-**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Baseline checkpoint**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
+**Previous baseline**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Earlier baseline**: `9da19ff docs: align pilot rehearsal logistics`
 **Current status**: `for post-rehearsal triage only`
 
 ## 1. Purpose
@@ -93,6 +93,12 @@ Dashboard requests during current pilot scope:
 - record them as `S4 observation` or `future request`
 - do not convert them directly into dashboard implementation work during current pilot rehearsal
 - route them to [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md) and future scope decision review
+
+Hospital role-model requests during current pilot scope:
+
+- record them as `S4 observation` or future role-model requirement unless a current workflow safety issue is exposed
+- do not convert them directly into role, permission, or RBAC implementation work during current pilot rehearsal
+- route them to [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md) and future scope decision review
 
 ## 8. Severity Rule
 
