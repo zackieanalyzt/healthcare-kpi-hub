@@ -1,8 +1,8 @@
 # Project Status
 
-**Checkpoint**: `9da19ff docs: align pilot rehearsal logistics`
-**Previous baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
-**Earlier baseline**: `9285764 docs: add pilot rehearsal log`
+**Checkpoint**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
 **Date**: `2026-05-29`
 
 ## Verified
@@ -43,6 +43,7 @@ Current controlled pilot package status:
 
 - `Ready for controlled pilot rehearsal package review`
 - move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after checkpoint alignment, ownership fields, evidence capture convention, defect ID convention, and tester logistics are confirmed
+- current logistics check still shows pending tester confirmation and scheduling
 
 Dashboard requirement note:
 

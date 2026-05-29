@@ -1,8 +1,9 @@
 # Pilot Readiness Checklist
 
-**Checkpoint commit**: `82fc153`
-**Checkpoint message**: `docs: harden controlled pilot rehearsal package`
-**Previous baseline**: `9285764 docs: add pilot rehearsal log`
+**Checkpoint commit**: `c312ea6`
+**Checkpoint message**: `docs: capture KPI dashboard visualization requirements`
+**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
 **Date**: `2026-05-29`
 **Status**: `Ready for controlled pilot rehearsal package review`
 
@@ -172,9 +173,10 @@ Every executed scenario should capture at least:
 - screenshot path or evidence reference when available
 - linked defect ID if a defect was opened
 
-Suggested evidence location:
+Actual evidence location for this rehearsal pass:
 
-- `docs/pilot-evidence/YYYY-MM-DD/`
+- external or private evidence folder: `pilot-evidence/2026-05-29/`
+- use repo-local naming `docs/pilot-evidence/2026-05-29/` only for sanitized evidence safe for git
 
 Screenshot naming convention:
 
@@ -247,16 +249,16 @@ Complete this checklist before rehearsal execution:
 
 | Item | Status | Notes |
 |---|---|---|
-| tester list confirmed | ready / not ready / TBD | |
-| tester role assigned | ready / not ready / TBD | |
-| browser and device confirmed | ready / not ready / TBD | |
-| rehearsal date and time confirmed | ready / not ready / TBD | |
-| facilitator confirmed | ready / not ready / TBD | |
-| evidence capture owner confirmed | ready / not ready / TBD | |
-| defect ID convention confirmed | ready / not ready / TBD | |
-| triage owner confirmed | ready / not ready / TBD | |
-| seed and test user credentials distributed securely | ready / not ready / TBD | |
-| scope reminder delivered | ready / not ready / TBD | |
+| tester list confirmed | not ready | tester names are still pending scheduling confirmation |
+| tester role assigned | not ready | role mapping depends on confirmed tester list |
+| browser and device confirmed | ready | desktop Chromium baseline, Firefox fallback |
+| rehearsal date and time confirmed | not ready | scheduling not fixed yet |
+| facilitator confirmed | ready | digital health team lead |
+| evidence capture owner confirmed | ready | assigned facilitator assistant |
+| defect ID convention confirmed | ready | `PILOT-001`, `PILOT-002`, `PILOT-003` |
+| triage owner confirmed | ready | project owner |
+| seed and test user credentials distributed securely | not ready | distribute only after tester list is fixed |
+| scope reminder delivered | ready | covered in tester brief and facilitator package |
 
 ## 13. Go / No-Go Decision For Rehearsal Execution
 

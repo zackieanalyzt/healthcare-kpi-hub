@@ -1,12 +1,13 @@
 # Pilot Rehearsal Log
 
 **Purpose**: Controlled pilot rehearsal execution and structured feedback capture for the current conservative KPI workflow
-**Commit under test**: `82fc153`
-**Commit message**: `docs: harden controlled pilot rehearsal package`
-**Previous baseline**: `9285764 docs: add pilot rehearsal log`
+**Commit under test**: `c312ea6`
+**Commit message**: `docs: capture KPI dashboard visualization requirements`
+**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
 **Date prepared**: `2026-05-29`
 **Rehearsal status**: `Ready for controlled pilot rehearsal package review`
-**Rehearsal package committed as**: `82fc153 docs: harden controlled pilot rehearsal package`
+**Rehearsal package committed as**: `c312ea6 docs: capture KPI dashboard visualization requirements`
 
 Preparation note:
 
@@ -62,7 +63,7 @@ Not in scope for this rehearsal:
 | backend env for local rehearsal | `NODE_ENV=development`, `AUTH_PROVIDER=dev` |
 | recommended local API port | `3015` |
 | data store | local SQLite app database |
-| target commit baseline | `82fc153` |
+| target commit baseline | `c312ea6` |
 | rehearsal audience | internal pilot testers only |
 
 Notes:
@@ -77,12 +78,12 @@ Fill these fields before rehearsal execution:
 
 | Field | Value |
 |---|---|
-| Facilitator | TBD |
-| Rehearsal log owner | TBD |
-| Evidence owner | TBD |
-| Defect log owner | TBD |
-| Triage owner | TBD |
-| Decision owner | TBD |
+| Facilitator | Digital health team lead |
+| Rehearsal log owner | Assigned dev and facilitator |
+| Evidence owner | Assigned facilitator assistant |
+| Defect log owner | Assigned dev recorder |
+| Triage owner | Project owner |
+| Decision owner | Project owner and steering reviewer |
 
 ## 5. Evidence And Defect Conventions
 
@@ -99,9 +100,11 @@ Examples:
 - `PILOT-001: R-10 stale-write message is unclear for editor user`
 - `PILOT-002: R-13 audit history wording is misleading`
 
-Suggested evidence location:
+Actual evidence location for the current rehearsal package:
 
-- `docs/pilot-evidence/YYYY-MM-DD/`
+- external or private evidence folder: `pilot-evidence/2026-05-29/`
+- record only the evidence path or reference in this rehearsal log
+- use repo-local naming `docs/pilot-evidence/2026-05-29/` only for sanitized evidence that is safe to keep in git
 
 Screenshot naming convention:
 
@@ -118,6 +121,7 @@ Evidence handling note:
 - if evidence is stored outside git, record only the evidence path or reference in this rehearsal log
 - do not capture passwords, session tokens, real patient data, or unnecessary personal information
 - redact or mask sensitive information before sharing screenshots
+- dashboard requests during rehearsal belong in `S4 observation` or `future request`, not in implementation scope
 
 ## 6. Participants
 
@@ -517,16 +521,16 @@ Complete before the first live tester session:
 
 | Item | Status | Notes |
 |---|---|---|
-| tester list confirmed | ready / not ready / TBD | |
-| tester role assigned | ready / not ready / TBD | |
-| browser and device confirmed | ready / not ready / TBD | |
-| rehearsal date and time confirmed | ready / not ready / TBD | |
-| facilitator confirmed | ready / not ready / TBD | |
-| evidence capture owner confirmed | ready / not ready / TBD | |
-| defect ID convention confirmed | ready / not ready / TBD | |
-| triage owner confirmed | ready / not ready / TBD | |
-| seed and test user credentials distributed securely | ready / not ready / TBD | |
-| scope reminder delivered | ready / not ready / TBD | |
+| tester list confirmed | not ready | small tester group not yet named |
+| tester role assigned | not ready | role mapping depends on confirmed tester list |
+| browser and device confirmed | ready | desktop Chromium baseline, Firefox fallback |
+| rehearsal date and time confirmed | not ready | waiting for tester scheduling |
+| facilitator confirmed | ready | digital health team lead |
+| evidence capture owner confirmed | ready | assigned facilitator assistant |
+| defect ID convention confirmed | ready | `PILOT-001`, `PILOT-002`, `PILOT-003` |
+| triage owner confirmed | ready | project owner |
+| seed and test user credentials distributed securely | not ready | distribute only after tester list is confirmed |
+| scope reminder delivered | ready | covered by tester brief and facilitator guide |
 
 ## 12. Rehearsal Execution Summary
 

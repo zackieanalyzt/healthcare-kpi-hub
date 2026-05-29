@@ -1,9 +1,9 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `9da19ff docs: align pilot rehearsal logistics`
-**Previous baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
-**Earlier baseline**: `9285764 docs: add pilot rehearsal log`
+**Current checkpoint**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
 **Date**: `2026-05-29`
 
 ## 1. Current Readiness Status
@@ -11,6 +11,7 @@
 - `Ready for controlled pilot rehearsal package review`
 - not ready for broad rollout
 - feedback must come before feature expansion
+- dashboard visualization requirement is captured as a gated future capability
 
 If checkpoint alignment, evidence capture, ownership fields, and tester scheduling are confirmed, this package can move to:
 
@@ -94,11 +95,11 @@ Recommended next action:
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 82fc153 docs: harden controlled pilot rehearsal package.
+We are continuing healthcare-kpi-hub from checkpoint c312ea6 docs: capture KPI dashboard visualization requirements.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
-Current status: Ready for controlled pilot rehearsal package review, not broad rollout. Do not expand into import, dashboard, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
+Current status: Ready for controlled pilot rehearsal package review, logistics still pending, with dashboard visualization requirement captured as a gated future capability. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
 
 Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 

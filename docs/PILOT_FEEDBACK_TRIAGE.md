@@ -1,8 +1,9 @@
 # Pilot Feedback Triage
 
 **Purpose**: Structured triage for controlled pilot rehearsal feedback and scope decisions
-**Baseline checkpoint**: `82fc153 docs: harden controlled pilot rehearsal package`
-**Previous baseline**: `9285764 docs: add pilot rehearsal log`
+**Baseline checkpoint**: `c312ea6 docs: capture KPI dashboard visualization requirements`
+**Previous baseline**: `9da19ff docs: align pilot rehearsal logistics`
+**Earlier baseline**: `82fc153 docs: harden controlled pilot rehearsal package`
 **Current status**: `for post-rehearsal triage only`
 
 ## 1. Purpose
@@ -28,7 +29,7 @@ Complete after rehearsal:
 | Field | Value |
 |---|---|
 | rehearsal date | |
-| checkpoint under review | `82fc153` or later reviewed checkpoint |
+| checkpoint under review | `c312ea6` or later reviewed checkpoint |
 | facilitator | |
 | triage owner | |
 | decision owner | |
@@ -59,11 +60,11 @@ Fill these fields before triage starts:
 
 | Field | Value |
 |---|---|
-| Facilitator | TBD |
-| Triage owner | TBD |
-| Decision owner | TBD |
-| Evidence owner | TBD |
-| Defect log owner | TBD |
+| Facilitator | Digital health team lead |
+| Triage owner | Project owner |
+| Decision owner | Project owner and steering reviewer |
+| Evidence owner | Assigned facilitator assistant |
+| Defect log owner | Assigned dev recorder |
 
 ## 6. Defect Classification Table
 
