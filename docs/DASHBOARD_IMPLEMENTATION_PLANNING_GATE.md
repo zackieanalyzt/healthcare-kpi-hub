@@ -4,6 +4,10 @@
 **Phase**: `Dashboard and KPI Visualization Design Phase`
 **Date**: `2026-05-29`
 
+Owner review status:
+
+`First-pass KPI measurement metadata baseline is ready for project-owner review and approval.`
+
 ## 1. Purpose
 
 This document defines the approval gate that must be satisfied before dashboard implementation planning begins.
@@ -42,6 +46,10 @@ The following are approved as planning inputs only:
 - aggregation rule discussion
 - scope and permission design discussion
 - implementation gate and test strategy discussion
+
+Important reminder:
+
+Implementation planning is not implementation.
 
 ## 4. What Is Not Approved For Implementation Yet
 

@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `a7ab43a docs: decide KPI measurement metadata baseline`
+**Current checkpoint**: `3fd8c91 docs: decide dashboard threshold rules baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
@@ -114,6 +114,7 @@ Recommended next action:
 7. use the KPI measurement decision baseline to keep first-pass implementation scope conservative and metadata-driven, with no hardcoded KPI-specific logic
 8. keep `target_rule` separate from optional `threshold_rules`, so achievement and risk display do not collapse into one implicit rule
 9. use [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md) before opening schema, API, or UI implementation planning
+10. treat the first-pass KPI measurement metadata baseline as ready for project-owner review and approval, but not yet approved unless the owner explicitly confirms it
 
 ## 7. Copy/Paste Starter Text For Next Chat
 

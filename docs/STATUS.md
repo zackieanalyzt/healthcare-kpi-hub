@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `a7ab43a docs: decide KPI measurement metadata baseline`
+**Checkpoint**: `3fd8c91 docs: decide dashboard threshold rules baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
@@ -47,6 +47,7 @@
 - KPI semantics design is additionally captured in [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - first-pass KPI metadata baseline is captured in [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 - dashboard implementation planning gate is captured in [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
+- first-pass KPI measurement metadata baseline is ready for project-owner review and approval, but not marked approved yet
 
 Current controlled pilot package status:
 

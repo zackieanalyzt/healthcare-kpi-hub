@@ -4,6 +4,10 @@
 **Phase**: `Dashboard and KPI Visualization Design Phase`
 **Date**: `2026-05-29`
 
+Owner review status:
+
+`First-pass KPI measurement metadata baseline is ready for project-owner review and approval.`
+
 ## 1. Purpose
 
 This document turns KPI measurement requirements into a first-pass metadata baseline for future implementation planning.
@@ -44,6 +48,38 @@ Reason for the first-pass baseline:
 - it reduces risk in dashboard aggregation rules
 - it makes read-model and API design simpler and safer
 - it avoids prematurely modeling high-variance KPI semantics without validated metadata
+
+Owner-review baseline in scope:
+
+- first-pass measurement types:
+  - `percentage`
+  - `count`
+  - `milestone`
+  - `boolean`
+- deferred types:
+  - `ratio`
+  - `score`
+  - `currency`
+  - `duration`
+  - `custom`
+- must-have metadata:
+  - `measurement_type`
+  - `measurement_unit`
+  - `target_operator`
+  - `target_value`
+  - `target_direction`
+  - `target_annotation`
+  - `aggregation_method`
+- optional or should-have:
+  - `threshold_rules`
+  - `numerator_label`
+  - `denominator_label`
+  - `denominator_source`
+  - `default_denominator_value`
+  - `calculation_formula_label`
+  - `preferred_chart_type`
+- milestone-only must-have:
+  - `milestone_levels`
 
 ## 3. First-Pass Measurement Type Support
 
@@ -327,7 +363,7 @@ This decision document does not:
 - approve API implementation yet
 - approve dashboard UI implementation yet
 
-## 13. Configuration Rule
+## 14. Configuration Rule
 
 No KPI-specific calculation should be hardcoded in application code.
 
