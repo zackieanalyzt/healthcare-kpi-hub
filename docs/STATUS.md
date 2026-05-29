@@ -1,31 +1,36 @@
 # Project Status
 
-**Checkpoint**: `v0.2-foundation-live-auth-verified`
-**Date**: 2026-05-28
+**Checkpoint**: `9285764 docs: add pilot rehearsal log`
+**Date**: `2026-05-29`
 
 ## Verified
 
-- architecture and specification set is in place
 - foundation scaffold is runnable
-- auth and session hardening baseline is complete
-- RBAC works against SQLite
-- read-only navigation and worklist slices are working
+- auth and session baseline is working
+- RBAC resolves from SQLite
 - live MariaDB authentication is verified
-- local user provisioning is verified
-- `/api/me` is verified
-- logout and session revocation are verified
-- typecheck, tests, migrations, and seeds are passing
+- `/api/me`, `/api/navigation`, and `/api/worklist` are available
+- hierarchy-aware KPI page read flow is implemented
+- KPI entry detail read flow is implemented
+- conservative KPI mutation is implemented
+- optimistic concurrency and stale-write protection are implemented
+- service-layer semantic audit is implemented
 
 ## Deferred
 
-- KPI page read-only expansion
-- KPI mutation workflow
-- import commit workflow
-- dashboard aggregation
-- admin mutation UX
+- import workflow
+- KPI template import design and implementation
+- operational KPI value import design and implementation
+- dashboard or aggregation
+- assignment editing
+- due date editing
+- advanced permission redesign
 - async jobs and realtime
 
 ## Recommended Next Phase
 
-- begin KPI page read-only expansion from the frozen foundation baseline
-- preserve the current auth and runtime contracts unless an ADR changes them
+- use the controlled pilot rehearsal package before any large feature expansion
+- read [CURRENT_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/CURRENT_HANDOFF.md)
+- review [PILOT_READINESS_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_READINESS_CHECKLIST.md)
+- execute with [PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_REHEARSAL_LOG.md)
+- triage with [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)

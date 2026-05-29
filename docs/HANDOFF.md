@@ -1,5 +1,7 @@
 # Handoff
 
+> Historical handoff for an older checkpoint. For the current controlled pilot rehearsal package, read [CURRENT_HANDOFF.md](D:/home/github/healthcare-kpi-hub/docs/CURRENT_HANDOFF.md) first.
+
 **Project**: `healthcare-kpi-hub`  
 **Checkpoint**: `v0.2-foundation-live-auth-verified`  
 **Commit**: `388f5f16b78ce7077862fb525f6d3a13bd2b395d`  
