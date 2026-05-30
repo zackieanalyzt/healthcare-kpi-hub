@@ -62,7 +62,7 @@
 - current Phase 1A code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests
 - Phase 1A is complete: metadata foundation, organization summary backend, API contract, UI skeleton, API+Web smoke, and owner pilot rehearsal all passed
 - Phase 1A.7 test hardening: added count/milestone/stale tests; revealed and fixed milestone achievement bug in compareNumeric (service.ts)
-- Phase 1B Option A approved (department/workgroup backend slice); Phase 1B-A planning is complete docs-only; see [DASHBOARD_PHASE_1B_A_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1B_A_PLAN.md); owner must confirm parent scope check strategy before Phase 1B-A implementation begins
+- Phase 1B Option A approved (department/workgroup backend slice); Phase 1B-A backend and API slice is fully implemented and verified; department scope check uses "direct parent only" rule; 5 service unit tests and 3 integration tests added and passed cleanly
 - only the read-only organization dashboard skeleton polish is in UI scope; drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
 
 Current controlled pilot package status:

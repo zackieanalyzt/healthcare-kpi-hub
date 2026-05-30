@@ -1,1 +1,4 @@
-export { getOrganizationDashboardSummary } from "./service";
+export {
+  getOrganizationDashboardSummary,
+  getDepartmentDashboardSummary
+} from "./service";

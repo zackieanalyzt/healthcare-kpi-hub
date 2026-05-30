@@ -64,7 +64,8 @@ export const DASHBOARD_API = {
 } as const;
 
 export const DASHBOARD_SCOPES = {
-  ORGANIZATION: "organization"
+  ORGANIZATION: "organization",
+  DEPARTMENT: "department"
 } as const;
 
 export const DASHBOARD_REPORTING_PERIOD_STATUSES = {

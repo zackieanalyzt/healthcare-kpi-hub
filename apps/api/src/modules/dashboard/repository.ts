@@ -103,9 +103,71 @@ export function findOrganizationScopeRoot(
   );
 }
 
-export function listOrganizationEntryRecords(
+export interface DashboardDepartmentScopeRecord {
+  page_id: string;
+  page_name: string;
+}
+
+export interface KpiPageHierarchyDetails {
+  page_id: string;
+  page_name: string;
+  is_active: number;
+  hierarchy_level: string | null;
+  parent_kpi_page_id: string | null;
+}
+
+export function findKpiPageHierarchyDetails(
   db: Database,
-  organizationPageId: string,
+  pageId: string
+): KpiPageHierarchyDetails | null {
+  return (
+    (db
+      .query(
+        `SELECT
+           p.id AS page_id,
+           p.name AS page_name,
+           p.is_active AS is_active,
+           h.hierarchy_level AS hierarchy_level,
+           h.parent_kpi_page_id AS parent_kpi_page_id
+         FROM kpi_pages p
+         LEFT JOIN kpi_page_hierarchy h
+           ON h.kpi_page_id = p.id
+         WHERE p.id = ?1
+         LIMIT 1`
+      )
+      .get(pageId) as KpiPageHierarchyDetails | null) ?? null
+  );
+}
+
+export function findDepartmentScopeNode(
+  db: Database,
+  pageId: string,
+  organizationPageId: string
+): DashboardDepartmentScopeRecord | null {
+  return (
+    (db
+      .query(
+        `SELECT
+           p.id AS page_id,
+           p.name AS page_name
+         FROM kpi_page_hierarchy h
+         INNER JOIN kpi_pages p
+           ON p.id = h.kpi_page_id
+          AND p.is_active = 1
+         WHERE h.kpi_page_id = ?1
+           AND h.hierarchy_level = ?2
+           AND h.parent_kpi_page_id = ?3
+         LIMIT 1`
+      )
+      .get(pageId, DASHBOARD_SCOPES.DEPARTMENT, organizationPageId) as
+        | DashboardDepartmentScopeRecord
+        | null) ?? null
+  );
+}
+
+export function listScopedEntryRecords(
+  db: Database,
+  rootPageId: string,
   reportingPeriodId: string
 ): DashboardOrganizationEntryRecord[] {
   return db
@@ -164,7 +226,7 @@ export function listOrganizationEntryRecords(
          ON h.kpi_page_id = p.id
        ORDER BY p.name, kd.sort_order, kd.name`
     )
-    .all(organizationPageId, reportingPeriodId) as DashboardOrganizationEntryRecord[];
+    .all(rootPageId, reportingPeriodId) as DashboardOrganizationEntryRecord[];
 }
 
 export interface DashboardAmbiguousScopeRecord {
@@ -176,7 +238,7 @@ export interface DashboardAmbiguousScopeRecord {
 
 export function listAmbiguousScopeRecords(
   db: Database,
-  organizationPageId: string,
+  rootPageId: string,
   reportingPeriodId: string
 ): DashboardAmbiguousScopeRecord[] {
   return db
@@ -212,5 +274,5 @@ export function listAmbiguousScopeRecords(
          )
        ORDER BY p.name, kd.name`
     )
-    .all(organizationPageId, reportingPeriodId) as DashboardAmbiguousScopeRecord[];
+    .all(rootPageId, reportingPeriodId) as DashboardAmbiguousScopeRecord[];
 }

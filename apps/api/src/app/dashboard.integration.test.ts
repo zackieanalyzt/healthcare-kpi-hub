@@ -144,7 +144,7 @@ describe("dashboard summary integration", () => {
     const sessionCookie = getCookie(loginResponse, env.sessionCookieName)!;
 
     const response = await handler(
-      new Request(`http://localhost${DASHBOARD_API.summaryPath}?scope=department`, {
+      new Request(`http://localhost${DASHBOARD_API.summaryPath}?scope=unit`, {
         headers: {
           Cookie: `${env.sessionCookieName}=${sessionCookie}`
         }
@@ -155,6 +155,7 @@ describe("dashboard summary integration", () => {
     const body = await response.json();
     expect(body.success).toBeFalse();
     expect(body.error.code).toBe("VALIDATION_FAILED");
+    expect(body.error.details).toEqual([{ field: "scope", issue: "unsupported_value" }]);
   });
 
   test("does not expose write behavior on the organization summary endpoint", async () => {
@@ -181,5 +182,83 @@ describe("dashboard summary integration", () => {
 
     expect(response.status).toBe(403);
     expect(afterCount.count).toBe(beforeCount.count);
+  });
+
+  test("returns a department summary for a valid department nodeId", async () => {
+    const { handler, env } = createTestEnvironment();
+    const loginResponse = await handler(
+      new Request("http://localhost/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: "viewer.user", password: env.devAuthPassword })
+      })
+    );
+    const sessionCookie = getCookie(loginResponse, env.sessionCookieName)!;
+
+    const response = await handler(
+      new Request(`http://localhost${DASHBOARD_API.summaryPath}?scope=department&nodeId=pag_dept_digital_health`, {
+        headers: {
+          Cookie: `${env.sessionCookieName}=${sessionCookie}`
+        }
+      })
+    );
+
+    expect(response.status).toBe(200);
+    const body = await response.json();
+    expect(body.success).toBeTrue();
+    expect(body.data.scope.type).toBe("department");
+    expect(body.data.scope.id).toBe("pag_dept_digital_health");
+  });
+
+  test("rejects department scope summary without nodeId", async () => {
+    const { handler, env } = createTestEnvironment();
+    const loginResponse = await handler(
+      new Request("http://localhost/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: "viewer.user", password: env.devAuthPassword })
+      })
+    );
+    const sessionCookie = getCookie(loginResponse, env.sessionCookieName)!;
+
+    const response = await handler(
+      new Request(`http://localhost${DASHBOARD_API.summaryPath}?scope=department`, {
+        headers: {
+          Cookie: `${env.sessionCookieName}=${sessionCookie}`
+        }
+      })
+    );
+
+    expect(response.status).toBe(400);
+    const body = await response.json();
+    expect(body.success).toBeFalse();
+    expect(body.error.code).toBe("VALIDATION_FAILED");
+    expect(body.error.details).toEqual([{ field: "nodeId", issue: "required" }]);
+  });
+
+  test("rejects department scope summary with wrong level nodeId", async () => {
+    const { handler, env } = createTestEnvironment();
+    const loginResponse = await handler(
+      new Request("http://localhost/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: "viewer.user", password: env.devAuthPassword })
+      })
+    );
+    const sessionCookie = getCookie(loginResponse, env.sessionCookieName)!;
+
+    const response = await handler(
+      new Request(`http://localhost${DASHBOARD_API.summaryPath}?scope=department&nodeId=pag_org_hospital`, {
+        headers: {
+          Cookie: `${env.sessionCookieName}=${sessionCookie}`
+        }
+      })
+    );
+
+    expect(response.status).toBe(400);
+    const body = await response.json();
+    expect(body.success).toBeFalse();
+    expect(body.error.code).toBe("VALIDATION_FAILED");
+    expect(body.error.details).toEqual([{ field: "nodeId", issue: "wrong_hierarchy_level" }]);
   });
 });

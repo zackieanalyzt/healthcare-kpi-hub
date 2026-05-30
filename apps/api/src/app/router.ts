@@ -15,7 +15,10 @@ import {
   logoutSession
 } from "../modules/auth/service";
 import { recordAuditEvent } from "../modules/audit/service";
-import { getOrganizationDashboardSummary } from "../modules/dashboard/service";
+import {
+  getOrganizationDashboardSummary,
+  getDepartmentDashboardSummary
+} from "../modules/dashboard/service";
 import { getKpiEntryDetail, updateKpiEntry } from "../modules/kpi-entries/service";
 import { getKpiPageDetail, getNavigationTree } from "../modules/navigation/service";
 import { getWorklist } from "../modules/worklist/service";
@@ -371,18 +374,35 @@ function handleDashboardSummary(
   const url = new URL(request.url);
   const scope = (url.searchParams.get("scope") ?? DASHBOARD_SCOPES.ORGANIZATION).trim();
 
-  if (scope !== DASHBOARD_SCOPES.ORGANIZATION) {
-    throw new AppError("VALIDATION_FAILED", "Request validation failed.", 400, [
-      { field: "scope", issue: "unsupported_value" }
-    ]);
+  if (scope === DASHBOARD_SCOPES.ORGANIZATION) {
+    return jsonSuccess(
+      getOrganizationDashboardSummary(context.db, {
+        periodKey: url.searchParams.get("period_key") ?? undefined
+      }),
+      context.requestId
+    );
   }
 
-  return jsonSuccess(
-    getOrganizationDashboardSummary(context.db, {
-      periodKey: url.searchParams.get("period_key") ?? undefined
-    }),
-    context.requestId
-  );
+  if (scope === DASHBOARD_SCOPES.DEPARTMENT) {
+    const nodeId = url.searchParams.get("nodeId")?.trim() ?? "";
+    if (!nodeId) {
+      throw new AppError("VALIDATION_FAILED", "Request validation failed.", 400, [
+        { field: "nodeId", issue: "required" }
+      ]);
+    }
+
+    return jsonSuccess(
+      getDepartmentDashboardSummary(context.db, {
+        nodeId,
+        periodKey: url.searchParams.get("period_key") ?? undefined
+      }),
+      context.requestId
+    );
+  }
+
+  throw new AppError("VALIDATION_FAILED", "Request validation failed.", 400, [
+    { field: "scope", issue: "unsupported_value" }
+  ]);
 }
 
 function handleKpiPageDetail(

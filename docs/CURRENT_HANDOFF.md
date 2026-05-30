@@ -145,7 +145,7 @@ Recommended next action:
 27. do not expand current code work into drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes
 28. Phase 1A is complete: metadata foundation, organization summary backend, stable API contract, organization dashboard UI skeleton, API+Web smoke, and owner pilot rehearsal all passed with 0 defects
 29. Phase 1A.7 test hardening revealed and fixed a production bug: milestone achievement derivation silently returned NOT_CONFIGURED for all values due to missing MILESTONE_AT_LEAST/MILESTONE_EXACT cases in compareNumeric; fixed in service.ts
-30. Phase 1B Option A approved; Phase 1B-A planning is open docs-only; see [DASHBOARD_PHASE_1B_A_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1B_A_PLAN.md); owner must confirm parent scope check strategy before Phase 1B-A implementation begins
+30. Phase 1B Option A approved; Phase 1B-A department/workgroup backend and API slice is fully implemented and verified under "direct parent only" rule; unit and integration tests are passing cleanly.
 
 ## 7. Phase 1A.3 Manual Browser Smoke Checklist
 
@@ -165,17 +165,15 @@ Use this checklist for owner or developer review of `/dashboard`:
 ## 8. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint f8d1a1b fix: harden dashboard achievement tests before Phase 1B.
+We are continuing healthcare-kpi-hub from checkpoint [insert hash] docs: record Phase 1B-A department workgroup backend implementation.
 
-The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, a complete Phase 1A organization dashboard (backend + UI skeleton + owner pilot rehearsal passed), and Phase 1A.7 test hardening (milestone achievement bug fixed).
+The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, a complete Phase 1A organization dashboard (backend + UI skeleton + owner pilot rehearsal passed), and Phase 1B-A department summary backend + API slice (fully implemented, verified under direct parent only scope checking, and all 98 API + 15 Web tests pass cleanly).
 
-Current status: Phase 1B Option A approved. Phase 1B-A (department/workgroup backend slice) planning is complete docs-only. Owner must confirm the parent scope check strategy (direct parent only vs recursive ancestor) before Phase 1B-A implementation begins. No code changes are open until owner confirms.
+Current status: Phase 1B-A (department summary backend + API) is complete. All department lookup, scope checks, repository generalize refactors, service and integration tests are verified.
 
-Phase 1B-A scope: shared-types DashboardScopeType extension, DASHBOARD_SCOPES.DEPARTMENT config, findDepartmentScopeNode repository, listScopedEntryRecords refactor, getDepartmentDashboardSummary service, router dispatch extension, service tests, integration tests. No UI, no chart, no unit/individual scope, no RBAC, no import, no KPI mutation.
+Scope guard: No UI changes, no chart, no unit/individual scope, no RBAC, no import, no KPI mutation.
 
-Hospital authorization must eventually separate organizational position, system role, and hierarchy scope, but the current system still uses only viewer/editor/manager/admin. See docs/ROLE_AND_SCOPE_REQUIREMENTS.md.
+Next recommended phase: Phase 1B-B (organization -> department dashboard drill-down UI implementation) or Phase 1B-C (dashboard visualization planning).
 
-If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
-
-Please read docs/DASHBOARD_PHASE_1B_A_PLAN.md, docs/DASHBOARD_PHASE_1A_TECHNICAL_AUDIT.md, docs/DASHBOARD_PHASE_1B_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then await owner confirmation of the parent scope check strategy before implementing Phase 1B-A code.
+Please read docs/DASHBOARD_PHASE_1B_A_PLAN.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then await owner confirmation on next steps.
 ```

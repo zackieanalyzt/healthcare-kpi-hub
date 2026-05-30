@@ -31,7 +31,9 @@ import {
   findDashboardReportingPeriod,
   findOrganizationScopeRoot,
   listAmbiguousScopeRecords,
-  listOrganizationEntryRecords,
+  listScopedEntryRecords,
+  findDepartmentScopeNode,
+  findKpiPageHierarchyDetails,
   type DashboardOrganizationEntryRecord
 } from "./repository";
 
@@ -461,7 +463,7 @@ export function getOrganizationDashboardSummary(
     );
   }
 
-  const includedRecords = listOrganizationEntryRecords(
+  const includedRecords = listScopedEntryRecords(
     db,
     organizationScope.page_id,
     reportingPeriod.id
@@ -551,6 +553,217 @@ export function getOrganizationDashboardSummary(
       type: DASHBOARD_SCOPES.ORGANIZATION,
       id: organizationScope.page_id,
       name: organizationScope.page_name
+    },
+    period: {
+      id: reportingPeriod.id,
+      key: reportingPeriod.period_key,
+      status: reportingPeriod.status
+    },
+    summary_cards: [
+      {
+        code: DASHBOARD_SUMMARY_CARD_CODES.total,
+        label: DASHBOARD_SUMMARY_CARD_LABELS.total,
+        value: includedRecords.length
+      },
+      {
+        code: DASHBOARD_SUMMARY_CARD_CODES.completed,
+        label: DASHBOARD_SUMMARY_CARD_LABELS.completed,
+        value: completedCount
+      },
+      {
+        code: DASHBOARD_SUMMARY_CARD_CODES.pending,
+        label: DASHBOARD_SUMMARY_CARD_LABELS.pending,
+        value: pendingCount
+      },
+      {
+        code: DASHBOARD_SUMMARY_CARD_CODES.overdue,
+        label: DASHBOARD_SUMMARY_CARD_LABELS.overdue,
+        value: overdueCount
+      },
+      {
+        code: DASHBOARD_SUMMARY_CARD_CODES.atRisk,
+        label: DASHBOARD_SUMMARY_CARD_LABELS.atRisk,
+        value: atRiskCount
+      },
+      {
+        code: DASHBOARD_SUMMARY_CARD_CODES.achievementPercent,
+        label: DASHBOARD_SUMMARY_CARD_LABELS.achievementPercent,
+        value: achievementPercent
+      }
+    ],
+    achievement: {
+      numerator: achievementNumerator,
+      denominator: achievementDenominator,
+      percent: achievementPercent
+    },
+    warnings,
+    lineage
+  };
+}
+
+export function getDepartmentDashboardSummary(
+  db: Database,
+  options: { nodeId: string; periodKey?: string }
+): DashboardOrganizationSummary {
+  const reportingPeriod = findDashboardReportingPeriod(db, options.periodKey);
+  if (!reportingPeriod) {
+    throw new AppError(
+      "NOT_FOUND_REPORTING_PERIOD",
+      "Reporting period not found for dashboard summary.",
+      404
+    );
+  }
+
+  const organizationScope = findOrganizationScopeRoot(db);
+  if (!organizationScope) {
+    throw new AppError(
+      "NOT_FOUND_ORGANIZATION_SCOPE",
+      "Organization dashboard scope is not configured.",
+      404
+    );
+  }
+
+  const pageDetails = findKpiPageHierarchyDetails(db, options.nodeId);
+  if (!pageDetails) {
+    throw new AppError(
+      "VALIDATION_FAILED",
+      "Request validation failed.",
+      400,
+      [{ field: "nodeId", issue: "not_found" }]
+    );
+  }
+
+  if (pageDetails.hierarchy_level !== DASHBOARD_SCOPES.DEPARTMENT) {
+    throw new AppError(
+      "VALIDATION_FAILED",
+      "Request validation failed.",
+      400,
+      [{ field: "nodeId", issue: "wrong_hierarchy_level" }]
+    );
+  }
+
+  if (pageDetails.is_active !== 1) {
+    throw new AppError(
+      "NOT_FOUND",
+      "Department page is inactive.",
+      404
+    );
+  }
+
+  if (pageDetails.parent_kpi_page_id !== organizationScope.page_id) {
+    throw new AppError(
+      "VALIDATION_FAILED",
+      "Request validation failed.",
+      400,
+      [{ field: "nodeId", issue: "out_of_scope" }]
+    );
+  }
+
+  const calculationTimestamp = new Date().toISOString();
+  const warnings: DashboardDataQualityWarning[] = [];
+  const lineage: DashboardLineageRecord[] = [];
+  const ambiguousScopeRecords = listAmbiguousScopeRecords(
+    db,
+    options.nodeId,
+    reportingPeriod.id
+  );
+
+  for (const record of ambiguousScopeRecords) {
+    warnings.push(
+      buildWarning(DASHBOARD_WARNING_CODE.AMBIGUOUS_SCOPE, null, record.entry_id)
+    );
+  }
+
+  const includedRecords = listScopedEntryRecords(
+    db,
+    options.nodeId,
+    reportingPeriod.id
+  ).filter((record) => {
+    const canonicalStatus = normalizeWorkflowStatus(record.entry_status);
+    return DASHBOARD_STATUS_RULES.denominatorIncluded.includes(canonicalStatus as never);
+  });
+
+  let completedCount = 0;
+  let pendingCount = 0;
+  let overdueCount = 0;
+  let atRiskCount = 0;
+  let achievementNumerator = 0;
+
+  for (const record of includedRecords) {
+    const canonicalStatus = normalizeWorkflowStatus(record.entry_status);
+    const overdue = isOverdue(record, calculationTimestamp);
+
+    if (!record.measurement_type) {
+      warnings.push(buildWarning(DASHBOARD_WARNING_CODE.MISSING_MEASUREMENT_TYPE, record));
+    }
+
+    if (hasMissingTargetRule(record)) {
+      warnings.push(buildWarning(DASHBOARD_WARNING_CODE.MISSING_TARGET_RULE, record));
+    }
+
+    if (!record.threshold_rules) {
+      warnings.push(buildWarning(DASHBOARD_WARNING_CODE.MISSING_THRESHOLD_RULES, record));
+    }
+
+    if (
+      record.measurement_type === DASHBOARD_MEASUREMENT_TYPE.MILESTONE &&
+      (!parseJsonObject<Record<string, unknown>>(record.milestone_levels)?.[
+        DASHBOARD_MILESTONE_RULE_SCHEMA.levelsKey
+      ] ||
+        !record.milestone_levels)
+    ) {
+      warnings.push(buildWarning(DASHBOARD_WARNING_CODE.MISSING_MILESTONE_LEVELS, record));
+    }
+
+    if (hasInvalidAggregationMethod(record)) {
+      warnings.push(buildWarning(DASHBOARD_WARNING_CODE.INVALID_AGGREGATION_METHOD, record));
+    }
+
+    if (isStale(record.entry_updated_at, calculationTimestamp)) {
+      warnings.push(buildWarning(DASHBOARD_WARNING_CODE.STALE_PROGRESS_DATA, record));
+    }
+
+    const achievementStatus = deriveAchievementStatus(record);
+    const riskStatus = deriveRiskStatus(record);
+
+    if (DASHBOARD_STATUS_RULES.completedStatuses.includes(canonicalStatus as never)) {
+      completedCount += 1;
+    }
+
+    if (overdue) {
+      overdueCount += 1;
+    } else if (DASHBOARD_STATUS_RULES.pendingStatuses.includes(canonicalStatus as never)) {
+      pendingCount += 1;
+    }
+
+    if (DASHBOARD_STATUS_RULES.atRiskStatuses.includes(riskStatus as never)) {
+      atRiskCount += 1;
+    }
+
+    if (achievementStatus === DASHBOARD_ACHIEVEMENT_STATUS.ACHIEVED) {
+      achievementNumerator += 1;
+    }
+
+    lineage.push(buildLineageRecord(record, calculationTimestamp));
+  }
+
+  const achievementDenominator = includedRecords.length;
+  const achievementPercent =
+    achievementDenominator > 0
+      ? clampPercent((achievementNumerator / achievementDenominator) * 100)
+      : 0;
+
+  return {
+    meta: {
+      contract_version: DASHBOARD_RELEASE.version,
+      release_label: DASHBOARD_RELEASE.releaseLabel,
+      phase_label: DASHBOARD_RELEASE.phaseLabel,
+      generated_at: calculationTimestamp
+    },
+    scope: {
+      type: DASHBOARD_SCOPES.DEPARTMENT,
+      id: pageDetails.page_id,
+      name: pageDetails.page_name
     },
     period: {
       id: reportingPeriod.id,

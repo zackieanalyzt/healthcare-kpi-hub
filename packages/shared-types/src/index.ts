@@ -321,7 +321,7 @@ export type DashboardLineageFieldName =
   | "calculation_timestamp"
   | "source_entry_updated_at";
 
-export type DashboardScopeType = "organization";
+export type DashboardScopeType = "organization" | "department";
 
 export type DashboardSummaryCardCode =
   | "total_kpis"
