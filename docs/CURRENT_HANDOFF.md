@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `3fd8c91 docs: decide dashboard threshold rules baseline`
+**Current checkpoint**: `436e509 docs: prepare KPI measurement baseline approval`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-29`
@@ -60,6 +60,7 @@ Current operational baseline:
 - [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
+- [DASHBOARD_IMPLEMENTATION_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING.md)
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
@@ -114,7 +115,8 @@ Recommended next action:
 7. use the KPI measurement decision baseline to keep first-pass implementation scope conservative and metadata-driven, with no hardcoded KPI-specific logic
 8. keep `target_rule` separate from optional `threshold_rules`, so achievement and risk display do not collapse into one implicit rule
 9. use [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md) before opening schema, API, or UI implementation planning
-10. treat the first-pass KPI measurement metadata baseline as ready for project-owner review and approval, but not yet approved unless the owner explicitly confirms it
+10. treat the first-pass KPI measurement metadata baseline as approved for implementation planning only
+11. use [DASHBOARD_IMPLEMENTATION_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING.md) as the planning baseline for schema, read-model, API, threshold, permission, and test strategy decisions
 
 ## 7. Copy/Paste Starter Text For Next Chat
 

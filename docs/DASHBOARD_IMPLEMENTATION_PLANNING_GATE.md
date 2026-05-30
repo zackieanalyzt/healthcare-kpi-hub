@@ -6,7 +6,7 @@
 
 Owner review status:
 
-`First-pass KPI measurement metadata baseline is ready for project-owner review and approval.`
+`First-pass KPI measurement metadata baseline is approved for implementation planning only.`
 
 ## 1. Purpose
 
@@ -34,6 +34,7 @@ Current approved design baseline includes:
 - first-pass KPI metadata baseline
 - threshold rule baseline where `target_rule` drives achievement and optional `threshold_rules` drive risk display
 - metadata-driven and rule-driven design direction with no hardcoded KPI-specific calculations
+- implementation planning approval only, not implementation approval
 
 ## 3. What Is Approved For Planning
 
