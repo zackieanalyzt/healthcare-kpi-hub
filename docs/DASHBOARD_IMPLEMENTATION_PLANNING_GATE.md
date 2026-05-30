@@ -1,6 +1,6 @@
 # Dashboard Implementation Planning Gate
 
-**Status**: `gate review only`
+**Status**: `gate review with accepted Phase 1A owner baseline`
 **Phase**: `Dashboard and KPI Visualization Design Phase`
 **Checkpoint baseline**: `12eee8a docs: review dashboard implementation gate readiness`
 **Date**: `2026-05-30`
@@ -12,6 +12,7 @@ Owner review status:
 Decision-closure reference:
 
 - [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md)
+- [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md)
 
 ## 1. Purpose
 
@@ -38,17 +39,17 @@ It does not approve or implement:
 
 Current gate status:
 
-`partially ready`
+`ready for Phase 1A approval review only`
 
 Interpretation:
 
-- the planning baseline is strong enough to support owner review of a narrow implementation opening
-- the planning baseline is not yet strong enough to authorize full dashboard implementation across schema, read model, API, and UI all at once
-- several owner decisions still need to be fixed before implementation starts
+- the owner baseline required for Phase 1A has now been recorded
+- the project is ready for a narrow Phase 1A approval review
+- the project is still not approved for broad dashboard implementation across schema, read model, API, and UI all at once
 
 This review does not recommend `blocked`, because the design direction is coherent and substantial planning already exists.
 
-This review does not recommend `ready`, because several prerequisites remain unresolved at decision level rather than documentation level.
+This review does not recommend broad `ready`, because the accepted baseline applies only to the narrow Phase 1A opening.
 
 ## 3. Readiness Review Summary
 
@@ -238,6 +239,8 @@ Before any dashboard implementation phase opens, the following should be explici
 
 Detailed option-by-option owner decisions are tracked in [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md).
 
+Accepted Phase 1A owner baseline is recorded in [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md).
+
 Implementation should still remain narrow even after these are approved.
 
 ## 5. Owner Decisions Required
@@ -357,12 +360,12 @@ Nothing in this review authorizes:
 Current recommendation:
 
 - `No-Go for broad dashboard implementation`
-- `Conditional Go for owner approval of a narrow future implementation slice only after the required decisions in this document are resolved`
+- `Conditional Go for Phase 1A approval review only, using the accepted owner baseline`
 
 Practical meaning:
 
 - do not open full dashboard implementation yet
-- finish owner decisions first
+- use the accepted owner baseline for the next approval step
 - if implementation is approved afterward, start with the narrowest backend-first slice rather than schema + API + UI + hierarchy all together
 
 ## 10. Acceptance Summary

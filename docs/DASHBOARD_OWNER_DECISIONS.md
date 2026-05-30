@@ -1,15 +1,19 @@
 # Dashboard Owner Decisions
 
-**Status**: `decision record draft only`
+**Status**: `decision record with accepted follow-up baseline`
 **Phase**: `Dashboard and KPI Visualization Design Phase`
 **Checkpoint baseline**: `12eee8a docs: review dashboard implementation gate readiness`
 **Date**: `2026-05-30`
 
 ## 1. Purpose
 
-This document records the remaining owner decisions required to close the dashboard implementation gate.
+This document records the owner-decision topics used to close the dashboard implementation gate.
 
 It is a decision-record-only document.
+
+Accepted owner baseline reference:
+
+- [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md)
 
 It does not implement:
 
@@ -61,6 +65,11 @@ The following decisions should be accepted before opening:
 - minimum first-pass lineage fields
 
 The issue and annotation roll-up policy can remain narrower in Phase 1A, but a minimal policy still needs to be explicit for organization summary behavior.
+
+Current state:
+
+- the accepted Phase 1A baseline is now recorded in [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md)
+- this document remains useful as the wider option history and rationale record
 
 ## 4. Decision Topics
 
