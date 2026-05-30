@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `36e1c27 docs: plan dashboard schema metadata strategy`
+**Checkpoint**: `92c6afb docs: expand dashboard read-model planning baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -52,6 +52,9 @@
 - dashboard schema planning baseline is captured in [DASHBOARD_SCHEMA_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_SCHEMA_PLANNING.md)
 - dashboard read-model planning baseline is captured in [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - current dashboard phase remains `planning only`; no schema, API, read-model service, aggregation, cache, or UI implementation is approved
+- dashboard implementation gate review baseline is captured in [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
+- current dashboard gate status is `partially ready`; broad implementation should not open yet
+- if implementation is approved later, the recommended narrow first phase is metadata foundation plus organization summary backend only
 
 Current controlled pilot package status:
 

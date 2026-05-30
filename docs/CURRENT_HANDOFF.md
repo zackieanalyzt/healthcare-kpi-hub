@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `36e1c27 docs: plan dashboard schema metadata strategy`
+**Current checkpoint**: `92c6afb docs: expand dashboard read-model planning baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -121,11 +121,14 @@ Recommended next action:
 12. use [DASHBOARD_SCHEMA_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_SCHEMA_PLANNING.md) as the schema/metadata placement baseline before any migration approval is requested
 13. use [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md) as the current planning baseline for source inputs, read-model levels, achievement and risk derivation, status inclusion, lineage, data quality warnings, and first-pass read-model strategy recommendation
 14. keep the dashboard read-model work strictly in `planning only` status: no read-model service, query, API, schema, UI, cache, or aggregation implementation is authorized
+15. use [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md) as the current gate review baseline for implementation readiness, prerequisites, owner decisions, and narrow first-phase recommendation
+16. current gate review status is `partially ready`: do not open broad dashboard implementation yet
+17. if owner later opens implementation, start from the narrowest backend-first slice only after status inclusion, overdue, scope-resolution, and enum decisions are fixed
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 36e1c27 docs: plan dashboard schema metadata strategy.
+We are continuing healthcare-kpi-hub from checkpoint 92c6afb docs: expand dashboard read-model planning baseline.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
@@ -139,5 +142,5 @@ Hospital authorization must eventually separate organizational position, system 
 
 If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
-Please read docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with dashboard read-model planning only. Keep the work docs-only. Do not implement schema, migration, service, query, API, UI, chart library, cache, or RBAC changes.
+Please read docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with dashboard implementation gate review or remaining planning only. Current gate status is partially ready, not implementation-ready for a broad dashboard release. Keep the work docs-only. Do not implement schema, migration, service, query, API, UI, chart library, cache, aggregation, import, dependency, or RBAC changes.
 ```
