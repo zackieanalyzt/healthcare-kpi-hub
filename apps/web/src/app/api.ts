@@ -1,12 +1,14 @@
 import type {
   ApiResponse,
   AuthenticatedUser,
+  DashboardOrganizationSummary,
   KpiEntryMutationRequest,
   KpiEntryDetail,
   KpiPageDetail,
   NavigationWorkgroup,
   WorklistItem
 } from "@healthcare-kpi-hub/shared-types";
+import { DASHBOARD_API, DASHBOARD_SCOPES } from "@healthcare-kpi-hub/config";
 
 async function requestJson<T>(input: string, init?: RequestInit): Promise<ApiResponse<T>> {
   const response = await fetch(input, {
@@ -61,6 +63,16 @@ export async function fetchNavigation() {
 
 export async function fetchWorklist() {
   return requestJson<{ items: WorklistItem[] }>("/api/worklist");
+}
+
+export async function fetchOrganizationDashboardSummary() {
+  const params = new URLSearchParams({
+    scope: DASHBOARD_SCOPES.ORGANIZATION
+  });
+
+  return requestJson<DashboardOrganizationSummary>(
+    `${DASHBOARD_API.summaryPath}?${params.toString()}`
+  );
 }
 
 export async function fetchKpiPage(pageId: string) {
