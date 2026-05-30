@@ -4,6 +4,7 @@ import {
   DASHBOARD_LINEAGE_FIELD_NAMES,
   DASHBOARD_MEASUREMENT_TYPE,
   DASHBOARD_RISK_STATUS,
+  DASHBOARD_RELEASE,
   DASHBOARD_SCOPES,
   DASHBOARD_STATUS_RULES,
   DASHBOARD_SUMMARY_CARD_CODES,
@@ -137,6 +138,10 @@ describe("dashboard organization summary service", () => {
 
     const summary = getOrganizationDashboardSummary(db);
 
+    expect(summary.meta.contract_version).toBe(DASHBOARD_RELEASE.version);
+    expect(summary.meta.release_label).toBe(DASHBOARD_RELEASE.releaseLabel);
+    expect(summary.meta.phase_label).toBe(DASHBOARD_RELEASE.phaseLabel);
+    expect(new Date(summary.meta.generated_at).toString()).not.toBe("Invalid Date");
     expect(summary.scope.type).toBe(DASHBOARD_SCOPES.ORGANIZATION);
     expect(summary.period.key).toBe("2026-05");
     expect(summary.summary_cards).toHaveLength(6);
@@ -318,6 +323,27 @@ describe("dashboard organization summary service", () => {
     for (const fieldName of DASHBOARD_LINEAGE_FIELD_NAMES) {
       expect(Object.hasOwn(summary.lineage[0]!, fieldName)).toBeTrue();
     }
+  });
+
+  test("returns stable empty-state shape when no operational KPI is included", () => {
+    const { db } = createTestEnvironment();
+    setCurrentPeriodStatuses(db, DASHBOARD_STATUS_RULES.workflowStatusMap.draft);
+
+    const summary = getOrganizationDashboardSummary(db);
+
+    expect(summaryCardValue(summary, DASHBOARD_SUMMARY_CARD_CODES.total)).toBe(0);
+    expect(summaryCardValue(summary, DASHBOARD_SUMMARY_CARD_CODES.completed)).toBe(0);
+    expect(summaryCardValue(summary, DASHBOARD_SUMMARY_CARD_CODES.pending)).toBe(0);
+    expect(summaryCardValue(summary, DASHBOARD_SUMMARY_CARD_CODES.overdue)).toBe(0);
+    expect(summaryCardValue(summary, DASHBOARD_SUMMARY_CARD_CODES.atRisk)).toBe(0);
+    expect(summaryCardValue(summary, DASHBOARD_SUMMARY_CARD_CODES.achievementPercent)).toBe(0);
+    expect(summary.achievement).toEqual({
+      numerator: 0,
+      denominator: 0,
+      percent: 0
+    });
+    expect(summary.warnings).toEqual([]);
+    expect(summary.lineage).toEqual([]);
   });
 
   test("keeps dashboard enum baselines centralized in config", () => {

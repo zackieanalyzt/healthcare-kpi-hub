@@ -4,6 +4,7 @@ import type {
   DashboardLineageFieldName,
   DashboardMeasurementType,
   DashboardRiskStatus,
+  DashboardSummaryCardCode,
   DashboardTargetDirection,
   DashboardTargetOperator,
   DashboardWarningCode,
@@ -289,7 +290,7 @@ export const DASHBOARD_SUMMARY_CARD_CODES = {
   overdue: "overdue_kpis",
   atRisk: "at_risk_kpis",
   achievementPercent: "achievement_rate"
-} as const;
+} as const satisfies Record<string, DashboardSummaryCardCode>;
 
 export const DASHBOARD_WARNING_MESSAGES: Record<DashboardWarningCode, string> = {
   missing_measurement_type: "KPI measurement type is missing.",

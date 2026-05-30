@@ -1,20 +1,27 @@
 # Dashboard API Contract Draft
 
-**Status**: `draft only, not an implementation commitment`
-**Phase**: `Dashboard and KPI Visualization Design Phase`
-**Date**: `2026-05-29`
+**Status**: `Phase 1A.1 contract stabilization baseline`
+**Phase**: `Phase 1A.1 API Contract Stabilization`
+**Date**: `2026-05-30`
 
 ## 1. Purpose
 
-This document proposes future API contract shapes for dashboard behavior.
+This document records the stabilized Phase 1A organization summary API
+contract and keeps future dashboard contract ideas separated from the active
+backend-only implementation.
 
-It does not implement:
+Implemented Phase 1A endpoint:
 
-- actual routes
-- controllers
-- handlers
-- read-model services
-- aggregation queries
+- `GET /api/dashboard/summary?scope=organization`
+
+Still not implemented in Phase 1A.1:
+
+- dashboard UI
+- drill-down UI or drill-down endpoints
+- chart payloads or chart library integration
+- materialized cache
+- department, workgroup, unit, team, or individual dashboard detail endpoints
+- import, RBAC, KPI mutation, or advanced aggregation changes
 
 ## 2. Contract Principles
 
@@ -30,7 +37,115 @@ Future dashboard API must be:
 
 It must not rely on hardcoded role-page routing or hardcoded hierarchy labels.
 
-## 3. Endpoint Candidates
+## 3. Phase 1A Stable Endpoint
+
+Phase 1A exposes exactly one dashboard API endpoint:
+
+```text
+GET /api/dashboard/summary?scope=organization
+```
+
+Request behavior:
+
+- `scope=organization` is the only supported scope in Phase 1A.
+- missing `scope` defaults to organization.
+- unsupported scopes return a validation error rather than silently falling
+  back to another scope.
+- the endpoint is read-only.
+- the endpoint requires dashboard read permission through the existing auth
+  and RBAC path.
+
+Response field naming:
+
+- Phase 1A uses existing backend JSON naming style with `snake_case` fields.
+- The contract is intentionally stable for frontend consumption, even though
+  future dashboard levels may add new fields later.
+
+### 3.1 Phase 1A Response Shape
+
+Stable response body under the existing API success envelope:
+
+```json
+{
+  "success": true,
+  "data": {
+    "meta": {
+      "contract_version": "phase-1a",
+      "release_label": "phase-1a-kickoff",
+      "phase_label": "Phase 1A",
+      "generated_at": "2026-05-30T00:00:00.000Z"
+    },
+    "scope": {
+      "type": "organization",
+      "id": "pag_org_hospital",
+      "name": "Hospital Organization"
+    },
+    "period": {
+      "id": "rpt_2026_05",
+      "key": "2026-05",
+      "status": "open"
+    },
+    "summary_cards": [
+      { "code": "total_kpis", "label": "Total KPIs", "value": 0 },
+      { "code": "completed_kpis", "label": "Completed", "value": 0 },
+      { "code": "pending_kpis", "label": "Pending", "value": 0 },
+      { "code": "overdue_kpis", "label": "Overdue", "value": 0 },
+      { "code": "at_risk_kpis", "label": "At Risk", "value": 0 },
+      { "code": "achievement_rate", "label": "Achievement %", "value": 0 }
+    ],
+    "achievement": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": 0
+    },
+    "warnings": [],
+    "lineage": []
+  }
+}
+```
+
+Stable warning item shape:
+
+```json
+{
+  "code": "missing_threshold_rules",
+  "message": "KPI threshold rules are missing.",
+  "kpi_definition_id": "kpd_example",
+  "kpi_entry_id": "ent_example"
+}
+```
+
+Stable lineage item shape:
+
+```json
+{
+  "kpi_definition_id": "kpd_example",
+  "assignment_id": "ent_example",
+  "scope_type": "organization",
+  "scope_id": "pag_org_hospital",
+  "measurement_metadata_version_or_updated_at": "2026-05-30T00:00:00.000Z",
+  "calculation_timestamp": "2026-05-30T00:00:00.000Z",
+  "source_entry_updated_at": "2026-05-30T00:00:00.000Z"
+}
+```
+
+Empty-state behavior:
+
+- if no operational KPI is included in the organization denominator, the API
+  returns the same shape with zero-valued summary cards, achievement
+  numerator/denominator/percent set to `0`, and empty warning and lineage
+  arrays unless separate data-quality warnings exist.
+
+Incomplete metadata behavior:
+
+- incomplete metadata must not crash the API.
+- included operational KPI records remain in `total_kpis`.
+- achievement percent numerator excludes unconfigured KPI.
+- warnings identify missing or invalid metadata.
+- missing `threshold_rules` produces an explicit warning and does not infer
+  risk.
+
+## 4. Future Endpoint Candidates
 
 Possible endpoint families:
 
@@ -59,7 +174,7 @@ Current design preference:
 - use hierarchy node identifiers for drill-down
 - link back to existing KPI detail routes for individual inspection
 
-## 4. Common Response Shape
+## 5. Future Common Response Concepts
 
 Common response concepts may include:
 
@@ -90,9 +205,9 @@ For KPI summary items, future payloads may also need:
 - `denominator`
 - `thresholdRules`
 
-## 5. Organization Summary Draft
+## 6. Historical Organization Summary Draft
 
-Example concept:
+Earlier concept:
 
 ```json
 {
@@ -126,7 +241,9 @@ Example concept:
 }
 ```
 
-The field names above are illustrative only.
+The field names above are retained as historical planning context only. The
+Phase 1A stable response shape is the `snake_case` contract documented in
+section 3.1.
 
 Important design rule:
 
@@ -138,7 +255,7 @@ Status semantics should stay explicit:
 - `riskStatus` = red/yellow/green or equivalent based on `thresholdRules` when configured
 - when `thresholdRules` are absent, `riskStatus` should remain explicit as `null`, `not_configured`, or similar, rather than derived implicitly
 
-## 6. Department / Workgroup Summary Draft
+## 7. Department / Workgroup Summary Draft
 
 Expected concepts:
 
@@ -152,7 +269,7 @@ Expected concepts:
 - issue and annotation summary
 - drill-down links
 
-## 7. Unit / Team Summary Draft
+## 8. Unit / Team Summary Draft
 
 Expected concepts:
 
@@ -166,7 +283,7 @@ Expected concepts:
 - links to KPI entry detail
 - audit availability indicator
 
-## 8. KPI Detail Draft
+## 9. KPI Detail Draft
 
 For individual drill-down, preferred direction is to reuse or align with the existing KPI entry detail model where possible instead of inventing an unrelated dashboard detail contract.
 
@@ -176,7 +293,7 @@ Possible pattern:
 - client links to existing KPI detail read route
 - future dashboard API may include lightweight wrapper metadata, but should not duplicate detail logic without a reason
 
-## 9. Permission And Scope Constraints
+## 10. Permission And Scope Constraints
 
 Explicit design rule:
 
@@ -192,7 +309,7 @@ The API contract must support:
 
 Scope resolution must be driven by authorization context, not by hardcoded username rules.
 
-## 10. Data Quality And Warnings
+## 11. Data Quality And Warnings
 
 The API contract should allow warnings such as:
 
@@ -212,7 +329,7 @@ For milestone KPI, future API shape may also need:
 - `targetMilestoneLevel`
 - `milestoneLevels`
 
-## 11. Non-Goals
+## 12. Non-Goals
 
 This draft does not commit to:
 
@@ -223,7 +340,7 @@ This draft does not commit to:
 - caching strategy
 - materialized-view strategy
 
-## 12. Acceptance Criteria
+## 13. Acceptance Criteria
 
 This draft is sufficient when it:
 

@@ -138,6 +138,7 @@ Recommended next action:
     metadata foundation plus organization summary backend
 26. keep Phase 1A implementation constrained to backend schema, validation, organization summary read model, one read-only API, and focused backend tests only
 27. do not expand current code work into dashboard UI, drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes
+28. current Phase 1A.1 work is limited to stabilizing the organization summary API contract, response shape, tests, and related docs only
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
@@ -146,7 +147,7 @@ We are continuing healthcare-kpi-hub from checkpoint deeb0cc feat: implement Pha
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
-Current status: Phase 1A implementation is in progress within the approved narrow backend scope only. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, broad dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes.
+Current status: Phase 1A.1 API contract stabilization is in progress within the approved organization summary backend scope only. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, broad dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes.
 Current triage outcome has progressed through dashboard design, gate review, owner decision acceptance, and Phase 1A kickoff planning. Broad dashboard implementation remains gated.
 
 Dashboard visualization is a core future capability, but UI, drill-down, charts, cache, and broad dashboard work remain gated beyond Phase 1A. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
@@ -156,5 +157,5 @@ Hospital authorization must eventually separate organizational position, system 
 
 If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
-Please read docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_OWNER_DECISIONS.md, docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with the narrow Phase 1A backend implementation only. Current code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests. Do not expand into dashboard UI, drill-down, chart library, cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes.
+Please read docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_OWNER_DECISIONS.md, docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with the narrow Phase 1A.1 organization summary API contract stabilization only. Current code work is limited to response shape, shared types, config/registry alignment, backend contract tests, and related docs. Do not expand into dashboard UI, drill-down, chart library, cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes.
 ```

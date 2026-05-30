@@ -5,12 +5,14 @@ import {
   DASHBOARD_METADATA_VALIDATION,
   DASHBOARD_MEASUREMENT_TYPE,
   DASHBOARD_MILESTONE_RULE_SCHEMA,
+  DASHBOARD_RELEASE,
   DASHBOARD_RISK_STATUS,
   DASHBOARD_RUNTIME_RULES,
   DASHBOARD_SCOPES,
   DASHBOARD_STATUS_RULES,
   DASHBOARD_SUMMARY_CARD_CODES,
   DASHBOARD_SUMMARY_CARD_LABELS,
+  DASHBOARD_TARGET_OPERATOR,
   DASHBOARD_THRESHOLD_RULE_SCHEMA,
   DASHBOARD_WARNING_CODE,
   DASHBOARD_WARNING_MESSAGES
@@ -140,15 +142,15 @@ function compareNumeric(
   targetValue: number
 ): boolean | null {
   switch (operator) {
-    case ">=":
+    case DASHBOARD_TARGET_OPERATOR.GTE:
       return actualValue >= targetValue;
-    case ">":
+    case DASHBOARD_TARGET_OPERATOR.GT:
       return actualValue > targetValue;
-    case "<=":
+    case DASHBOARD_TARGET_OPERATOR.LTE:
       return actualValue <= targetValue;
-    case "<":
+    case DASHBOARD_TARGET_OPERATOR.LT:
       return actualValue < targetValue;
-    case "=":
+    case DASHBOARD_TARGET_OPERATOR.EQ:
       return actualValue === targetValue;
     default:
       return null;
@@ -241,7 +243,7 @@ function deriveAchievementStatus(
 
   if (
     typeof comparableValue === "boolean" &&
-    record.target_operator === "=" &&
+    record.target_operator === DASHBOARD_TARGET_OPERATOR.EQ &&
     record.target_value !== null
   ) {
     const matches = compareBoolean(comparableValue, record.target_value);
@@ -537,6 +539,12 @@ export function getOrganizationDashboardSummary(
       : 0;
 
   return {
+    meta: {
+      contract_version: DASHBOARD_RELEASE.version,
+      release_label: DASHBOARD_RELEASE.releaseLabel,
+      phase_label: DASHBOARD_RELEASE.phaseLabel,
+      generated_at: calculationTimestamp
+    },
     scope: {
       type: DASHBOARD_SCOPES.ORGANIZATION,
       id: organizationScope.page_id,

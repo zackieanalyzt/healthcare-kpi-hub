@@ -321,6 +321,16 @@ export type DashboardLineageFieldName =
   | "calculation_timestamp"
   | "source_entry_updated_at";
 
+export type DashboardScopeType = "organization";
+
+export type DashboardSummaryCardCode =
+  | "total_kpis"
+  | "completed_kpis"
+  | "pending_kpis"
+  | "overdue_kpis"
+  | "at_risk_kpis"
+  | "achievement_rate";
+
 export interface DashboardDataQualityWarning {
   code: DashboardWarningCode;
   message: string;
@@ -339,14 +349,20 @@ export interface DashboardLineageRecord {
 }
 
 export interface DashboardSummaryCard {
-  code: string;
+  code: DashboardSummaryCardCode;
   label: string;
   value: number;
 }
 
 export interface DashboardOrganizationSummary {
+  meta: {
+    contract_version: string;
+    release_label: string;
+    phase_label: string;
+    generated_at: string;
+  };
   scope: {
-    type: "organization";
+    type: DashboardScopeType;
     id: string;
     name: string;
   };

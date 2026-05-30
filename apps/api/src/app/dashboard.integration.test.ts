@@ -1,15 +1,44 @@
 import {
   DASHBOARD_AGGREGATION_METHOD,
   DASHBOARD_API,
+  DASHBOARD_LINEAGE_FIELD_NAMES,
   DASHBOARD_MEASUREMENT_TYPE,
+  DASHBOARD_RELEASE,
   DASHBOARD_RISK_STATUS,
   DASHBOARD_SCOPES,
+  DASHBOARD_SUMMARY_CARD_CODES,
   DASHBOARD_SUMMARY_CARD_LABELS,
   DASHBOARD_TARGET_DIRECTION,
   DASHBOARD_TARGET_OPERATOR
 } from "@healthcare-kpi-hub/config";
 import { describe, expect, test } from "bun:test";
 import { createTestEnvironment, getCookie } from "../test/test-app";
+
+function expectOrganizationSummaryContract(data: any) {
+  expect(data.meta.contract_version).toBe(DASHBOARD_RELEASE.version);
+  expect(data.meta.release_label).toBe(DASHBOARD_RELEASE.releaseLabel);
+  expect(data.meta.phase_label).toBe(DASHBOARD_RELEASE.phaseLabel);
+  expect(new Date(data.meta.generated_at).toString()).not.toBe("Invalid Date");
+  expect(data.scope.type).toBe(DASHBOARD_SCOPES.ORGANIZATION);
+  expect(typeof data.scope.id).toBe("string");
+  expect(typeof data.scope.name).toBe("string");
+  expect(typeof data.period.id).toBe("string");
+  expect(typeof data.period.key).toBe("string");
+  expect(typeof data.period.status).toBe("string");
+  expect(data.summary_cards.map((card: { code: string }) => card.code)).toEqual([
+    DASHBOARD_SUMMARY_CARD_CODES.total,
+    DASHBOARD_SUMMARY_CARD_CODES.completed,
+    DASHBOARD_SUMMARY_CARD_CODES.pending,
+    DASHBOARD_SUMMARY_CARD_CODES.overdue,
+    DASHBOARD_SUMMARY_CARD_CODES.atRisk,
+    DASHBOARD_SUMMARY_CARD_CODES.achievementPercent
+  ]);
+  expect(typeof data.achievement.numerator).toBe("number");
+  expect(typeof data.achievement.denominator).toBe("number");
+  expect(typeof data.achievement.percent).toBe("number");
+  expect(Array.isArray(data.warnings)).toBeTrue();
+  expect(Array.isArray(data.lineage)).toBeTrue();
+}
 
 describe("dashboard summary integration", () => {
   test("returns a read-only organization summary for a dashboard reader", async () => {
@@ -64,10 +93,18 @@ describe("dashboard summary integration", () => {
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body.success).toBeTrue();
-    expect(body.data.scope.type).toBe(DASHBOARD_SCOPES.ORGANIZATION);
+    expectOrganizationSummaryContract(body.data);
     expect(body.data.summary_cards.some((card: { label: string }) => card.label === DASHBOARD_SUMMARY_CARD_LABELS.total)).toBeTrue();
-    expect(Array.isArray(body.data.warnings)).toBeTrue();
-    expect(Array.isArray(body.data.lineage)).toBeTrue();
+    expect(body.data.warnings.every((warning: Record<string, unknown>) => (
+      typeof warning.code === "string" &&
+      typeof warning.message === "string" &&
+      Object.hasOwn(warning, "kpi_definition_id") &&
+      Object.hasOwn(warning, "kpi_entry_id")
+    ))).toBeTrue();
+    expect(body.data.lineage.length).toBeGreaterThan(0);
+    for (const fieldName of DASHBOARD_LINEAGE_FIELD_NAMES) {
+      expect(Object.hasOwn(body.data.lineage[0], fieldName)).toBeTrue();
+    }
   });
 
   test("forbids access when the role lacks dashboard.read", async () => {

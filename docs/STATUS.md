@@ -60,6 +60,7 @@
 - the approved narrow first phase is metadata foundation plus organization summary backend only
 - Phase 1A implementation has now started in the narrow approved backend scope only
 - current Phase 1A code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests
+- Phase 1A.1 API contract stabilization is in progress for `GET /api/dashboard/summary?scope=organization`
 - dashboard UI, drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
 
 Current controlled pilot package status:
