@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `4d106cd docs: record dashboard owner decision closure`
+**Checkpoint**: `c9fa6d4 docs: accept Phase 1A owner decision baseline`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -55,6 +55,7 @@
 - dashboard implementation gate review baseline is captured in [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
 - dashboard owner decision-closure baseline is captured in [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md)
 - dashboard owner decision acceptance baseline is captured in [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md)
+- dashboard Phase 1A kickoff plan is captured in [DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md)
 - current dashboard gate status is `ready for Phase 1A approval review only`; broad implementation should not open yet
 - if implementation is approved later, the recommended narrow first phase is metadata foundation plus organization summary backend only
 - implementation remains closed until a separate approval explicitly opens Phase 1A code work
