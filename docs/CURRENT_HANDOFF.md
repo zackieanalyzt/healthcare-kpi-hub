@@ -70,6 +70,7 @@ Current operational baseline:
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 - [DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md)
 - [DASHBOARD_PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_LOG.md)
+- [DASHBOARD_PHASE_1B_IMPLEMENTATION_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1B_IMPLEMENTATION_PLAN.md)
 
 ## 4. What Must Not Be Expanded Yet
 
@@ -140,7 +141,8 @@ Recommended next action:
     metadata foundation plus organization summary backend
 26. keep Phase 1A implementation constrained to backend schema, validation, organization summary read model, one read-only API, and focused backend tests only
 27. do not expand current code work into drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes
-28. current Phase 1A.3 work is limited to hardening the read-only Organization Dashboard UI skeleton for owner review and manual browser smoke
+28. Phase 1A is complete: metadata foundation, organization summary backend, stable API contract, organization dashboard UI skeleton, API+Web smoke, and owner pilot rehearsal all passed with 0 defects
+29. Phase 1B planning is now open docs-only; see [DASHBOARD_PHASE_1B_IMPLEMENTATION_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1B_IMPLEMENTATION_PLAN.md) for the two proposed options; owner decision is required before Phase 1B implementation begins
 
 ## 7. Phase 1A.3 Manual Browser Smoke Checklist
 
@@ -160,19 +162,17 @@ Use this checklist for owner or developer review of `/dashboard`:
 ## 8. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint f0190c1 feat: add Phase 1A organization dashboard skeleton.
+We are continuing healthcare-kpi-hub from checkpoint 656fb45 docs: record Phase 1A dashboard owner pilot rehearsal.
 
-The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
+The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, a controlled pilot rehearsal documentation package, and a complete Phase 1A organization dashboard (backend + UI skeleton + owner pilot rehearsal passed).
 
-Current status: Phase 1A.3 UI hardening and owner review prep is in progress within the approved organization summary scope only. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, broad dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes.
-Current triage outcome has progressed through dashboard design, gate review, owner decision acceptance, and Phase 1A kickoff planning. Broad dashboard implementation remains gated.
+Current status: Phase 1A is fully complete. Phase 1B planning is open docs-only. Owner must choose between Option A (department/workgroup backend slice) or Option B (organization dashboard UI refinement) before any Phase 1B implementation starts. Do not start code work without explicit owner approval.
 
-Dashboard visualization is a core future capability, but Phase 1A.3 is limited to hardening the read-only organization dashboard skeleton. Drill-down, charts, cache, and broad dashboard work remain gated beyond this slice. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
-The latest product feedback also requests an organization-first dashboard landing page with drill-down from organization to department, unit, and individual KPI detail. Keep this in docs, but do not implement drill-down during Phase 1A.3.
+Dashboard visualization is a core future capability, but Phase 1B still prohibits chart library, drill-down controls, RBAC changes, import, KPI mutation, and advanced aggregation. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
 
-Hospital authorization must eventually separate organizational position, system role, and hierarchy scope, but the current controlled rehearsal still uses only viewer/editor/manager/admin. See docs/ROLE_AND_SCOPE_REQUIREMENTS.md.
+Hospital authorization must eventually separate organizational position, system role, and hierarchy scope, but the current system still uses only viewer/editor/manager/admin. See docs/ROLE_AND_SCOPE_REQUIREMENTS.md.
 
 If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
-Please read docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_OWNER_DECISIONS.md, docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with narrow Phase 1A.3 UI hardening and owner review prep only. Current code work is limited to readability, semantic markup, loading/empty/error states, owner smoke checklist, and focused frontend tests for `/dashboard`. Do not expand into drill-down, chart library, cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes.
+Please read docs/DASHBOARD_PHASE_1B_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then await the owner Phase 1B option decision before proceeding. Do not implement any Phase 1B code without the owner selecting Option A or Option B.
 ```
