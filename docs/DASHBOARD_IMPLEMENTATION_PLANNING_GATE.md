@@ -2,12 +2,16 @@
 
 **Status**: `gate review only`
 **Phase**: `Dashboard and KPI Visualization Design Phase`
-**Checkpoint baseline**: `92c6afb docs: expand dashboard read-model planning baseline`
+**Checkpoint baseline**: `12eee8a docs: review dashboard implementation gate readiness`
 **Date**: `2026-05-30`
 
 Owner review status:
 
 `Dashboard planning is partially ready for a narrow future implementation opening, but it is not yet ready for broad dashboard implementation approval.`
+
+Decision-closure reference:
+
+- [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md)
 
 ## 1. Purpose
 
@@ -231,6 +235,8 @@ Before any dashboard implementation phase opens, the following should be explici
    - `achievementStatus`
    - `riskStatus`
 8. explicit first implementation slice approval so scope does not expand accidentally
+
+Detailed option-by-option owner decisions are tracked in [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md).
 
 Implementation should still remain narrow even after these are approved.
 

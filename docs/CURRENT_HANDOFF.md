@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `92c6afb docs: expand dashboard read-model planning baseline`
+**Current checkpoint**: `12eee8a docs: review dashboard implementation gate readiness`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -60,6 +60,7 @@ Current operational baseline:
 - [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
 - [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
+- [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md)
 - [DASHBOARD_IMPLEMENTATION_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING.md)
 - [DASHBOARD_SCHEMA_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_SCHEMA_PLANNING.md)
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
@@ -124,11 +125,13 @@ Recommended next action:
 15. use [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md) as the current gate review baseline for implementation readiness, prerequisites, owner decisions, and narrow first-phase recommendation
 16. current gate review status is `partially ready`: do not open broad dashboard implementation yet
 17. if owner later opens implementation, start from the narrowest backend-first slice only after status inclusion, overdue, scope-resolution, and enum decisions are fixed
+18. use [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md) as the decision-closure baseline for unresolved owner choices before Phase 1A
+19. do not open implementation until the owner accepts the required decision set for status inclusion, overdue, scope hierarchy, enum naming, unconfigured KPI handling, minimum warning set, and minimum lineage set
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint 92c6afb docs: expand dashboard read-model planning baseline.
+We are continuing healthcare-kpi-hub from checkpoint 12eee8a docs: review dashboard implementation gate readiness.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
@@ -142,5 +145,5 @@ Hospital authorization must eventually separate organizational position, system 
 
 If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
-Please read docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with dashboard implementation gate review or remaining planning only. Current gate status is partially ready, not implementation-ready for a broad dashboard release. Keep the work docs-only. Do not implement schema, migration, service, query, API, UI, chart library, cache, aggregation, import, dependency, or RBAC changes.
+Please read docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_OWNER_DECISIONS.md, docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with owner decision closure or remaining planning only. Current gate status is partially ready, and implementation must remain closed until the required owner decisions are accepted. Keep the work docs-only. Do not implement schema, migration, service, query, API, UI, chart library, cache, aggregation, import, dependency, or RBAC changes.
 ```
