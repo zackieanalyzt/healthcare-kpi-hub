@@ -351,4 +351,89 @@ describe("dashboard organization summary service", () => {
     expect(Object.values(DASHBOARD_ACHIEVEMENT_STATUS)).toContain(DASHBOARD_ACHIEVEMENT_STATUS.ACHIEVED);
     expect(Object.values(DASHBOARD_RISK_STATUS)).toContain(DASHBOARD_RISK_STATUS.NOT_CONFIGURED);
   });
+
+  test("derives achievementStatus achieved and not_achieved for count measurement type", () => {
+    const { db } = createTestEnvironment();
+    setCurrentPeriodStatuses(db, DASHBOARD_STATUS_RULES.workflowStatusMap.draft);
+    setEntryState(db, "ent_org_bed_occupancy_2026_05", DASHBOARD_STATUS_RULES.workflowStatusMap.submitted, isoOffsetFromNow(5));
+
+    setDefinitionMetadata(db, "kpd_org_bed_occupancy", {
+      measurementType: DASHBOARD_MEASUREMENT_TYPE.COUNT,
+      measurementUnit: "cases",
+      targetOperator: DASHBOARD_TARGET_OPERATOR.GTE,
+      targetValue: "10",
+      targetDirection: DASHBOARD_TARGET_DIRECTION.HIGHER_IS_BETTER,
+      targetAnnotation: "At least 10 cases.",
+      aggregationMethod: DASHBOARD_AGGREGATION_METHOD.SUM
+    });
+
+    db.query(
+      `UPDATE entry_values SET actual_value = '12' WHERE kpi_entry_id = 'ent_org_bed_occupancy_2026_05'`
+    ).run();
+    const summaryAchieved = getOrganizationDashboardSummary(db);
+    expect(summaryAchieved.achievement.numerator).toBe(1);
+    expect(summaryCardValue(summaryAchieved, DASHBOARD_SUMMARY_CARD_CODES.achievementPercent)).toBe(100);
+
+    db.query(
+      `UPDATE entry_values SET actual_value = '5' WHERE kpi_entry_id = 'ent_org_bed_occupancy_2026_05'`
+    ).run();
+    const summaryNotAchieved = getOrganizationDashboardSummary(db);
+    expect(summaryNotAchieved.achievement.numerator).toBe(0);
+    expect(summaryCardValue(summaryNotAchieved, DASHBOARD_SUMMARY_CARD_CODES.achievementPercent)).toBe(0);
+  });
+
+  test("derives achievementStatus achieved and not_achieved for milestone measurement type", () => {
+    const { db } = createTestEnvironment();
+    setCurrentPeriodStatuses(db, DASHBOARD_STATUS_RULES.workflowStatusMap.draft);
+    setEntryState(db, "ent_org_bed_occupancy_2026_05", DASHBOARD_STATUS_RULES.workflowStatusMap.submitted, isoOffsetFromNow(5));
+
+    setDefinitionMetadata(db, "kpd_org_bed_occupancy", {
+      measurementType: DASHBOARD_MEASUREMENT_TYPE.MILESTONE,
+      measurementUnit: "level",
+      targetOperator: DASHBOARD_TARGET_OPERATOR.MILESTONE_AT_LEAST,
+      targetValue: "3",
+      targetDirection: DASHBOARD_TARGET_DIRECTION.MILESTONE_PROGRESSION,
+      targetAnnotation: "Reach milestone level 3.",
+      aggregationMethod: DASHBOARD_AGGREGATION_METHOD.LATEST_LEVEL,
+      milestoneLevels: JSON.stringify({ levels: ["planning", "design", "implementation", "deployed"] })
+    });
+
+    db.query(
+      `UPDATE entry_values SET actual_value = '3' WHERE kpi_entry_id = 'ent_org_bed_occupancy_2026_05'`
+    ).run();
+    const summaryAtTarget = getOrganizationDashboardSummary(db);
+    expect(summaryAtTarget.achievement.numerator).toBe(1);
+
+    db.query(
+      `UPDATE entry_values SET actual_value = '4' WHERE kpi_entry_id = 'ent_org_bed_occupancy_2026_05'`
+    ).run();
+    const summaryAboveTarget = getOrganizationDashboardSummary(db);
+    expect(summaryAboveTarget.achievement.numerator).toBe(1);
+
+    db.query(
+      `UPDATE entry_values SET actual_value = '2' WHERE kpi_entry_id = 'ent_org_bed_occupancy_2026_05'`
+    ).run();
+    const summaryBelowTarget = getOrganizationDashboardSummary(db);
+    expect(summaryBelowTarget.achievement.numerator).toBe(0);
+  });
+
+  test("emits stale_progress_data warning when entry updated_at exceeds the stale threshold", () => {
+    const { db } = createTestEnvironment();
+    setCurrentPeriodStatuses(db, DASHBOARD_STATUS_RULES.workflowStatusMap.draft);
+    setEntryState(db, "ent_org_bed_occupancy_2026_05", DASHBOARD_STATUS_RULES.workflowStatusMap.submitted, isoOffsetFromNow(5));
+
+    const fifteenDaysAgo = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString();
+    db.query(
+      `UPDATE kpi_entries SET updated_at = ?1 WHERE id = 'ent_org_bed_occupancy_2026_05'`
+    ).run(fifteenDaysAgo);
+
+    const summaryStale = getOrganizationDashboardSummary(db);
+    expect(summaryStale.warnings.some((w) => w.code === DASHBOARD_WARNING_CODE.STALE_PROGRESS_DATA)).toBeTrue();
+
+    db.query(
+      `UPDATE kpi_entries SET updated_at = ?1 WHERE id = 'ent_org_bed_occupancy_2026_05'`
+    ).run(new Date().toISOString());
+    const summaryFresh = getOrganizationDashboardSummary(db);
+    expect(summaryFresh.warnings.every((w) => w.code !== DASHBOARD_WARNING_CODE.STALE_PROGRESS_DATA)).toBeTrue();
+  });
 });

@@ -143,6 +143,7 @@ function compareNumeric(
 ): boolean | null {
   switch (operator) {
     case DASHBOARD_TARGET_OPERATOR.GTE:
+    case DASHBOARD_TARGET_OPERATOR.MILESTONE_AT_LEAST:
       return actualValue >= targetValue;
     case DASHBOARD_TARGET_OPERATOR.GT:
       return actualValue > targetValue;
@@ -151,6 +152,7 @@ function compareNumeric(
     case DASHBOARD_TARGET_OPERATOR.LT:
       return actualValue < targetValue;
     case DASHBOARD_TARGET_OPERATOR.EQ:
+    case DASHBOARD_TARGET_OPERATOR.MILESTONE_EXACT:
       return actualValue === targetValue;
     default:
       return null;
