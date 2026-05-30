@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `a2aa014 feat: stabilize Phase 1A dashboard API contract`
+**Checkpoint**: `f0190c1 feat: add Phase 1A organization dashboard skeleton`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -60,8 +60,8 @@
 - the approved narrow first phase is metadata foundation plus organization summary backend only
 - Phase 1A implementation has now started in the narrow approved backend scope only
 - current Phase 1A code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests
-- Phase 1A.2 Organization Dashboard UI skeleton is in progress for `GET /api/dashboard/summary?scope=organization`
-- only the read-only organization dashboard skeleton is in UI scope; drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
+- Phase 1A.3 UI hardening and owner review prep is in progress for `/dashboard`
+- only the read-only organization dashboard skeleton polish is in UI scope; drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
 
 Current controlled pilot package status:
 
@@ -78,7 +78,7 @@ Current controlled pilot package status:
 Dashboard requirement note:
 
 - `healthcare-kpi-hub` is both an operational KPI management system and a future KPI dashboard and visualization platform
-- broad dashboard implementation remains deferred; narrow Phase 1A.2 organization summary UI skeleton work is active under the approved scope guard
+- broad dashboard implementation remains deferred; narrow Phase 1A.3 organization summary UI hardening work is active under the approved scope guard
 - owner-led rehearsal feedback adds a future requirement for an organization-first dashboard landing page with hierarchical drill-down
 - future dashboard design should support organization -> department/workgroup -> unit/team -> individual drill-down with KPI summary, status, progress, and annotation visibility
 - threshold rule baseline now distinguishes `achievementStatus` from `riskStatus`, and keeps `threshold_rules` optional rather than mandatory for every KPI

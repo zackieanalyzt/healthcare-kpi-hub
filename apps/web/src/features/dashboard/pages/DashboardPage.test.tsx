@@ -87,6 +87,24 @@ function collectText(node: unknown): string {
   return "";
 }
 
+function collectPropValues(node: unknown, propName: string): string[] {
+  if (node === null || node === undefined || typeof node !== "object") {
+    return [];
+  }
+
+  if (Array.isArray(node)) {
+    return node.flatMap((child) => collectPropValues(child, propName));
+  }
+
+  if ("props" in node) {
+    const props = (node as { props?: Record<string, unknown> }).props;
+    const currentValue = typeof props?.[propName] === "string" ? [props[propName]] : [];
+    return currentValue.concat(collectPropValues(props?.children, propName));
+  }
+
+  return [];
+}
+
 describe("DashboardPage", () => {
   test("is defined", () => {
     expect(DashboardPage).toBeDefined();
@@ -95,10 +113,13 @@ describe("DashboardPage", () => {
 
 describe("DashboardView", () => {
   test("renders loading state", () => {
-    const text = collectText(DashboardView({ state: { status: "loading" } }));
+    const view = DashboardView({ state: { status: "loading" } });
+    const text = collectText(view);
+    const ids = collectPropValues(view, "id");
 
     expect(text).toContain("Organization Dashboard");
     expect(text).toContain("Loading organization dashboard");
+    expect(ids).toContain("dashboard-title");
   });
 
   test("renders organization dashboard summary cards", () => {
@@ -127,11 +148,13 @@ describe("DashboardView", () => {
     const text = collectText(DashboardView({ state: { status: "ready", summary } }));
 
     expect(text).toContain("No operational KPI is included");
+    expect(text).toContain("No Operational KPI Yet");
   });
 
   test("renders error state", () => {
     const text = collectText(DashboardView({ state: { status: "error", message: "API unavailable" } }));
 
+    expect(text).toContain("Unable to Load Dashboard");
     expect(text).toContain("Dashboard error");
     expect(text).toContain("API unavailable");
   });
@@ -141,6 +164,7 @@ describe("DashboardView", () => {
 
     expect(text).toContain(DASHBOARD_WARNING_CODE.MISSING_THRESHOLD_RULES);
     expect(text).toContain(DASHBOARD_WARNING_MESSAGES[DASHBOARD_WARNING_CODE.MISSING_THRESHOLD_RULES]);
+    expect(text).toContain("Data Quality Warnings");
   });
 
   test("renders meta and lineage information", () => {
@@ -149,6 +173,7 @@ describe("DashboardView", () => {
     expect(text).toContain(DASHBOARD_RELEASE.version);
     expect(text).toContain(DASHBOARD_RELEASE.phaseLabel);
     expect(text).toContain("Lineage Summary");
+    expect(text).toContain("Contract Meta");
     expect(text).toContain(DASHBOARD_LINEAGE_FIELD_NAMES[0]);
     expect(text).toContain("ent_org_bed_occupancy_2026_05");
   });

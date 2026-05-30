@@ -34,21 +34,36 @@ const panelStyle = {
   padding: "1rem"
 } as const;
 
+const subtleTextStyle = {
+  color: "#4b5563"
+} as const;
+
+const sectionHeaderStyle = {
+  marginTop: 0,
+  marginBottom: "0.75rem"
+} as const;
+
 export function DashboardView({ state }: { state: DashboardLoadState }) {
   if (state.status === "loading") {
     return (
-      <section>
-        <h1>Organization Dashboard</h1>
-        <p>Loading organization dashboard...</p>
+      <section aria-labelledby="dashboard-title" style={{ display: "grid", gap: "1rem" }}>
+        <h1 id="dashboard-title">Organization Dashboard</h1>
+        <article aria-live="polite" style={panelStyle}>
+          <h2 style={sectionHeaderStyle}>Loading</h2>
+          <p style={{ margin: 0 }}>Loading organization dashboard...</p>
+        </article>
       </section>
     );
   }
 
   if (state.status === "error") {
     return (
-      <section>
-        <h1>Organization Dashboard</h1>
-        <p>Dashboard error: {state.message}</p>
+      <section aria-labelledby="dashboard-title" style={{ display: "grid", gap: "1rem" }}>
+        <h1 id="dashboard-title">Organization Dashboard</h1>
+        <article role="alert" style={panelStyle}>
+          <h2 style={sectionHeaderStyle}>Unable to Load Dashboard</h2>
+          <p style={{ margin: 0 }}>Dashboard error: {state.message}</p>
+        </article>
       </section>
     );
   }
@@ -57,15 +72,16 @@ export function DashboardView({ state }: { state: DashboardLoadState }) {
   const lineagePreview = summary.lineage.slice(0, 3);
 
   return (
-    <section style={{ display: "grid", gap: "1rem" }}>
+    <section aria-labelledby="dashboard-title" style={{ display: "grid", gap: "1rem" }}>
       <header>
-        <h1 style={{ marginBottom: "0.25rem" }}>Organization Dashboard</h1>
-        <p style={{ margin: 0, color: "#4b5563" }}>
-          {summary.scope.name} / {summary.period.key} / {summary.period.status}
+        <h1 id="dashboard-title" style={{ marginBottom: "0.25rem" }}>Organization Dashboard</h1>
+        <p style={{ margin: 0, ...subtleTextStyle }}>
+          {summary.scope.name} / Period {summary.period.key} / Status {summary.period.status}
         </p>
       </header>
 
       <div
+        aria-label="Organization KPI summary cards"
         style={{
           display: "grid",
           gap: "0.75rem",
@@ -73,52 +89,70 @@ export function DashboardView({ state }: { state: DashboardLoadState }) {
         }}
       >
         {summary.summary_cards.map((card) => (
-          <article key={card.code} style={panelStyle}>
-            <div style={{ color: "#4b5563", fontSize: "0.9rem" }}>{card.label}</div>
+          <article key={card.code} aria-label={`${card.label}: ${card.value}`} style={panelStyle}>
+            <div style={{ ...subtleTextStyle, fontSize: "0.9rem" }}>{card.label}</div>
             <div style={{ fontSize: "1.75rem", fontWeight: 700 }}>{card.value}</div>
           </article>
         ))}
       </div>
 
       {isEmptyDashboard(summary) ? (
-        <article style={panelStyle}>
-          <h2 style={{ marginTop: 0 }}>Empty State</h2>
+        <article aria-labelledby="dashboard-empty-title" style={panelStyle}>
+          <h2 id="dashboard-empty-title" style={sectionHeaderStyle}>No Operational KPI Yet</h2>
           <p style={{ margin: 0 }}>No operational KPI is included in the organization summary yet.</p>
         </article>
       ) : null}
 
-      <article style={panelStyle}>
-        <h2 style={{ marginTop: 0 }}>Achievement</h2>
-        <div>Numerator: {summary.achievement.numerator}</div>
-        <div>Denominator: {summary.achievement.denominator}</div>
-        <div>Achievement: {summary.achievement.percent}%</div>
+      <article aria-labelledby="achievement-title" style={panelStyle}>
+        <h2 id="achievement-title" style={sectionHeaderStyle}>Achievement Summary</h2>
+        <dl style={{ display: "grid", gap: "0.5rem", margin: 0, gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))" }}>
+          <div>
+            <dt style={subtleTextStyle}>Numerator</dt>
+            <dd style={{ margin: 0, fontWeight: 700 }}>{summary.achievement.numerator}</dd>
+          </div>
+          <div>
+            <dt style={subtleTextStyle}>Denominator</dt>
+            <dd style={{ margin: 0, fontWeight: 700 }}>{summary.achievement.denominator}</dd>
+          </div>
+          <div>
+            <dt style={subtleTextStyle}>Achievement</dt>
+            <dd style={{ margin: 0, fontWeight: 700 }}>{summary.achievement.percent}%</dd>
+          </div>
+        </dl>
       </article>
 
-      <article style={panelStyle}>
-        <h2 style={{ marginTop: 0 }}>Warnings</h2>
+      <article aria-labelledby="warnings-title" style={panelStyle}>
+        <h2 id="warnings-title" style={sectionHeaderStyle}>Data Quality Warnings</h2>
         {summary.warnings.length === 0 ? (
           <p style={{ margin: 0 }}>No dashboard data quality warnings.</p>
         ) : (
-          <div style={{ display: "grid", gap: "0.5rem" }}>
+          <div role="list" style={{ display: "grid", gap: "0.5rem" }}>
             {summary.warnings.map((warning, index) => (
-              <div key={`${warning.code}-${warning.kpi_entry_id ?? index}`}>
-                <strong>{warning.code}</strong>: {warning.message}
+              <div key={`${warning.code}-${warning.kpi_entry_id ?? index}`} role="listitem">
+                <strong>{warning.code}</strong>
+                <div>{warning.message}</div>
+                <div style={{ ...subtleTextStyle, fontSize: "0.9rem" }}>
+                  KPI: {warning.kpi_definition_id ?? "-"} / Entry: {warning.kpi_entry_id ?? "-"}
+                </div>
               </div>
             ))}
           </div>
         )}
       </article>
 
-      <article style={panelStyle}>
-        <h2 style={{ marginTop: 0 }}>Lineage Summary</h2>
+      <article aria-labelledby="lineage-title" style={panelStyle}>
+        <h2 id="lineage-title" style={sectionHeaderStyle}>Lineage Summary</h2>
         <div>Records: {summary.lineage.length}</div>
-        <div>Fields: {DASHBOARD_LINEAGE_FIELD_NAMES.join(", ")}</div>
+        <details style={{ marginTop: "0.5rem" }}>
+          <summary>Lineage fields</summary>
+          <div style={{ marginTop: "0.5rem", ...subtleTextStyle }}>{DASHBOARD_LINEAGE_FIELD_NAMES.join(", ")}</div>
+        </details>
         {lineagePreview.length === 0 ? (
           <p style={{ marginBottom: 0 }}>No lineage records are available for the current organization summary.</p>
         ) : (
-          <div style={{ display: "grid", gap: "0.5rem", marginTop: "0.75rem" }}>
+          <div role="list" style={{ display: "grid", gap: "0.5rem", marginTop: "0.75rem" }}>
             {lineagePreview.map((item) => (
-              <div key={item.assignment_id}>
+              <div key={item.assignment_id} role="listitem">
                 {item.kpi_definition_id} / {item.assignment_id} / {item.scope_type}
               </div>
             ))}
@@ -126,12 +160,26 @@ export function DashboardView({ state }: { state: DashboardLoadState }) {
         )}
       </article>
 
-      <article style={panelStyle}>
-        <h2 style={{ marginTop: 0 }}>Contract Meta</h2>
-        <div>Contract: {summary.meta.contract_version}</div>
-        <div>Phase: {summary.meta.phase_label}</div>
-        <div>Release: {summary.meta.release_label}</div>
-        <div>Generated: {formatGeneratedAt(summary.meta.generated_at)}</div>
+      <article aria-labelledby="meta-title" style={panelStyle}>
+        <h2 id="meta-title" style={sectionHeaderStyle}>Contract Meta</h2>
+        <dl style={{ display: "grid", gap: "0.5rem", margin: 0 }}>
+          <div>
+            <dt style={subtleTextStyle}>Contract</dt>
+            <dd style={{ margin: 0 }}>{summary.meta.contract_version}</dd>
+          </div>
+          <div>
+            <dt style={subtleTextStyle}>Phase</dt>
+            <dd style={{ margin: 0 }}>{summary.meta.phase_label}</dd>
+          </div>
+          <div>
+            <dt style={subtleTextStyle}>Release</dt>
+            <dd style={{ margin: 0 }}>{summary.meta.release_label}</dd>
+          </div>
+          <div>
+            <dt style={subtleTextStyle}>Generated</dt>
+            <dd style={{ margin: 0 }}>{formatGeneratedAt(summary.meta.generated_at)}</dd>
+          </div>
+        </dl>
       </article>
     </section>
   );
