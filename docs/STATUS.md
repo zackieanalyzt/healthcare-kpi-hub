@@ -60,7 +60,7 @@
 - the approved narrow first phase is metadata foundation plus organization summary backend only
 - Phase 1A implementation has now started in the narrow approved backend scope only
 - current Phase 1A code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests
-- Phase 1A.5 pilot rehearsal preparation checklist is completed; ready for owner-led rehearsal of `/dashboard` using [DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md)
+- Phase 1A.6 owner controlled pilot rehearsal has been executed and passed successfully with 5 pass / 0 defects using [DASHBOARD_PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_LOG.md)
 - only the read-only organization dashboard skeleton polish is in UI scope; drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
 
 Current controlled pilot package status:
@@ -73,7 +73,7 @@ Current controlled pilot package status:
 - move to `Ready for controlled pilot rehearsal execution pending tester scheduling` only after tester list, tester-role mapping, rehearsal date/time, and secure credential distribution are confirmed
 - rehearsal date/time is confirmed for `2026-05-29 20:31 Asia/Bangkok (+07)` with expected duration `90 minutes`
 - seed/test credentials are handled securely out-of-band and are not stored in repository documents
-- owner-led internal dry run executed with `14 pass / 0 fail / 0 blocked / 0 defects`
+- owner-led internal dry run executed with `14 pass / 0 fail / 0 blocked / 0 defects (operational)`, `5 pass / 0 fail / 0 blocked / 0 defects (dashboard Phase 1A)`
 
 Dashboard requirement note:
 

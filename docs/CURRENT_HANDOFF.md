@@ -17,9 +17,9 @@
 - current tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
 - this rehearsal validates workflow readiness before inviting additional operational testers
 - this is not external operational user pilot feedback
-- rehearsal date is `2026-05-29` with start `20:31` in `Asia/Bangkok (+07)` and expected duration `90 minutes`
+- rehearsal date is `2026-05-29` (operational) and `2026-05-30` (dashboard Phase 1A)
 - seed/test credentials are handled securely out-of-band and are not stored in repository documents
-- owner-led dry run results: `14 pass / 0 fail / 0 blocked / 0 defects`
+- owner-led dry run results: `14 pass / 0 fail / 0 blocked / 0 defects (operational)`, `5 pass / 0 fail / 0 blocked / 0 defects (dashboard Phase 1A)`
 
 If checkpoint alignment, evidence capture, ownership fields, and tester scheduling are confirmed, this package can move to:
 
@@ -69,6 +69,7 @@ Current operational baseline:
 - [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 - [DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md)
+- [DASHBOARD_PILOT_REHEARSAL_LOG.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_LOG.md)
 
 ## 4. What Must Not Be Expanded Yet
 
