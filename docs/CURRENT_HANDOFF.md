@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `c9fa6d4 docs: accept Phase 1A owner decision baseline`
+**Current checkpoint**: `c2061a0 docs: plan Phase 1A implementation kickoff`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -11,7 +11,7 @@
 - `Ready for owner-led controlled rehearsal execution`
 - not ready for broad rollout
 - feedback must come before feature expansion
-- dashboard visualization requirement is captured as a gated future capability
+- dashboard visualization requirement is captured as a gated future capability; narrow Phase 1A backend work is in progress
 - hospital role and scope model is captured as a gated future capability
 - current rehearsal type is `owner-led controlled rehearsal / internal dry run`
 - current tester mapping is `T-01 = project owner / facilitator` across `viewer`, `editor`, `manager`, and `admin`
@@ -76,7 +76,7 @@ Do not expand into these areas before pilot feedback triage:
 - import workflow
 - KPI template creation or import
 - operational KPI value import
-- dashboard or aggregation
+- broad dashboard, drill-down, visualization, or advanced aggregation
 - assignment editing
 - due date editing
 - target value editing
@@ -93,7 +93,7 @@ Deferred requirement to remember:
 - Template Import affects `KPIDefinition`
 - Operational KPI Value Import affects `KPIEntry` and `EntryValue`
 - future import must not bypass workflow, validation, concurrency, or audit
-- future dashboard visualization is a core product capability, but implementation is gated until controlled pilot rehearsal results and feedback triage are recorded
+- future dashboard visualization is a core product capability, but broad implementation remains gated beyond the active narrow Phase 1A backend scope
 - owner-led rehearsal feedback adds a future requirement for an organization-first dashboard landing page with hierarchy drill-down
 - future hospital role and authorization scope redesign is required, but implementation is gated until controlled pilot rehearsal results and feedback triage are recorded
 
@@ -112,7 +112,7 @@ Recommended next action:
 
 1. treat triage as completed for the owner-led dry run and keep the decision recorded in [PILOT_FEEDBACK_TRIAGE.md](D:/home/github/healthcare-kpi-hub/docs/PILOT_FEEDBACK_TRIAGE.md)
 2. open `Dashboard and KPI Visualization Design Phase` only
-3. keep scope guard active: no dashboard implementation, no chart library, no dashboard API, no aggregation service, and no landing page behavior change yet
+3. keep scope guard active: Phase 1A allows only metadata foundation, organization summary backend, one read-only API, and focused backend tests
 4. keep role-model feedback and dashboard landing feedback as design inputs unless a future run exposes a real workflow safety defect
 5. use the dashboard design docs as the current working set for personas, UX flow, read-model design, and API contract draft; keep all design metadata-driven and avoid hardcoding
 6. use the KPI measurement model requirement as a prerequisite for dashboard calculation, target-rule design, visualization choice, and future import design
@@ -123,34 +123,38 @@ Recommended next action:
 11. use [DASHBOARD_IMPLEMENTATION_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING.md) as the planning baseline for schema, read-model, API, threshold, permission, and test strategy decisions
 12. use [DASHBOARD_SCHEMA_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_SCHEMA_PLANNING.md) as the schema/metadata placement baseline before any migration approval is requested
 13. use [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md) as the current planning baseline for source inputs, read-model levels, achievement and risk derivation, status inclusion, lineage, data quality warnings, and first-pass read-model strategy recommendation
-14. keep the dashboard read-model work strictly in `planning only` status: no read-model service, query, API, schema, UI, cache, or aggregation implementation is authorized
+14. keep dashboard implementation limited to the approved Phase 1A backend slice; no UI, drill-down, cache, or advanced aggregation implementation is authorized
 15. use [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md) as the current gate review baseline for implementation readiness, prerequisites, owner decisions, and narrow first-phase recommendation
-16. current gate review status is `partially ready`: do not open broad dashboard implementation yet
-17. if owner later opens implementation, start from the narrowest backend-first slice only after status inclusion, overdue, scope-resolution, and enum decisions are fixed
+16. broad dashboard implementation remains out of scope even though the narrow Phase 1A backend slice is now open
+17. keep all Phase 1A code work aligned with the accepted status inclusion, overdue, scope-resolution, and enum baselines
 18. use [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md) as the decision-closure baseline for unresolved owner choices before Phase 1A
 19. do not open implementation until the owner accepts the required decision set for status inclusion, overdue, scope hierarchy, enum naming, unconfigured KPI handling, minimum warning set, and minimum lineage set
-20. use [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md) as the accepted baseline for Phase 1A approval review
-21. current dashboard state is ready for `Phase 1A approval review only`, not for broad implementation and not for code work yet
-22. if Phase 1A is approved later, keep the boundary narrow: metadata foundation plus organization summary backend only
+20. use [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md) as the accepted baseline that now governs active Phase 1A implementation work
+21. current dashboard state is in active narrow-scope Phase 1A backend implementation, not broad dashboard implementation
+22. keep the active Phase 1A boundary narrow: metadata foundation plus organization summary backend only
 23. use [DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md) as the kickoff plan for the narrow implementation opening
-24. do not start code work until a separate approval explicitly opens Phase 1A implementation
+24. Phase 1A code work is now open only for the approved narrow backend slice
+25. Phase 1A implementation has now started in the narrow approved backend scope only:
+    metadata foundation plus organization summary backend
+26. keep Phase 1A implementation constrained to backend schema, validation, organization summary read model, one read-only API, and focused backend tests only
+27. do not expand current code work into dashboard UI, drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes
 
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint c9fa6d4 docs: accept Phase 1A owner decision baseline.
+We are continuing healthcare-kpi-hub from checkpoint c2061a0 docs: plan Phase 1A implementation kickoff.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 
-Current status: Ready for owner-led controlled rehearsal execution, with dashboard visualization and hospital role-and-scope requirements captured as gated future capabilities. The current rehearsal is an owner-led controlled rehearsal / internal dry run using T-01 as project owner / facilitator across viewer, editor, manager, and admin. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes before pilot feedback triage.
-Current triage outcome recommends opening `Dashboard and KPI Visualization Design Phase` only. Dashboard implementation remains gated.
+Current status: Phase 1A implementation is in progress within the approved narrow backend scope only. The owner-led dry run on 2026-05-29 passed all 14 scenarios with no defects opened. Do not expand into import, broad dashboard implementation, assignment, due-date, unlock workflow, or advanced permission changes.
+Current triage outcome has progressed through dashboard design, gate review, owner decision acceptance, and Phase 1A kickoff planning. Broad dashboard implementation remains gated.
 
-Dashboard visualization is a core future capability, but it remains gated until controlled pilot rehearsal results and feedback triage exist. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
-The latest product feedback also requests an organization-first dashboard landing page with drill-down from organization to department, unit, and individual KPI detail. Capture this in docs and triage, but do not implement it during the current rehearsal pass.
+Dashboard visualization is a core future capability, but UI, drill-down, charts, cache, and broad dashboard work remain gated beyond Phase 1A. See docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md.
+The latest product feedback also requests an organization-first dashboard landing page with drill-down from organization to department, unit, and individual KPI detail. Keep this in docs, but do not implement it during Phase 1A.
 
 Hospital authorization must eventually separate organizational position, system role, and hierarchy scope, but the current controlled rehearsal still uses only viewer/editor/manager/admin. See docs/ROLE_AND_SCOPE_REQUIREMENTS.md.
 
 If continuing on another machine such as a MacBook, read docs/MACBOOK_CODEX_HANDOFF.md as well.
 
-Please read docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_OWNER_DECISIONS.md, docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with Phase 1A approval review or remaining planning only. Current dashboard state is ready for Phase 1A implementation approval review, but implementation remains closed until a separate approval opens code work. Keep the work docs-only unless a later approval explicitly starts Phase 1A implementation. Do not implement schema, migration, service, query, API, UI, chart library, cache, aggregation, import, dependency, or RBAC changes.
+Please read docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md, docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md, docs/DASHBOARD_OWNER_DECISIONS.md, docs/DASHBOARD_SCHEMA_PLANNING.md, docs/DASHBOARD_READ_MODEL_DESIGN.md, docs/DASHBOARD_IMPLEMENTATION_PLANNING.md, docs/DASHBOARD_API_CONTRACT_DRAFT.md, docs/KPI_MEASUREMENT_MODEL_DECISIONS.md, docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md, docs/CURRENT_HANDOFF.md, and docs/STATUS.md first, then continue with the narrow Phase 1A backend implementation only. Current code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests. Do not expand into dashboard UI, drill-down, chart library, cache, import, RBAC, advanced aggregation, or KPI mutation behavior changes.
 ```

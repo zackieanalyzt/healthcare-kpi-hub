@@ -1,0 +1,1 @@
+export { getOrganizationDashboardSummary } from "./service";

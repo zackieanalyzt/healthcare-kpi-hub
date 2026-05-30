@@ -1,0 +1,15 @@
+ALTER TABLE kpi_definitions ADD COLUMN measurement_type TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN measurement_unit TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN target_operator TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN target_value TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN target_direction TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN target_annotation TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN aggregation_method TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN threshold_rules TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN milestone_levels TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN numerator_label TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN denominator_label TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN denominator_source TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN default_denominator_value TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN calculation_formula_label TEXT;
+ALTER TABLE kpi_definitions ADD COLUMN preferred_chart_type TEXT;

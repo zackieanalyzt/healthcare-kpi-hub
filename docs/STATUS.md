@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `c9fa6d4 docs: accept Phase 1A owner decision baseline`
+**Checkpoint**: `c2061a0 docs: plan Phase 1A implementation kickoff`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -23,7 +23,7 @@
 - import workflow
 - KPI template import design and implementation
 - operational KPI value import design and implementation
-- dashboard or aggregation
+- broad dashboard or advanced aggregation
 - dashboard visualization implementation
 - hospital role and authorization scope redesign implementation
 - assignment editing
@@ -42,7 +42,7 @@
 - capture future dashboard requirements in [DASHBOARD_VISUALIZATION_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_VISUALIZATION_REQUIREMENTS.md)
 - capture future hospital role and scope requirements in [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
 - triage outcome now supports `Dashboard and KPI Visualization Design Phase` as the recommended next phase
-- design only; no dashboard implementation yet
+- broad dashboard design remains gated; narrow Phase 1A backend implementation has started
 - current design docs include [DASHBOARD_DESIGN_PHASE_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_DESIGN_PHASE_PLAN.md), [DASHBOARD_UX_FLOW.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_UX_FLOW.md), [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md), and [DASHBOARD_API_CONTRACT_DRAFT.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_API_CONTRACT_DRAFT.md)
 - KPI semantics design is additionally captured in [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - first-pass KPI metadata baseline is captured in [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
@@ -51,14 +51,16 @@
 - dashboard implementation planning baseline is captured in [DASHBOARD_IMPLEMENTATION_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING.md)
 - dashboard schema planning baseline is captured in [DASHBOARD_SCHEMA_PLANNING.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_SCHEMA_PLANNING.md)
 - dashboard read-model planning baseline is captured in [DASHBOARD_READ_MODEL_DESIGN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_READ_MODEL_DESIGN.md)
-- current dashboard phase remains `planning only`; no schema, API, read-model service, aggregation, cache, or UI implementation is approved
+- current dashboard phase is `Phase 1A implementation in progress`; only the narrow backend slice is approved
 - dashboard implementation gate review baseline is captured in [DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_IMPLEMENTATION_PLANNING_GATE.md)
 - dashboard owner decision-closure baseline is captured in [DASHBOARD_OWNER_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISIONS.md)
 - dashboard owner decision acceptance baseline is captured in [DASHBOARD_OWNER_DECISION_ACCEPTANCE.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_OWNER_DECISION_ACCEPTANCE.md)
 - dashboard Phase 1A kickoff plan is captured in [DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PHASE_1A_IMPLEMENTATION_PLAN.md)
-- current dashboard gate status is `ready for Phase 1A approval review only`; broad implementation should not open yet
-- if implementation is approved later, the recommended narrow first phase is metadata foundation plus organization summary backend only
-- implementation remains closed until a separate approval explicitly opens Phase 1A code work
+- current dashboard gate status is `Phase 1A implementation in progress within narrow backend scope only`; broad implementation should not open
+- the approved narrow first phase is metadata foundation plus organization summary backend only
+- Phase 1A implementation has now started in the narrow approved backend scope only
+- current Phase 1A code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests
+- dashboard UI, drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
 
 Current controlled pilot package status:
 
@@ -75,7 +77,7 @@ Current controlled pilot package status:
 Dashboard requirement note:
 
 - `healthcare-kpi-hub` is both an operational KPI management system and a future KPI dashboard and visualization platform
-- dashboard implementation is deferred until controlled pilot rehearsal results and feedback triage are recorded
+- broad dashboard implementation remains deferred; narrow Phase 1A backend work is active under the approved scope guard
 - owner-led rehearsal feedback adds a future requirement for an organization-first dashboard landing page with hierarchical drill-down
 - future dashboard design should support organization -> department/workgroup -> unit/team -> individual drill-down with KPI summary, status, progress, and annotation visibility
 - threshold rule baseline now distinguishes `achievementStatus` from `riskStatus`, and keeps `threshold_rules` optional rather than mandatory for every KPI

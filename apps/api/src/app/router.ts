@@ -1,4 +1,8 @@
-import { PERMISSIONS } from "@healthcare-kpi-hub/config";
+import {
+  DASHBOARD_API,
+  DASHBOARD_SCOPES,
+  PERMISSIONS
+} from "@healthcare-kpi-hub/config";
 import type { PermissionCode } from "@healthcare-kpi-hub/shared-types";
 import { jsonFailure, jsonSuccess } from "../domain/shared/http";
 import type { AppContext } from "./types";
@@ -11,6 +15,7 @@ import {
   logoutSession
 } from "../modules/auth/service";
 import { recordAuditEvent } from "../modules/audit/service";
+import { getOrganizationDashboardSummary } from "../modules/dashboard/service";
 import { getKpiEntryDetail, updateKpiEntry } from "../modules/kpi-entries/service";
 import { getKpiPageDetail, getNavigationTree } from "../modules/navigation/service";
 import { getWorklist } from "../modules/worklist/service";
@@ -354,6 +359,32 @@ function handleWorklist(request: Request, context: AppContext): Response {
   );
 }
 
+function handleDashboardSummary(
+  request: Request,
+  context: AppContext
+): Response {
+  const authFailure = requirePermission(context, PERMISSIONS.DASHBOARD_READ);
+  if (authFailure) {
+    return authFailure;
+  }
+
+  const url = new URL(request.url);
+  const scope = (url.searchParams.get("scope") ?? DASHBOARD_SCOPES.ORGANIZATION).trim();
+
+  if (scope !== DASHBOARD_SCOPES.ORGANIZATION) {
+    throw new AppError("VALIDATION_FAILED", "Request validation failed.", 400, [
+      { field: "scope", issue: "unsupported_value" }
+    ]);
+  }
+
+  return jsonSuccess(
+    getOrganizationDashboardSummary(context.db, {
+      periodKey: url.searchParams.get("period_key") ?? undefined
+    }),
+    context.requestId
+  );
+}
+
 function handleKpiPageDetail(
   context: AppContext,
   params: RouteParams
@@ -478,6 +509,13 @@ export function createRouter(): RouteDefinition[] {
       auth: "authenticated",
       permission: PERMISSIONS.WORKLIST_READ,
       handler: (request, context) => handleWorklist(request, context)
+    },
+    {
+      method: "GET",
+      pathname: DASHBOARD_API.summaryPath,
+      auth: "authenticated",
+      permission: PERMISSIONS.DASHBOARD_READ,
+      handler: (request, context) => handleDashboardSummary(request, context)
     },
     {
       method: "GET",
