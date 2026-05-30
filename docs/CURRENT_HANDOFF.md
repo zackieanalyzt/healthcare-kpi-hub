@@ -1,7 +1,7 @@
 # Current Handoff
 
 **Project**: `healthcare-kpi-hub`
-**Current checkpoint**: `c2061a0 docs: plan Phase 1A implementation kickoff`
+**Current checkpoint**: `deeb0cc feat: implement Phase 1A dashboard summary backend`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
@@ -142,7 +142,7 @@ Recommended next action:
 ## 7. Copy/Paste Starter Text For Next Chat
 
 ```text
-We are continuing healthcare-kpi-hub from checkpoint c2061a0 docs: plan Phase 1A implementation kickoff.
+We are continuing healthcare-kpi-hub from checkpoint deeb0cc feat: implement Phase 1A dashboard summary backend.
 
 The system currently has foundation/auth/RBAC, hierarchy-aware KPI page read model, KPI entry detail, conservative KPI mutation, optimistic concurrency with updated_at, stale-write protection, service-layer semantic audit, Thai-ready message mapping, and a controlled pilot rehearsal documentation package.
 

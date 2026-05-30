@@ -1,6 +1,6 @@
 # Project Status
 
-**Checkpoint**: `c2061a0 docs: plan Phase 1A implementation kickoff`
+**Checkpoint**: `deeb0cc feat: implement Phase 1A dashboard summary backend`
 **Previous baseline**: `792dd3d docs: capture hospital role and scope model`
 **Earlier baseline**: `0705d7b docs: finalize controlled pilot rehearsal logistics`
 **Date**: `2026-05-30`
