@@ -68,6 +68,7 @@ Current operational baseline:
 - [KPI_MEASUREMENT_MODEL_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_REQUIREMENTS.md)
 - [KPI_MEASUREMENT_MODEL_DECISIONS.md](D:/home/github/healthcare-kpi-hub/docs/KPI_MEASUREMENT_MODEL_DECISIONS.md)
 - [ROLE_AND_SCOPE_REQUIREMENTS.md](D:/home/github/healthcare-kpi-hub/docs/ROLE_AND_SCOPE_REQUIREMENTS.md)
+- [DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md)
 
 ## 4. What Must Not Be Expanded Yet
 

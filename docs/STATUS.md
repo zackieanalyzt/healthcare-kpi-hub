@@ -60,7 +60,7 @@
 - the approved narrow first phase is metadata foundation plus organization summary backend only
 - Phase 1A implementation has now started in the narrow approved backend scope only
 - current Phase 1A code work is limited to metadata foundation, organization summary backend, one read-only API, and focused backend tests
-- Phase 1A.3 UI hardening and owner review prep is in progress for `/dashboard`
+- Phase 1A.5 pilot rehearsal preparation checklist is completed; ready for owner-led rehearsal of `/dashboard` using [DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md](D:/home/github/healthcare-kpi-hub/docs/DASHBOARD_PILOT_REHEARSAL_CHECKLIST.md)
 - only the read-only organization dashboard skeleton polish is in UI scope; drill-down, chart library, materialized cache, import, RBAC, advanced aggregation, and KPI mutation behavior changes remain out of scope
 
 Current controlled pilot package status:
